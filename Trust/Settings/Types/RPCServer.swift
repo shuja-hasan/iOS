@@ -114,9 +114,7 @@ enum RPCServer {
         switch self {
         case .main:
             return EthereumAddress(string: "0x314159265dd8dbb310642f98f50c066173c1259b")!
-        case .ether1:
-            return EthereumAddress(string: "0xdfdbe46a630fbde2da1cea59cd18960843268fb7")!
-        case .classic, .poa, .callisto, .gochain:
+        case .classic, .poa, .callisto, .gochain, .ether1:
             return EthereumAddress.zero
         }
     }
