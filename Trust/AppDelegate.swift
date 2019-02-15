@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         //setenv("CFNETWORK_DIAGNOSTICS", "3", 1);
         window = UIWindow(frame: UIScreen.main.bounds)
         
-//        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _  in }
-//        UIApplication.shared.registerForRemoteNotifications()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _  in }
+        UIApplication.shared.registerForRemoteNotifications()
 
         let sharedMigration = SharedMigrationInitializer()
         sharedMigration.perform()

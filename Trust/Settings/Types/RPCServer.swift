@@ -89,7 +89,7 @@ enum RPCServer {
             case .callisto: return "https://clo-geth.0xinfra.com"
             case .poa: return "https://poa.infura.io"
             case .gochain: return "https://rpc.gochain.io"
-            case .ether1: return "https://rpc.ether1.org"
+            case .ether1: return "https://remote.europool.me"
             }
         }()
         return URL(string: urlString)!
