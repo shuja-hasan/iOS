@@ -7,7 +7,7 @@ target 'Trust' do
 
   pod 'BigInt', '~> 3.0'
   pod 'R.swift'
-  pod 'JSONRPCKit', :git=> 'https://github.com/bricklife/JSONRPCKit.git'
+  pod 'JSONRPCKit', :git=> 'https://github.com/fxwx23/JSONRPCKit.git', :branch=>'xcode10-swift4.2'
   pod 'PromiseKit', '~> 6.0'
   pod 'APIKit'
   pod 'Eureka'
