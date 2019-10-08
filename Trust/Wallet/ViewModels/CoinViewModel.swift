@@ -20,6 +20,7 @@ struct CoinViewModel {
         case .callisto: return "Callisto"
         case .gochain: return "GoChain"
         case .ether1: return "Ether-1"
+        case .xerom: return "Xerom"
         }
     }
 
@@ -32,6 +33,7 @@ struct CoinViewModel {
         case .gochain: return "GO"
         case .bitcoin: return "Bitcoin"
         case .ether1: return "ETHO"
+        case .xerom: return "XERO"
         }
     }
 
@@ -43,7 +45,8 @@ struct CoinViewModel {
         case .poa: return R.image.ethereum99()
         case .callisto: return R.image.ethereum820()
         case .gochain: return R.image.ethereum60()
-        case .ether1: return R.image.ethereum64()
+        case .ether1: return R.image.ethereum61()
+        case .xerom: return R.image.ethereum60()
         }
     }
 

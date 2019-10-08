@@ -119,26 +119,20 @@ final class SettingsViewController: FormViewController, Coordinator {
             <<< currencyRow()
             <<< browserRow()
             //<<< privacyRow()
-            
             +++ Section(R.string.localizable.settingsJoinCommunityLabelTitle())
-            
             <<< linkProvider(type: .twitter)
             <<< linkProvider(type: .telegram)
             <<< linkProvider(type: .facebook)
             <<< linkProvider(type: .discord)
             <<< linkProvider(type: .bitcointalk)
             <<< linkProvider(type: .reddit)
-            
             +++ Section()
             <<< shareWithFriendsRow()
-            
             +++ Section()
             <<< aboutRow()
-            
             //+++ Section()
             //<<< developersRow()
     }
-    
     private func shareWithFriendsRow() -> ButtonRow {
         return AppFormAppearance.button { button in
             button.title = R.string.localizable.shareWithFriends()

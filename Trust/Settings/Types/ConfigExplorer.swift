@@ -28,6 +28,8 @@ struct ConfigExplorer {
                 return endpoint + "/tx/" + ID
             case .ether1:
                 return endpoint + "/tx/" + ID
+            case .xerom:
+                return endpoint + "/tx/" + ID
             }
         }()
         guard let string = urlString else { return .none }
@@ -48,6 +50,8 @@ struct ConfigExplorer {
             return "https://explorer.gochain.io"
         case .ether1:
             return "https://explorer.ether1.org"
+        case .xerom:
+            return "https://explorer.xerom.org"
         }
     }
 }

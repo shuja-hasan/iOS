@@ -19,7 +19,7 @@ struct TokenObjectViewModel {
     var placeholder: UIImage? {
         switch token.type {
         case .coin:
-            return R.image.ethereum_logo_256()
+            return token.coin.tokenImage
         case .ERC20:
             let imageCache = ImageCaching.shared
             let key = token.coin.tokenTitle

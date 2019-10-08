@@ -10,6 +10,7 @@ enum RPCServer {
     case callisto
     case gochain
     case ether1
+    case xerom
 
     var id: String {
         switch self {
@@ -19,6 +20,7 @@ enum RPCServer {
         case .callisto: return "callisto"
         case .gochain: return "gochain"
         case .ether1: return "ether1"
+        case .xerom: return "xerom"
         }
     }
 
@@ -30,6 +32,7 @@ enum RPCServer {
         case .ether1: return 1313114
         case .callisto: return 820
         case .gochain: return 60
+        case .xerom: return 1313500
         }
     }
 
@@ -41,12 +44,13 @@ enum RPCServer {
         case .callisto: return EthereumAddress(string: "0x0000000000000000000000000000000000000334")!
         case .gochain: return EthereumAddress(string: "0x00000000000000000000000000000000000017aC")!
         case .ether1: return EthereumAddress(string: "0x000000000000000000000000000000000014095a")!
+        case .xerom: return EthereumAddress(string: "0x0000000000000000000000000000000000140ADC")!
         }
     }
 
     var isDisabledByDefault: Bool {
         switch self {
-        case .ether1: return false
+        case .ether1, .xerom: return false
         case .main, .poa, .classic, .callisto, .gochain: return true
         }
     }
@@ -59,6 +63,7 @@ enum RPCServer {
         case .callisto: return "Callisto"
         case .gochain: return "GoChain"
         case .ether1: return "Ether-1"
+        case .xerom: return "Xerom"
         }
     }
 
@@ -74,6 +79,7 @@ enum RPCServer {
         case .poa: return "POA"
         case .gochain: return "GO"
         case .ether1: return "ETHO"
+        case .xerom: return "XERO"
         }
     }
 
@@ -89,7 +95,8 @@ enum RPCServer {
             case .callisto: return "https://clo-geth.0xinfra.com"
             case .poa: return "https://poa.infura.io"
             case .gochain: return "https://rpc.gochain.io"
-            case .ether1: return "https://remote.europool.me"
+            case .ether1: return "https://rpc.ether1.org"
+            case .xerom: return "https://rpc.xerom.org"
             }
         }()
         return URL(string: urlString)!
@@ -104,6 +111,7 @@ enum RPCServer {
             case .poa: return "https://poa.trustwalletapp.com"
             case .gochain: return "https://gochain.trustwalletapp.com"
             case .ether1: return "https://api1.etholabs.org"
+            case .xerom: return "https://mobileapi.xerom.org"
             }
         }()
         return URL(string: urlString)!
@@ -114,14 +122,14 @@ enum RPCServer {
         switch self {
         case .main:
             return EthereumAddress(string: "0x314159265dd8dbb310642f98f50c066173c1259b")!
-        case .classic, .poa, .callisto, .gochain, .ether1:
+        case .classic, .poa, .callisto, .gochain, .ether1, .xerom:
             return EthereumAddress.zero
         }
     }
 
     var openseaPath: String {
         switch self {
-        case .main, .classic, .poa, .callisto, .gochain, .ether1: return Constants.dappsOpenSea
+        case .main, .classic, .poa, .callisto, .gochain, .ether1, .xerom: return Constants.dappsOpenSea
         }
     }
 
@@ -141,6 +149,7 @@ enum RPCServer {
         case .poa: return Coin.poa
         case .gochain: return Coin.gochain
         case .ether1: return Coin.ether1
+        case .xerom: return Coin.xerom
         }
     }
 }
