@@ -16,6 +16,7 @@ before_install:
   - gem install cocoapods
   - pod install --repo-update
   - brew install swiftlint || true
+  - bundle update --bundler
 
 before_script:
   - bundle exec danger
