@@ -1,5 +1,5 @@
 language: swift
-osx_image: xcode9.3
+osx_image: xcode11
 
 branches:
   only:
@@ -24,6 +24,5 @@ script:
   - set -o pipefail
   - xcodebuild -workspace Trust.xcworkspace -scheme Trust -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone SE" test | xcpretty
 
-notifications:
-  slack: trust-wallet:33Vj3pGpKoBMTBAHTB8dF79n
-  email: false
+after_success:
+  - bash <(curl -s https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
