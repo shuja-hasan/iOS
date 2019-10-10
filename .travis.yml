@@ -9,7 +9,6 @@ env:
 
 cache:
   - cocoapods
-  - bundler
 
 before_install:
   - bundle install
