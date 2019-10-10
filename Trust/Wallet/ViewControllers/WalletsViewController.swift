@@ -27,7 +27,7 @@ class WalletsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.separatorColor = StyleLayout.TableView.separatorColor
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.register(R.nib.walletViewCell(), forCellReuseIdentifier: R.nib.walletViewCell.name)
         navigationItem.title = viewModel.title
         tableView.tableFooterView = UIView()
@@ -63,8 +63,8 @@ class WalletsViewController: UITableViewController {
         return viewModel.canEditRowAt(for: indexPath)
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
             confirmDelete(wallet: viewModel.cellViewModel(for: indexPath).wallet)
         }
     }

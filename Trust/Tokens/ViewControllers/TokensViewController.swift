@@ -22,7 +22,7 @@ final class TokensViewController: UIViewController {
         header.amountLabel.textColor = viewModel.headerBalanceTextColor
         header.backgroundColor = viewModel.headerBackgroundColor
         header.amountLabel.font = viewModel.headerBalanceFont
-        header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+        header.frame.size = header.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
         return header
     }()
 
@@ -31,7 +31,7 @@ final class TokensViewController: UIViewController {
         footer.textLabel.text = viewModel.footerTitle
         footer.textLabel.font = viewModel.footerTextFont
         footer.textLabel.textColor = viewModel.footerTextColor
-        footer.frame.size = footer.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+        footer.frame.size = footer.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
         footer.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(missingToken))
         )
@@ -79,8 +79,8 @@ final class TokensViewController: UIViewController {
         ])
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         sheduleBalanceUpdate()
-        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     override func viewDidLoad() {

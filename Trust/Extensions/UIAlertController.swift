@@ -34,7 +34,7 @@ extension UIAlertController {
     static func alertController(
         title: String? = .none,
         message: String? = .none,
-        style: UIAlertControllerStyle,
+        style: UIAlertController.Style,
         in navigationController: NavigationController
     ) -> UIAlertController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: style)

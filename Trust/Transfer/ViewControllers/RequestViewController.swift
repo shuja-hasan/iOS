@@ -76,10 +76,10 @@ class RequestViewController: UIViewController {
     }
 
     private func displayStackViewController() {
-        addChildViewController(stackViewController)
+        addChild(stackViewController)
         view.addSubview(stackViewController.view)
         _ = stackViewController.view.activateSuperviewHuggingConstraints()
-        stackViewController.didMove(toParentViewController: self)
+        stackViewController.didMove(toParent: self)
 
         stackViewController.stackView.spacing = 20
         stackViewController.stackView.alignment = .center

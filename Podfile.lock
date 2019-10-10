@@ -32,11 +32,11 @@ PODS:
   - R.swift (4.0.0):
     - R.swift.Library (~> 4.0.0)
   - R.swift.Library (4.0.0)
-  - Realm (3.7.6):
-    - Realm/Headers (= 3.7.6)
-  - Realm/Headers (3.7.6)
-  - RealmSwift (3.7.6):
-    - Realm (= 3.7.6)
+  - Realm (3.19.0):
+    - Realm/Headers (= 3.19.0)
+  - Realm/Headers (3.19.0)
+  - RealmSwift (3.19.0):
+    - Realm (= 3.19.0)
   - Result (3.2.4)
   - SAMKeychain (1.5.3)
   - SeedStackViewController (0.4.0)
@@ -72,7 +72,7 @@ DEPENDENCIES:
   - PromiseKit (~> 6.0)
   - QRCodeReaderViewController (from `https://github.com/yannickl/QRCodeReaderViewController.git`, branch `master`)
   - R.swift
-  - RealmSwift
+  - RealmSwift (~> 3.19.0)
   - SAMKeychain
   - SeedStackViewController
   - StatefulViewController
@@ -85,7 +85,7 @@ DEPENDENCIES:
   - URLNavigator
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - APIKit
     - BigInt
@@ -166,8 +166,8 @@ SPEC CHECKSUMS:
   QRCodeReaderViewController: e8f27d035b3e72b1d4b1c61ff66458287e3be0ff
   R.swift: d6a5ec2f55a8441dc0ed9f1f8b37d7d11ae85c66
   R.swift.Library: c3af34921024333546e23b70e70d0b4e0cffca75
-  Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
-  RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
+  Realm: 995d585bcf699aaff226715886c849a29dd3d07f
+  RealmSwift: 35f284a537989f2187b413e5917091948cb87a3f
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   SeedStackViewController: 45e88ca1493a610e74d661d3feced7098f72dbd3
@@ -175,12 +175,12 @@ SPEC CHECKSUMS:
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   TrezorCrypto: bfeea47a052dca2c77d4a39e1e183865e52de14d
-  TrustCore: 6c7deb45f03664d650da712bb5a19b33df0534a6
+  TrustCore: 3f0a67efb643c14cedefdb6ca0e720de4702bb91
   TrustKeystore: c54b52ade9c97d31d23ded9ae2518c62dd73b5fe
-  TrustWalletSDK: 12451433bda69bc07e5a27408449b1f4692879e4
+  TrustWalletSDK: f5c609b94df568afad223b5b884b5eda153cf1c0
   TrustWeb3Provider: 50fa391bdf170feb43dd4419992931510a5751d8
   URLNavigator: 2357a32f3b3787b748bf87deb927761f8b0f7f53
 
-PODFILE CHECKSUM: 3d80c07f659245873eaf82710f1b42a2e25f2f35
+PODFILE CHECKSUM: 87ca40f972d7aca4247395f3cef712345e265497
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.8.3

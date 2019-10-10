@@ -28,7 +28,7 @@ class SelectCoinViewController: UITableViewController {
         super.viewDidLoad()
 
         tableView.separatorColor = StyleLayout.TableView.separatorColor
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.register(R.nib.coinViewCell(), forCellReuseIdentifier: R.nib.coinViewCell.name)
         tableView.tableFooterView = UIView()
         navigationItem.title = viewModel.title

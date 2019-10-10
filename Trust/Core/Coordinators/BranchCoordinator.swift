@@ -16,7 +16,7 @@ final class BranchCoordinator {
         return events.last
     }
 
-    func didFinishLaunchingWithOptions(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+    func didFinishLaunchingWithOptions(launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { params, error in
             guard
                 error == nil,
@@ -51,7 +51,7 @@ final class BranchCoordinator {
         return Branch.getInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         return Branch.getInstance().application(app, open: url, options: options)
     }
 }

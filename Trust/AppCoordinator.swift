@@ -100,13 +100,13 @@ class AppCoordinator: NSObject, Coordinator {
         let alertController = UIAlertController(
             title: "Great News! Big Update! 🚀",
             message: "We have made a huge progress towards supporting and simplifying management of your tokens across blockchains. \n\nTake a look on how to create Multi-Coin Wallet in Trust!",
-            preferredStyle: UIAlertControllerStyle.alert
+            preferredStyle: UIAlertController.Style.alert
         )
         alertController.popoverPresentationController?.sourceView = self.navigationController.view
         alertController.addAction(
             UIAlertAction(
                 title: R.string.localizable.learnMore(),
-                style: UIAlertActionStyle.default,
+                style: UIAlertAction.Style.default,
                 handler: { [weak self] _ in
                     let url = URL(string: "https://medium.com/p/fa50f258274b")
                     self?.inCoordinator?.showTab(.browser(openURL: url))
