@@ -8,7 +8,7 @@ Welcome to Nextshore's open source iOS app!
 2. Clone this repository.
 3. Run `make bootstrap` to install tools and dependencies.
 4. Open Trust.xcworkspace in Xcode
-5. Set the following pods to swift version 4.
+5. Set the following pods to Swift Language version 4.
 
 ```
 Alamofire
