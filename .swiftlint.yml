@@ -40,10 +40,5 @@ file_length:
   error:                     1200
 trailing_comma:
   mandatory_comma:           true
-file_header:
-  required_pattern:
-  "// Copyright DApps Platform Inc. All rights reserved.\n
-  // Copyright Ether-1 Developers. All rights reserved.\n
-  // Copyright Xerom Developers. All rights reserved.\n"
 superfluous_disable_command: warning
 reporter:                    "xcode"
