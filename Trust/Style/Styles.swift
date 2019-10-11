@@ -1,11 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
+import Eureka
 import Foundation
 import UIKit
-import Eureka
 
 func applyStyle() {
-
     if #available(iOS 11, *) {
     } else {
         UINavigationBar.appearance(whenContainedInInstancesOf: [NavigationController.self]).isTranslucent = false

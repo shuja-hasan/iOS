@@ -1,15 +1,19 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 final class ProtectionCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     lazy var splashCoordinator: SplashCoordinator = {
-        return SplashCoordinator(window: self.protectionWindow)
+        SplashCoordinator(window: self.protectionWindow)
     }()
+
     lazy var lockEnterPasscodeCoordinator: LockEnterPasscodeCoordinator = {
-        return LockEnterPasscodeCoordinator(model: LockEnterPasscodeViewModel())
+        LockEnterPasscodeCoordinator(model: LockEnterPasscodeViewModel())
     }()
+
     let protectionWindow = UIWindow()
     init() {
         protectionWindow.windowLevel = UIWindow.Level.statusBar + 2.0
@@ -18,7 +22,7 @@ final class ProtectionCoordinator: Coordinator {
     func didFinishLaunchingWithOptions() {
         splashCoordinator.start()
         lockEnterPasscodeCoordinator.start()
-        //lockEnterPasscodeCoordinator.showAuthentication()
+        // lockEnterPasscodeCoordinator.showAuthentication()
     }
 
     func applicationDidBecomeActive() {

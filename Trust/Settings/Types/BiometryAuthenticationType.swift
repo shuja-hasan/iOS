@@ -1,5 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
-
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 import Foundation
 import LocalAuthentication
 
@@ -20,7 +21,7 @@ enum BiometryAuthenticationType {
         // https://stackoverflow.com/a/46920111
         let authContext = LAContext()
         if #available(iOS 11, *) {
-            let _ = authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+            _ = authContext.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
             switch authContext.biometryType {
             case .none:
                 return .none

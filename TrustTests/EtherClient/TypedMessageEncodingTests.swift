@@ -1,13 +1,14 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import XCTest
+import KeychainSwift
 @testable import Trust
 import TrustCore
 import TrustKeystore
-import KeychainSwift
+import XCTest
 
 class TypedMessageEncodingTests: XCTestCase {
-
     let keystore = FakeEtherKeystore()
 
     func testValue_none() {
@@ -34,7 +35,7 @@ class TypedMessageEncodingTests: XCTestCase {
     func testType_uint_Value_uint() {
         let account = importAccount()
         // from https://beta.adex.network/
-        let typedData = EthTypedData(type: "uint", name: "Auth token", value: .uint(value: 1498316044249108))
+        let typedData = EthTypedData(type: "uint", name: "Auth token", value: .uint(value: 1_498_316_044_249_108))
 
         let signResult = keystore.signTypedMessage([typedData], for: account)
         guard case let .success(data) = signResult else {
@@ -126,7 +127,7 @@ class TypedMessageEncodingTests: XCTestCase {
         }
         XCTAssertEqual(data.hexEncoded, "0xb88c74fd791b6f1e201c8bb08ff977a938d9ca379f83fd00140f683f3a04fcf6220db28ff750efafc642b525d00d0e3e37d2a1af8cd50940306e690f5b93c8d81c")
     }
-    
+
     func testType_bytes_Value_hexString() {
         let account = importAccount()
         let typedData = EthTypedData(type: "bytes", name: "your address", value: .string(value: "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23"))

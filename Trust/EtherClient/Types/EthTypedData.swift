@@ -1,11 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import BigInt
 import Foundation
 import TrustCore
 
 /*
-This enum is only used to support decode solidity types (represented by json values) to swift primitive types.
+ This enum is only used to support decode solidity types (represented by json values) to swift primitive types.
  */
 enum SolidityJSONValue: Decodable {
     case none
@@ -21,15 +23,15 @@ enum SolidityJSONValue: Decodable {
         switch self {
         case .none:
             return ""
-        case .bool(let bool):
+        case let .bool(bool):
             return bool ? "true" : "false"
-        case .string(let string):
+        case let .string(string):
             return string
-        case .address(let address):
+        case let .address(address):
             return address
-        case .uint(let uint):
+        case let .uint(uint):
             return String(uint)
-        case .int(let int):
+        case let .int(int):
             return String(int)
         }
     }
@@ -55,7 +57,7 @@ enum SolidityJSONValue: Decodable {
 }
 
 struct EthTypedData: Decodable {
-    //for signTypedMessage
+    // for signTypedMessage
     let type: String
     let name: String
     let value: SolidityJSONValue
@@ -70,27 +72,27 @@ struct EthTypedData: Decodable {
 
     var typedData: Data {
         switch value {
-        case .bool(let bool):
+        case let .bool(bool):
             let byte: UInt8 = bool ? 0x01 : 0x00
             return Data(bytes: [byte])
-        case .address(let address):
+        case let .address(address):
             let data = Data(hex: String(address.dropFirst(2)))
             return data
-        case .uint(let uint):
+        case let .uint(uint):
             if type.starts(with: "bytes") {
                 return uint.getHexData()
             }
             let size = parseIntSize(type: type, prefix: "uint")
             guard size > 0 else { return Data() }
             return uint.getTypedData(size: size)
-        case .int(let int):
+        case let .int(int):
             if type.starts(with: "bytes") {
                 return int.getHexData()
             }
             let size = parseIntSize(type: type, prefix: "int")
             guard size > 0 else { return Data() }
             return int.getTypedData(size: size)
-        case .string(let string):
+        case let .string(string):
             if type.starts(with: "bytes") {
                 if string.isHexEncoded {
                     return Data(hex: string)
@@ -127,7 +129,7 @@ extension FixedWidthInteger {
     func getHexData() -> Data {
         var string = String(self, radix: 16)
         if string.count % 2 != 0 {
-            //pad to even
+            // pad to even
             string = "0" + string
         }
         let data = Data(hex: string)
@@ -135,7 +137,7 @@ extension FixedWidthInteger {
     }
 
     func getTypedData(size: Int) -> Data {
-        var intValue = self.bigEndian
+        var intValue = bigEndian
         var data = Data(buffer: UnsafeBufferPointer(start: &intValue, count: 1))
         let num = size / 8 - 8
         if num > 0 {

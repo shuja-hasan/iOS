@@ -1,10 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
+import Result
 import TrustCore
 import TrustKeystore
-import Result
+import UIKit
 
 protocol ConfirmCoordinatorDelegate: class {
     func didCancel(in coordinator: ConfirmCoordinator)
@@ -28,7 +30,7 @@ final class ConfirmCoordinator: RootCoordinator {
     }
 
     private lazy var controller: ConfirmPaymentViewController = {
-        return ConfirmPaymentViewController(
+        ConfirmPaymentViewController(
             session: session,
             keystore: keystore,
             configurator: configurator,
@@ -58,9 +60,9 @@ final class ConfirmCoordinator: RootCoordinator {
         controller.didCompleted = { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .success(let data):
+            case let .success(data):
                 self.didCompleted?(.success(data))
-            case .failure(let error):
+            case let .failure(error):
                 self.didCompleted?(.failure(error))
             }
         }

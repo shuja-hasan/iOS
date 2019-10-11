@@ -1,11 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
 import StatefulViewController
+import UIKit
 
 final class ErrorView: UIView {
-
     let descriptionLabel = UILabel()
     let imageView = UIImageView()
     let button = Button(size: .normal, style: .solid)
@@ -63,7 +64,7 @@ final class ErrorView: UIView {
         onRetry?()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

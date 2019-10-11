@@ -1,11 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
-import UIKit
 import BigInt
+import Foundation
+import Result
 import TrustCore
 import TrustKeystore
-import Result
+import UIKit
 
 protocol SendCoordinatorDelegate: class {
     func didFinish(_ result: Result<ConfirmResult, AnyError>, in coordinator: SendCoordinator)
@@ -34,7 +36,7 @@ final class SendCoordinator: RootCoordinator {
         controller.navigationItem.backBarButtonItem = nil
         controller.hidesBottomBarWhenPushed = true
         switch transfer.type {
-        case .ether(_, let destination):
+        case let .ether(_, destination):
             controller.addressRow?.value = destination?.description
             controller.addressRow?.cell.row.updateCell()
         case .token, .dapp: break
@@ -66,7 +68,7 @@ final class SendCoordinator: RootCoordinator {
 }
 
 extension SendCoordinator: SendViewControllerDelegate {
-    func didPressConfirm(transaction: UnconfirmedTransaction, transfer: Transfer, in viewController: SendViewController) {
+    func didPressConfirm(transaction: UnconfirmedTransaction, transfer: Transfer, in _: SendViewController) {
         let configurator = TransactionConfigurator(
             session: session,
             account: account,

@@ -1,7 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
 import APIKit
+import Foundation
 import JSONRPCKit
 import Result
 
@@ -12,16 +14,16 @@ extension Error {
             switch error.error {
             case let error as APIKit.SessionTaskError:
                 switch error {
-                case .connectionError(let error):
+                case let .connectionError(error):
                     return error.localizedDescription
-                case .requestError(let error):
+                case let .requestError(error):
                     return error.localizedDescription
-                case .responseError(let error):
+                case let .responseError(error):
                     guard let JSONError = error as? JSONRPCError else {
                         return error.localizedDescription
                     }
                     switch JSONError {
-                    case .responseError(_, let message, _):
+                    case let .responseError(_, message, _):
                         return message
                     default: return "Undefined error"
                     }

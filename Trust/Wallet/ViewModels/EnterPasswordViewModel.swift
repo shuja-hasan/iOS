@@ -1,9 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 
 struct EnterPasswordViewModel {
-
     var title: String {
         return NSLocalizedString("enterPassword.navigation.title", value: "Backup Password", comment: "")
     }

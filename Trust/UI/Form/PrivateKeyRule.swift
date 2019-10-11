@@ -1,12 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
 import Eureka
+import Foundation
 
 public struct PrivateKeyRule<T: Equatable>: RuleType {
-
     public init(msg: String = "Private Key has to be 64 characters long") {
-        self.validationError = ValidationError(msg: msg)
+        validationError = ValidationError(msg: msg)
     }
 
     public var id: String?

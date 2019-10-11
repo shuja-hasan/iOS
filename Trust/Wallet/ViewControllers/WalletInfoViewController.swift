@@ -1,8 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import UIKit
 import Eureka
 import TrustKeystore
+import UIKit
 
 protocol WalletInfoViewControllerDelegate: class {
     func didPress(item: WalletInfoType, in controller: WalletInfoViewController)
@@ -17,13 +19,14 @@ enum WalletInfoField {
 }
 
 final class WalletInfoViewController: FormViewController {
-
     lazy var viewModel: WalletInfoViewModel = {
-        return WalletInfoViewModel(wallet: wallet)
+        WalletInfoViewModel(wallet: wallet)
     }()
+
     var segmentRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.name)
     }
+
     let wallet: WalletInfo
 
     weak var delegate: WalletInfoViewControllerDelegate?
@@ -33,7 +36,7 @@ final class WalletInfoViewController: FormViewController {
     }
 
     lazy var saveBarButtonItem: UIBarButtonItem = {
-        return UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+        UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
     }()
 
     init(
@@ -51,13 +54,13 @@ final class WalletInfoViewController: FormViewController {
 
         form +++ Section()
 
-        <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
-            $0.add(rule: RuleRequired())
-            $0.value = self.viewModel.name
-        }.cellUpdate { [weak self] cell, _ in
-            cell.textField.placeholder = self?.viewModel.nameTitle
-            cell.textField.rightViewMode = .always
-        }
+            <<< AppFormAppearance.textFieldFloat(tag: Values.name) {
+                $0.add(rule: RuleRequired())
+                $0.value = self.viewModel.name
+            }.cellUpdate { [weak self] cell, _ in
+                cell.textField.placeholder = self?.viewModel.nameTitle
+                cell.textField.rightViewMode = .always
+            }
 
         for types in viewModel.sections {
             let newSection = Section(footer: types.footer ?? "")
@@ -74,7 +77,7 @@ final class WalletInfoViewController: FormViewController {
         let button = ButtonRowRow(item.title) {
             $0.title = item.title
             $0.value = item
-        }.onCellSelection { [weak self] (_, row) in
+        }.onCellSelection { [weak self] _, row in
             guard let `self` = self, let item = row.value else { return }
             self.delegate?.didPress(item: item, in: self)
         }.cellSetup { cell, _ in
@@ -92,7 +95,7 @@ final class WalletInfoViewController: FormViewController {
         delegate?.didPressSave(wallet: wallet, fields: [.name(name)], in: self)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

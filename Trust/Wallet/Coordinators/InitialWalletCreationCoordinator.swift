@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import TrustCore
@@ -10,7 +12,6 @@ protocol InitialWalletCreationCoordinatorDelegate: class {
 }
 
 final class InitialWalletCreationCoordinator: Coordinator {
-
     let navigationController: NavigationController
     let keystore: Keystore
     var coordinators: [Coordinator] = []

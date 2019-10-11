@@ -1,10 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 final class WordCollectionViewCell: UICollectionViewCell {
-
-    @IBOutlet weak var wordLabel: UILabel!
+    @IBOutlet var wordLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -8,13 +10,14 @@ final class LockEnterPasscodeCoordinator: Coordinator {
     private let model: LockEnterPasscodeViewModel
     private let lock: LockInterface
     private lazy var lockEnterPasscodeViewController: LockEnterPasscodeViewController = {
-        return LockEnterPasscodeViewController(model: model)
+        LockEnterPasscodeViewController(model: model)
     }()
+
     init(model: LockEnterPasscodeViewModel, lock: LockInterface = Lock()) {
-        self.window.windowLevel = UIWindow.Level.statusBar + 1.0
+        window.windowLevel = UIWindow.Level.statusBar + 1.0
         self.model = model
         self.lock = lock
-        lockEnterPasscodeViewController.unlockWithResult = { [weak self] (state, bioUnlock) in
+        lockEnterPasscodeViewController.unlockWithResult = { [weak self] state, _ in
             if state {
                 self?.stop()
             }
@@ -27,7 +30,8 @@ final class LockEnterPasscodeCoordinator: Coordinator {
         window.rootViewController = lockEnterPasscodeViewController
         window.makeKeyAndVisible()
     }
-    //This method should be refactored!!!
+
+    // This method should be refactored!!!
     func showAuthentication() {
         if window.isKeyWindow {
             if lock.isPasscodeSet() {

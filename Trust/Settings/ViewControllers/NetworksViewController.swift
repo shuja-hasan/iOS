@@ -1,13 +1,14 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
+import Eureka
 import Foundation
 import UIKit
-import Eureka
 
 final class NetworksViewController: FormViewController {
-
     lazy var addButton: UIBarButtonItem = {
-        return UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(addNetwork))
+        UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(addNetwork))
     }()
 
     override func viewDidLoad() {
@@ -15,8 +16,8 @@ final class NetworksViewController: FormViewController {
         tableView.isEditing = false
         let nameList = ["1"]
 
-        let section =  MultivaluedSection(multivaluedOptions: .None, footer: "")
-        for _ in 1..<4 {
+        let section = MultivaluedSection(multivaluedOptions: .None, footer: "")
+        for _ in 1 ..< 4 {
             section <<< PickerInlineRow<String> {
                 $0.title = "Tap to select"
                 $0.value = "client"
@@ -27,7 +28,5 @@ final class NetworksViewController: FormViewController {
         form +++ section
     }
 
-    @objc func addNetwork(sender: UIBarButtonItem) {
-
-    }
+    @objc func addNetwork(sender _: UIBarButtonItem) {}
 }

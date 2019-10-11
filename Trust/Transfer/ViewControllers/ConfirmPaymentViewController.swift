@@ -1,10 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import BigInt
 import Foundation
-import UIKit
 import Result
 import StatefulViewController
+import UIKit
 
 enum ConfirmType {
     case sign
@@ -17,12 +19,12 @@ enum ConfirmResult {
 }
 
 class ConfirmPaymentViewController: UIViewController {
-
     private let keystore: Keystore
     let session: WalletSession
     lazy var sendTransactionCoordinator = {
-        return SendTransactionCoordinator(session: self.session, keystore: keystore, confirmType: confirmType, server: server)
+        SendTransactionCoordinator(session: self.session, keystore: keystore, confirmType: confirmType, server: server)
     }()
+
     lazy var submitButton: UIButton = {
         let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -30,10 +32,12 @@ class ConfirmPaymentViewController: UIViewController {
         button.addTarget(self, action: #selector(send), for: .touchUpInside)
         return button
     }()
+
     lazy var viewModel: ConfirmPaymentViewModel = {
-        //TODO: Refactor
-        return ConfirmPaymentViewModel(type: self.confirmType)
+        // TODO: Refactor
+        ConfirmPaymentViewModel(type: self.confirmType)
     }()
+
     var configurator: TransactionConfigurator
     let confirmType: ConfirmType
     let server: RPCServer
@@ -92,7 +96,7 @@ class ConfirmPaymentViewController: UIViewController {
             case .success:
                 self.reloadView()
                 self.endLoading()
-            case .failure(let error):
+            case let .failure(error):
                 self.endLoading(animated: true, error: error, completion: nil)
             }
         }
@@ -188,10 +192,10 @@ class ConfirmPaymentViewController: UIViewController {
             session: session,
             server: server
         )
-        self.configure(for: viewModel)
+        configure(for: viewModel)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -203,14 +207,14 @@ class ConfirmPaymentViewController: UIViewController {
             session: session
         )
         controller.delegate = self
-        self.navigationController?.pushViewController(controller, animated: true)
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     @objc func send() {
-        self.displayLoading()
+        displayLoading()
 
         let transaction = configurator.signTransaction
-        self.sendTransactionCoordinator.send(transaction: transaction) { [weak self] result in
+        sendTransactionCoordinator.send(transaction: transaction) { [weak self] result in
             guard let `self` = self else { return }
             self.didCompleted?(result)
             self.hideLoading()
@@ -225,7 +229,7 @@ extension ConfirmPaymentViewController: StatefulViewController {
 }
 
 extension ConfirmPaymentViewController: ConfigureTransactionViewControllerDelegate {
-    func didEdit(configuration: TransactionConfiguration, in viewController: ConfigureTransactionViewController) {
+    func didEdit(configuration: TransactionConfiguration, in _: ConfigureTransactionViewController) {
         configurator.update(configuration: configuration)
         reloadView()
         navigationController?.popViewController(animated: true)

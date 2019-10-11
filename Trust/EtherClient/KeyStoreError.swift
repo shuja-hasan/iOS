@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 
@@ -25,7 +27,7 @@ enum KeystoreError: LocalizedError {
             return "Failed to delete account"
         case .failedToDecryptKey:
             return "Could not decrypt key with given passphrase"
-        case .failedToImport(let error):
+        case let .failedToImport(error):
             return error.localizedDescription
         case .duplicateAccount:
             return "You already added this address to wallets"

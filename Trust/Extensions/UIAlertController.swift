@@ -1,11 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
 import Result
+import UIKit
 
 extension UIAlertController {
-
     static func askPassword(
         title: String = "",
         message: String = "",
@@ -24,7 +25,7 @@ extension UIAlertController {
         alertController.addAction(UIAlertAction(title: R.string.localizable.cancel(), style: .cancel, handler: { _ in
             completion(.failure(ConfirmationError.cancel))
         }))
-        alertController.addTextField(configurationHandler: {(textField: UITextField!) -> Void in
+        alertController.addTextField(configurationHandler: { (textField: UITextField!) -> Void in
             textField.placeholder = NSLocalizedString("Password", value: "Password", comment: "")
             textField.isSecureTextEntry = true
         })

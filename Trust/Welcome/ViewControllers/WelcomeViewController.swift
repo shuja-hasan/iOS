@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -8,7 +10,6 @@ protocol WelcomeViewControllerDelegate: class {
 }
 
 final class WelcomeViewController: UIViewController {
-
     var viewModel = WelcomeViewModel()
     weak var delegate: WelcomeViewControllerDelegate?
 
@@ -26,11 +27,13 @@ final class WelcomeViewController: UIViewController {
         collectionViewController.collectionView?.backgroundColor = viewModel.backgroundColor
         return collectionViewController
     }()
+
     let pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
+
     let createWalletButton: UIButton = {
         let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -39,6 +42,7 @@ final class WelcomeViewController: UIViewController {
         button.backgroundColor = Colors.darkRed
         return button
     }()
+
     let importWalletButton: UIButton = {
         let importWalletButton = Button(size: .large, style: .border)
         importWalletButton.translatesAutoresizingMaskIntoConstraints = false
@@ -47,6 +51,7 @@ final class WelcomeViewController: UIViewController {
         importWalletButton.accessibilityIdentifier = "import-wallet"
         return importWalletButton
     }()
+
     let pages: [OnboardingPageViewModel] = [
         OnboardingPageViewModel(
             title: NSLocalizedString("welcome.privateAndSecure.label.title", value: "Private & Secure", comment: ""),

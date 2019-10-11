@@ -1,13 +1,14 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
 import BigInt
+import Foundation
 import RealmSwift
-import TrustKeystore
 import TrustCore
+import TrustKeystore
 
 final class TokenViewModel {
-
     private let shortFormatter = EtherNumberFormatter.short
     private let config: Config
     private let store: TokensDataStore
@@ -21,7 +22,7 @@ final class TokenViewModel {
 
     let token: TokenObject
     private lazy var tokenObjectViewModel: TokenObjectViewModel = {
-        return TokenObjectViewModel(token: token)
+        TokenObjectViewModel(token: token)
     }()
 
     var title: String {
@@ -51,11 +52,11 @@ final class TokenViewModel {
     }()
 
     let backgroundColor: UIColor = {
-        return .white
+        .white
     }()
 
     lazy var transactionsProvider: EthereumTransactionsProvider = {
-        return EthereumTransactionsProvider(server: server)
+        EthereumTransactionsProvider(server: server)
     }()
 
     var amount: String {
@@ -75,7 +76,7 @@ final class TokenViewModel {
     }
 
     lazy var currentAccount: Account = {
-        return session.account.accounts.filter { $0.coin == token.coin }.first!
+        session.account.accounts.filter { $0.coin == token.coin }.first!
     }()
 
     init(
@@ -87,7 +88,7 @@ final class TokenViewModel {
         session: WalletSession
     ) {
         self.token = token
-        self.transactionsStore =  transactionsStore
+        self.transactionsStore = transactionsStore
         self.config = config
         self.store = store
         self.tokensNetwork = tokensNetwork
@@ -226,7 +227,7 @@ final class TokenViewModel {
         guard let provider = TokenViewModel.balance(for: token, wallet: session.account) else {
             return
         }
-        let _ = provider.balance().done { [weak self] balance in
+        _ = provider.balance().done { [weak self] balance in
             self?.store.update(balance: balance, for: provider.addressUpdate)
         }
     }
@@ -260,7 +261,7 @@ final class TokenViewModel {
         for transaction in transactions {
             transactionsProvider.update(for: transaction) { result in
                 switch result {
-                case .success(let transaction, let state):
+                case let .success(transaction, state):
                     self.transactionsStore.update(state: state, for: transaction)
                 case .failure: break
                 }

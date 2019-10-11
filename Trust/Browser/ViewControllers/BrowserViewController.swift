@@ -1,10 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
-import WebKit
 import JavaScriptCore
 import Result
+import UIKit
+import WebKit
 
 enum BrowserAction {
     case history
@@ -22,7 +24,6 @@ protocol BrowserViewControllerDelegate: class {
 }
 
 final class BrowserViewController: UIViewController {
-
     private var myContext = 0
     let account: WalletInfo
     let sessionConfig: Config
@@ -35,7 +36,7 @@ final class BrowserViewController: UIViewController {
     }
 
     private lazy var userClient: String = {
-        return Keys.ClientName + "/" + (Bundle.main.versionNumber ?? "")
+        Keys.ClientName + "/" + (Bundle.main.versionNumber ?? "")
     }()
 
     lazy var webView: WKWebView = {
@@ -73,9 +74,9 @@ final class BrowserViewController: UIViewController {
         return progressView
     }()
 
-    //Take a look at this issue : https://stackoverflow.com/questions/26383031/wkwebview-causes-my-view-controller-to-leak
+    // Take a look at this issue : https://stackoverflow.com/questions/26383031/wkwebview-causes-my-view-controller-to-leak
     lazy var config: WKWebViewConfiguration = {
-        //TODO
+        // TODO:
         let config = WKWebViewConfiguration.make(for: server, address: account.address, with: sessionConfig, in: ScriptMessageProxy(delegate: self))
         config.websiteDataStore = WKWebsiteDataStore.default()
         return config
@@ -89,7 +90,7 @@ final class BrowserViewController: UIViewController {
         server: RPCServer
     ) {
         self.account = account
-        self.sessionConfig = config
+        sessionConfig = config
         self.server = server
 
         super.init(nibName: nil, bundle: nil)
@@ -122,7 +123,7 @@ final class BrowserViewController: UIViewController {
         webView.addObserver(self, forKeyPath: Keys.URL, options: [.new, .initial], context: &myContext)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -147,9 +148,9 @@ final class BrowserViewController: UIViewController {
     func notifyFinish(callbackID: Int, value: Result<DappCallback, DAppError>) {
         let script: String = {
             switch value {
-            case .success(let result):
+            case let .success(result):
                 return "executeCallback(\(callbackID), null, \"\(result.value.object)\")"
-            case .failure(let error):
+            case let .failure(error):
                 return "executeCallback(\(callbackID), \"\(error)\", null)"
             }
         }()
@@ -177,7 +178,6 @@ final class BrowserViewController: UIViewController {
     private func refreshURL() {
         browserNavBar?.textField.text = webView.url?.absoluteString
         browserNavBar?.backButton.isHidden = !webView.canGoBack
-
     }
 
     private func recordURL() {
@@ -209,7 +209,7 @@ final class BrowserViewController: UIViewController {
             }
         } else if keyPath == Keys.URL {
             if let url = webView.url {
-                self.browserNavBar?.textField.text = url.absoluteString
+                browserNavBar?.textField.text = url.absoluteString
                 changeURL(url)
             }
         }
@@ -266,30 +266,30 @@ extension BrowserViewController: BrowserNavigationBarDelegate {
 }
 
 extension BrowserViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(_: WKWebView, didFinish _: WKNavigation!) {
         recordURL()
         hideErrorView()
         refreshURL()
     }
 
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+    func webView(_: WKWebView, didCommit _: WKNavigation!) {
         hideErrorView()
     }
 
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+    func webView(_: WKWebView, didFail _: WKNavigation!, withError error: Error) {
         handleError(error: error)
     }
 
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+    func webView(_: WKWebView, didFailProvisionalNavigation _: WKNavigation!, withError error: Error) {
         handleError(error: error)
     }
 }
 
 extension BrowserViewController: WKScriptMessageHandler {
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    func userContentController(_: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let command = DappAction.fromMessage(message) else { return }
         let requester = DAppRequester(title: webView.title, url: webView.url)
-        //TODO: Refactor
+        // TODO: Refactor
         let token = TokensDataStore.token(for: server)
         let transfer = Transfer(server: server, type: .dapp(token, requester))
         let action = DappAction.fromCommand(command, transfer: transfer)
@@ -299,7 +299,7 @@ extension BrowserViewController: WKScriptMessageHandler {
 }
 
 extension BrowserViewController: BrowserErrorViewDelegate {
-    func didTapReload(_ sender: Button) {
+    func didTapReload(_: Button) {
         reload()
     }
 }

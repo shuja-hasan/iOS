@@ -1,11 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
 import BigInt
+import Foundation
 
 public struct GasLimitConfiguration {
-    static let `default` = BigInt(90_000)
-    static let min = BigInt(21_000)
+    static let `default` = BigInt(90000)
+    static let min = BigInt(21000)
     static let max = BigInt(600_000)
     static let tokenTransfer = BigInt(144_000)
     static let dappTransfer = BigInt(600_000)

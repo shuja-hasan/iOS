@@ -1,19 +1,21 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import UIKit
 import APIKit
 import JSONRPCKit
-import StatefulViewController
-import Result
-import TrustCore
 import RealmSwift
+import Result
+import StatefulViewController
+import TrustCore
 import TrustKeystore
+import UIKit
 //
-//protocol TransactionsViewControllerDelegate: class {
+// protocol TransactionsViewControllerDelegate: class {
 //    func didPressTransaction(transaction: Transaction, in viewController: TransactionsViewController)
-//}
+// }
 //
-//class TransactionsViewController: UIViewController {
+// class TransactionsViewController: UIViewController {
 //
 //    var viewModel: TransactionsViewModel
 //    let tableView = TransactionsTableView()
@@ -89,22 +91,22 @@ import TrustKeystore
 //    required init?(coder aDecoder: NSCoder) {
 //        fatalError("init(coder:) has not been implemented")
 //    }
-//}
+// }
 //
-//extension TransactionsViewController: StatefulViewController {
+// extension TransactionsViewController: StatefulViewController {
 //    func hasContent() -> Bool {
 //        return viewModel.hasContent
 //    }
-//}
+// }
 //
-//extension TransactionsViewController: UITableViewDelegate {
+// extension TransactionsViewController: UITableViewDelegate {
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        tableView.deselectRow(at: indexPath, animated: true )
 //        delegate?.didPressTransaction(transaction: viewModel.item(for: indexPath.row, section: indexPath.section), in: self)
 //    }
-//}
+// }
 //
-//extension TransactionsViewController: UITableViewDataSource {
+// extension TransactionsViewController: UITableViewDataSource {
 //    func numberOfSections(in tableView: UITableView) -> Int {
 //        return viewModel.numberOfSections
 //    }
@@ -126,10 +128,10 @@ import TrustKeystore
 //    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 //        return StyleLayout.TableView.heightForHeaderInSection
 //    }
-//}
+// }
 //
-//extension TransactionsViewController: Scrollable {
+// extension TransactionsViewController: Scrollable {
 //    func scrollOnTop() {
 //        tableView.scrollOnTop()
 //    }
-//}
+// }

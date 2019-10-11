@@ -1,11 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
+import BigInt
 import Foundation
 import UIKit
-import BigInt
 
 struct TokenViewCellViewModel {
-
     private let shortFormatter = EtherNumberFormatter.short
     let viewModel: TokenObjectViewModel
     private let ticker: CoinTicker?

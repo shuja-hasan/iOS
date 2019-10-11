@@ -1,9 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 final class SectionHeader: UIView {
-
     private var fillColor: UIColor
     private var borderColor: UIColor
     private var title: String?
@@ -26,12 +27,12 @@ final class SectionHeader: UIView {
         addLayout()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     private func addLayout() {
-        self.backgroundColor = fillColor
+        backgroundColor = fillColor
 
         let topBorder = UIView()
         topBorder.backgroundColor = borderColor
@@ -45,9 +46,9 @@ final class SectionHeader: UIView {
         titleLabel.font = textFont
         titleLabel.sizeToFit()
 
-        self.addSubview(titleLabel)
-        self.addSubview(topBorder)
-        self.addSubview(bottomBorder)
+        addSubview(titleLabel)
+        addSubview(topBorder)
+        addSubview(bottomBorder)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         topBorder.translatesAutoresizingMaskIntoConstraints = false

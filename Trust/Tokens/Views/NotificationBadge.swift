@@ -1,9 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 extension UIView {
-
     @objc public func badge(text badgeText: String?) {
         badge(text: badgeText, appearance: BadgeAppearance())
     }
@@ -12,23 +13,21 @@ extension UIView {
         badge(text: badgeText, badgeEdgeInsets: nil, appearance: appearance)
     }
 
-    public func badge(text badgeText: String?, badgeEdgeInsets: UIEdgeInsets?, appearance: BadgeAppearance) {
-
+    public func badge(text badgeText: String?, badgeEdgeInsets _: UIEdgeInsets?, appearance: BadgeAppearance) {
         var badgeLabel: BadgeLabel!
         var doesBadgeExist = false
-        for view in self.subviews {
-            if view.tag == 1 && view is BadgeLabel {
+        for view in subviews {
+            if view.tag == 1, view is BadgeLabel {
                 badgeLabel = view as? BadgeLabel
             }
         }
-        if badgeText == nil && badgeLabel != nil {
-
+        if badgeText == nil, badgeLabel != nil {
             if appearance.animate {
                 UIView.animate(withDuration: appearance.duration, animations: {
                     badgeLabel.alpha = 0.0
                     badgeLabel.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
 
-                }, completion: { (_) in
+                }, completion: { _ in
 
                     badgeLabel.removeFromSuperview()
                 })
@@ -36,7 +35,7 @@ extension UIView {
                 badgeLabel.removeFromSuperview()
             }
             return
-        } else if badgeText == nil && badgeLabel == nil {
+        } else if badgeText == nil, badgeLabel == nil {
             return
         }
 
@@ -73,7 +72,7 @@ extension UIView {
         if doesBadgeExist {
             badgeLabel.removeFromSuperview()
         }
-        self.addSubview(badgeLabel)
+        addSubview(badgeLabel)
 
         let centerY = appearance.distanceFromCenterY == 0 ? -(bounds.size.height / 2) : appearance.distanceFromCenterY
 
@@ -81,13 +80,13 @@ extension UIView {
 
         badgeLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        self.addConstraint(NSLayoutConstraint(item: badgeLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(height)))
+        addConstraint(NSLayoutConstraint(item: badgeLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(height)))
 
-        self.addConstraint(NSLayoutConstraint(item: badgeLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(width)))
+        addConstraint(NSLayoutConstraint(item: badgeLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: CGFloat(width)))
 
-        self.addConstraint(NSLayoutConstraint(item: badgeLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: centerX))
+        addConstraint(NSLayoutConstraint(item: badgeLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: centerX))
 
-        self.addConstraint(NSLayoutConstraint(item: badgeLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: centerY))
+        addConstraint(NSLayoutConstraint(item: badgeLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: centerY))
 
         badgeLabel.layer.borderColor = appearance.borderColor.cgColor
         badgeLabel.layer.borderWidth = appearance.borderWidth
@@ -110,8 +109,8 @@ extension UIView {
                                initialSpringVelocity: 0.5,
                                options: [],
                                animations: {
-                                badgeLabel.transform = .identity
-                },
+                                   badgeLabel.transform = .identity
+                               },
                                completion: nil)
             }
         } else {
@@ -124,7 +123,6 @@ extension UIView {
             }
         }
     }
-
 }
 
 @objc class BadgeLabel: UILabel {}
@@ -155,5 +153,4 @@ public struct BadgeAppearance {
         distanceFromCenterY = 0
         distanceFromCenterX = 0
     }
-
 }

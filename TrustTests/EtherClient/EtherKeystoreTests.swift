@@ -1,14 +1,15 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import XCTest
+import BigInt
+import KeychainSwift
 @testable import Trust
 import TrustCore
 import TrustKeystore
-import KeychainSwift
-import BigInt
+import XCTest
 
 class EtherKeystoreTests: XCTestCase {
-
     func testInitialization() {
         let keystore = FakeEtherKeystore()
 
@@ -32,8 +33,8 @@ class EtherKeystoreTests: XCTestCase {
         let keystore = FakeEtherKeystore()
         let password = "test"
 
-        let _ = keystore.createAccout(password: password)
-        let _ = keystore.createAccout(password: password)
+        _ = keystore.createAccout(password: password)
+        _ = keystore.createAccout(password: password)
 
         XCTAssertEqual(2, keystore.wallets.count)
     }
@@ -107,9 +108,9 @@ class EtherKeystoreTests: XCTestCase {
 
         // TODO. Move this into sync calls
         let coin = Coin.ethereum
-        keystore.importWallet(type: ImportType.mnemonic(words: ["often", "tobacco", "bread", "scare", "imitate", "song", "kind", "common", "bar", "forest", "yard", "wisdom"], password: "", derivationPath: coin.derivationPath(at: 0)), coin: .ethereum) { result  in
+        keystore.importWallet(type: ImportType.mnemonic(words: ["often", "tobacco", "bread", "scare", "imitate", "song", "kind", "common", "bar", "forest", "yard", "wisdom"], password: "", derivationPath: coin.derivationPath(at: 0)), coin: .ethereum) { result in
             switch result {
-            case .success(let wallet):
+            case let .success(wallet):
                 XCTAssertEqual(1, keystore.wallets.count)
                 XCTAssertEqual("0x33F44330cc4253cCd4ce4224186DB9baCe2190ea", wallet.accounts[0].address.description)
             case .failure:
@@ -123,9 +124,9 @@ class EtherKeystoreTests: XCTestCase {
 
         // TODO. Move this into sync calls
         let coin = Coin.ethereum
-        keystore.importWallet(type: ImportType.mnemonic(words: ["often", "tobacco", "bread", "scare", "imitate", "song", "kind", "common", "bar", "forest", "yard", "wisdom"], password: "test123", derivationPath: coin.derivationPath(at: 0)), coin: .ethereum) { result  in
+        keystore.importWallet(type: ImportType.mnemonic(words: ["often", "tobacco", "bread", "scare", "imitate", "song", "kind", "common", "bar", "forest", "yard", "wisdom"], password: "test123", derivationPath: coin.derivationPath(at: 0)), coin: .ethereum) { result in
             switch result {
-            case .success(let wallet):
+            case let .success(wallet):
                 XCTAssertEqual(1, keystore.wallets.count)
                 XCTAssertEqual("0x5f9763AF89b1De8d44F3739d55C00dD6a21C2Cb6", wallet.accounts[0].address.description)
             case .failure:
@@ -334,7 +335,7 @@ class EtherKeystoreTests: XCTestCase {
         let keystore = FakeEtherKeystore()
         let address: EthereumAddress = .make()
 
-        keystore.importWallet(type: ImportType.address(address: address), coin: .ethereum) {_  in }
+        keystore.importWallet(type: ImportType.address(address: address), coin: .ethereum) { _ in }
 
         XCTAssertEqual(1, keystore.wallets.count)
         XCTAssertEqual(address.data, keystore.wallets[0].address.data)
@@ -345,13 +346,13 @@ class EtherKeystoreTests: XCTestCase {
         let address: EthereumAddress = .make()
 
         // TODO. Move this into sync calls
-        keystore.importWallet(type: ImportType.address(address: address), coin: .ethereum) { result  in
+        keystore.importWallet(type: ImportType.address(address: address), coin: .ethereum) { result in
             switch result {
-            case .success(let wallet):
+            case let .success(wallet):
                 XCTAssertEqual(1, keystore.wallets.count)
                 XCTAssertEqual(address.data, keystore.wallets[0].address.data)
 
-                let _ = keystore.delete(wallet: wallet, completion: { _ in })
+                _ = keystore.delete(wallet: wallet, completion: { _ in })
 
                 XCTAssertEqual(0, keystore.wallets.count)
             case .failure:
@@ -367,12 +368,12 @@ class EtherKeystoreTests: XCTestCase {
 
         // TODO. Move this into sync calls
         let coin = Coin.ethereum
-        keystore.importWallet(type: ImportType.mnemonic(words: ["often", "tobacco", "bread", "scare", "imitate", "song", "kind", "common", "bar", "forest", "yard", "wisdom"], password: "test123", derivationPath: coin.derivationPath(at: 0)), coin: .ethereum) { result  in
+        keystore.importWallet(type: ImportType.mnemonic(words: ["often", "tobacco", "bread", "scare", "imitate", "song", "kind", "common", "bar", "forest", "yard", "wisdom"], password: "test123", derivationPath: coin.derivationPath(at: 0)), coin: .ethereum) { result in
             switch result {
-            case .success(let wallet):
+            case let .success(wallet):
                 XCTAssertEqual(1, keystore.wallets.count)
 
-                let _ = keystore.delete(wallet: wallet.currentWallet!)
+                _ = keystore.delete(wallet: wallet.currentWallet!)
 
                 XCTAssertEqual(0, keystore.wallets.count)
             case .failure:

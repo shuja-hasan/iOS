@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import TrustCore
 import UIKit
@@ -8,15 +10,14 @@ protocol WalletViewCellDelegate: class {
 }
 
 final class WalletViewCell: UITableViewCell {
-
-    @IBOutlet weak var infoButton: UIButton!
-    @IBOutlet weak var glassesImageView: UIImageView!
-    @IBOutlet weak var walletTypeImageView: UIImageView!
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var subtitle: UILabel!
-    @IBOutlet weak var identiconImageView: TokenImageView!
-    @IBOutlet weak var selectedImageView: UIImageView!
-    @IBOutlet weak var balance: UILabel!
+    @IBOutlet var infoButton: UIButton!
+    @IBOutlet var glassesImageView: UIImageView!
+    @IBOutlet var walletTypeImageView: UIImageView!
+    @IBOutlet var title: UILabel!
+    @IBOutlet var subtitle: UILabel!
+    @IBOutlet var identiconImageView: TokenImageView!
+    @IBOutlet var selectedImageView: UIImageView!
+    @IBOutlet var balance: UILabel!
 
     weak var delegate: WalletViewCellDelegate?
 
@@ -44,10 +45,10 @@ final class WalletViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.viewModel = nil
+        viewModel = nil
     }
 
-    @IBAction func infoAction(_ sender: Any) {
+    @IBAction func infoAction(_: Any) {
         guard let viewModel = viewModel else { return }
         delegate?.didPress(viewModel: viewModel, in: self)
     }

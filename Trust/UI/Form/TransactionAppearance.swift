@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -9,7 +11,6 @@ enum DividerDirection {
 }
 
 struct TransactionAppearance {
-
     static let spacing: CGFloat = 16
 
     static func divider(direction: DividerDirection = .horizontal, color: UIColor, alpha: CGFloat = 1, layoutInsets: UIEdgeInsets = .zero) -> UIView {
@@ -37,9 +38,9 @@ struct TransactionAppearance {
         subTitle: String,
         titleStyle: AppStyle = .heading,
         subTitleStyle: AppStyle = .paragraphLight,
-        subTitleMinimumScaleFactor: CGFloat  = 0.7,
-        layoutMargins: UIEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15),
-        completion:((_ title: String, _ value: String, _ sender: UIView) -> Void)? = .none
+        subTitleMinimumScaleFactor: CGFloat = 0.7,
+        layoutMargins _: UIEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15),
+        completion: ((_ title: String, _ value: String, _ sender: UIView) -> Void)? = .none
     ) -> UIView {
         let titleLabel = UILabel(frame: .zero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -87,7 +88,7 @@ struct TransactionAppearance {
         subTitleStyle: AppStyle = .paragraphLight,
         layoutMargins: UIEdgeInsets = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15),
         backgroundColor: UIColor = .clear,
-        completion:((_ title: String, _ value: String, _ sender: UIView) -> Void)? = .none
+        completion: ((_ title: String, _ value: String, _ sender: UIView) -> Void)? = .none
     ) -> UIView {
         let titleLabel = UILabel(frame: .zero)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

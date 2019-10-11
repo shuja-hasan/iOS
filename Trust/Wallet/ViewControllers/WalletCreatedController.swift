@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -8,7 +10,6 @@ protocol WalletCreatedControllerDelegate: class {
 }
 
 final class WalletCreatedController: UIViewController {
-
     weak var delegate: WalletCreatedControllerDelegate?
 
     lazy var doneButton: UIButton = {
@@ -91,7 +92,7 @@ final class WalletCreatedController: UIViewController {
         delegate?.didPressDone(wallet: viewModel.wallet, in: self)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

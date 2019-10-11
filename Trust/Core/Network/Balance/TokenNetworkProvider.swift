@@ -1,14 +1,15 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
-import TrustCore
-import PromiseKit
-import BigInt
 import APIKit
+import BigInt
+import Foundation
 import JSONRPCKit
+import PromiseKit
+import TrustCore
 
 final class TokenNetworkProvider: BalanceNetworkProvider {
-
     let server: RPCServer
     let address: EthereumAddress
     let contract: EthereumAddress
@@ -35,12 +36,12 @@ final class TokenNetworkProvider: BalanceNetworkProvider {
             )
             Session.send(request) { result in
                 switch result {
-                case .success(let balance):
+                case let .success(balance):
                     guard let value = BigInt(balance.drop0x, radix: 16) else {
                         return seal.reject(CookiesStoreError.empty)
                     }
                     seal.fulfill(value)
-                case .failure(let error):
+                case let .failure(error):
                     seal.reject(error)
                 }
             }

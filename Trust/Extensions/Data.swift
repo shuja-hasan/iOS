@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 
@@ -8,7 +10,7 @@ extension Data {
     }
 
     var hexEncoded: String {
-        return "0x" + self.hex
+        return "0x" + hex
     }
 
     func toString() -> String? {

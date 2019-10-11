@@ -1,9 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
-import TrustCore
 import BigInt
+import TrustCore
 
 final class WalletValueOperation: TrustOperation {
     private var balanceProvider: WalletBalanceProvider
@@ -14,7 +16,7 @@ final class WalletValueOperation: TrustOperation {
         balanceProvider: WalletBalanceProvider,
         keystore: Keystore,
         wallet: WalletObject
-        ) {
+    ) {
         self.balanceProvider = balanceProvider
         self.keystore = keystore
         self.wallet = wallet
@@ -31,7 +33,7 @@ final class WalletValueOperation: TrustOperation {
     }
 
     private func updateModel(with balance: BigInt) {
-        self.keystore.store(object: wallet, fields: [.balance(balance.description)])
-        self.finish()
+        keystore.store(object: wallet, fields: [.balance(balance.description)])
+        finish()
     }
 }

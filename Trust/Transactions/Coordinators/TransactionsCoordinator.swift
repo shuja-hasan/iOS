@@ -1,9 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
 //
-//class TransactionsCoordinator: RootCoordinator {
+// class TransactionsCoordinator: RootCoordinator {
 //
 //    let session: WalletSession
 //    let storage: TransactionsStorage
@@ -39,4 +41,4 @@ import UIKit
 //        self.storage = storage
 //        self.network = network
 //    }
-//}
+// }

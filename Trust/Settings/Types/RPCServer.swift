@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import TrustCore
@@ -29,10 +31,10 @@ enum RPCServer {
         case .main: return 1
         case .poa: return 99
         case .classic: return 61
-        case .ether1: return 1313114
+        case .ether1: return 1_313_114
         case .callisto: return 820
         case .gochain: return 60
-        case .xerom: return 1313500
+        case .xerom: return 1_313_500
         }
     }
 
@@ -68,7 +70,7 @@ enum RPCServer {
     }
 
     var displayName: String {
-        return "\(self.name) (\(self.symbol))"
+        return "\(self.name) (\(symbol))"
     }
 
     var symbol: String {
@@ -138,7 +140,7 @@ enum RPCServer {
     }
 
     func opensea(with contract: String, and id: String) -> URL? {
-        return URL(string: (openseaPath + "/assets/\(contract)/\(id)"))
+        return URL(string: openseaPath + "/assets/\(contract)/\(id)")
     }
 
     var coin: Coin {
@@ -149,7 +151,7 @@ enum RPCServer {
         case .poa: return Coin.poa
         case .gochain: return Coin.gochain
         case .ether1: return Coin.ether1
-        case .xerom: return Coin.ether1
+        case .xerom: return Coin.xerom
         }
     }
 }
@@ -157,7 +159,7 @@ enum RPCServer {
 extension RPCServer: Equatable {
     static func == (lhs: RPCServer, rhs: RPCServer) -> Bool {
         switch (lhs, rhs) {
-        case (let lhs, let rhs):
+        case let (lhs, rhs):
             return lhs.chainID == rhs.chainID
         }
     }

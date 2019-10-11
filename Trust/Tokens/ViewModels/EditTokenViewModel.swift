@@ -1,12 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
 import Moya
 import RealmSwift
+import UIKit
 
 final class EditTokenViewModel {
-
     let network: NetworkProtocol
     let storage: TokensDataStore
 
@@ -23,7 +24,7 @@ final class EditTokenViewModel {
         self.network = network
         self.storage = storage
 
-        self.localSet = Set(tokens)
+        localSet = Set(tokens)
     }
 
     var title: String {
@@ -38,7 +39,7 @@ final class EditTokenViewModel {
         return 1
     }
 
-    func numberOfRowsInSection(_ section: Int) -> Int {
+    func numberOfRowsInSection(_: Int) -> Int {
         return tokens.count
     }
 
@@ -51,7 +52,7 @@ final class EditTokenViewModel {
     }
 
     func searchNetwork(token: String, completion: (([TokenObject]) -> Void)?) {
-        network.search(query: token, tokens: Set(self.storage.tokens)).done { [weak self] tokens in
+        network.search(query: token, tokens: Set(storage.tokens)).done { [weak self] tokens in
             var filterSet = Set<TokenObject>()
             if let localSet = self?.localSet {
                 filterSet = localSet
@@ -72,6 +73,6 @@ final class EditTokenViewModel {
 
     func updateToken(indexPath: IndexPath, action: TokenAction) {
         let token = self.token(for: indexPath)
-        self.storage.update(tokens: [token.token], action: action)
+        storage.update(tokens: [token.token], action: action)
     }
 }

@@ -1,9 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import RealmSwift
 
-final class  HistoryStore {
+final class HistoryStore {
     var histories: Results<History> {
         return realm.objects(History.self)
             .sorted(byKeyPath: "createdAt", ascending: false)

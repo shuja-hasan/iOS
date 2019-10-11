@@ -1,9 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
+import BigInt
 import Foundation
 import JSONRPCKit
 import TrustCore
-import BigInt
 
 struct TransactionReceipt: Encodable {
     let gasUsed: String
@@ -17,6 +19,7 @@ struct GetTransactionReceiptRequest: JSONRPCKit.Request {
     var method: String {
         return "eth_getTransactionReceipt"
     }
+
     var parameters: Any? {
         return [hash]
     }
@@ -27,8 +30,8 @@ struct GetTransactionReceiptRequest: JSONRPCKit.Request {
             let gasUsedString = dict["gasUsed"] as? String,
             let statusString = dict["status"] as? String,
             let gasUsed = BigInt(gasUsedString.drop0x, radix: 16)
-            else {
-                throw CastError(actualValue: resultObject, expectedType: Response.self)
+        else {
+            throw CastError(actualValue: resultObject, expectedType: Response.self)
         }
         return TransactionReceipt(
             gasUsed: gasUsed.description,

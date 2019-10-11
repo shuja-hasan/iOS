@@ -1,7 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import UIKit
 import StatefulViewController
+import UIKit
 
 protocol TokenViewControllerDelegate: class {
     func didPressRequest(for token: TokenObject, in controller: UIViewController)
@@ -11,7 +13,6 @@ protocol TokenViewControllerDelegate: class {
 }
 
 final class TokenViewController: UIViewController {
-
     private let refreshControl = UIRefreshControl()
 
     private var tableView = TransactionsTableView()
@@ -59,7 +60,7 @@ final class TokenViewController: UIViewController {
 
         // TODO: Enable when finished
         if isDebug {
-            //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(infoAction))
+            // navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(infoAction))
         }
     }
 
@@ -148,13 +149,13 @@ final class TokenViewController: UIViewController {
         emptyView = TransactionsEmptyView(insets: insets)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension TokenViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         return viewModel.numberOfSections
     }
 
@@ -164,17 +165,17 @@ extension TokenViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfItems(for: section)
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return SectionHeader(
             title: viewModel.titleForHeader(in: section)
         )
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         return StyleLayout.TableView.heightForHeaderInSection
     }
 

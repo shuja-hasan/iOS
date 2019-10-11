@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import Moya
@@ -17,14 +19,13 @@ enum TrustAPI {
 }
 
 extension TrustAPI: TargetType {
-
     var baseURL: URL { return Constants.trustAPI }
 
     var path: String {
         switch self {
         case .prices:
             return "/prices"
-        case .getTransactions(let value):
+        case let .getTransactions(value):
             return "/\(value.server.id)/transactions"
         case .getTokens:
             return "/tokens"
@@ -56,24 +57,24 @@ extension TrustAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .prices(let tokensPrice):
+        case let .prices(tokensPrice):
             return .requestJSONEncodable(tokensPrice)
-        case .getTransactions(_, let address, let startBlock, let page, let contract):
+        case let .getTransactions(_, address, startBlock, page, contract):
             var params: [String: Any] = ["address": address, "startBlock": startBlock, "page": page]
             if let transactionContract = contract {
                 params["contract"] = transactionContract
             }
             return .requestParameters(parameters: params, encoding: URLEncoding())
-        case .getAllTransactions(let addresses):
+        case let .getAllTransactions(addresses):
             return .requestParameters(parameters: ["address": addresses], encoding: URLEncoding())
-        case .register(let device):
+        case let .register(device):
             return .requestJSONEncodable(device)
-        case .unregister(let device):
+        case let .unregister(device):
             return .requestJSONEncodable(device)
-        case .collectibles(let value), .getTokens(let value):
+        case let .collectibles(value), let .getTokens(value):
             return .requestJSONEncodable(value)
-        case .search(let query, let networks):
-            let networkString =  networks.map { String($0) }.joined(separator: ",")
+        case let .search(query, networks):
+            let networkString = networks.map { String($0) }.joined(separator: ",")
             return .requestParameters(parameters: ["query": query, "networks": networkString], encoding: URLEncoding())
         }
     }

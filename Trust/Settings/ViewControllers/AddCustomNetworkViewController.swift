@@ -1,11 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import UIKit
 import Eureka
 import Result
+import UIKit
 
 final class AddCustomNetworkViewController: FormViewController {
-
     let viewModel = AddCustomNetworkViewModel()
 
     private struct Values {
@@ -20,12 +21,15 @@ final class AddCustomNetworkViewController: FormViewController {
     private var chainIDRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.chainID) as? TextFloatLabelRow
     }
+
     private var nameRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.name) as? TextFloatLabelRow
     }
+
     private var symbolRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.symbol) as? TextFloatLabelRow
     }
+
     private var endpointRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.endpoint) as? TextFloatLabelRow
     }
@@ -65,7 +69,7 @@ final class AddCustomNetworkViewController: FormViewController {
             }
     }
 
-    func addNetwork(completion: @escaping(Result<CustomRPC, AnyError>) -> Void) {
+    func addNetwork(completion: @escaping (Result<CustomRPC, AnyError>) -> Void) {
         guard form.validate().isEmpty else {
             return
         }

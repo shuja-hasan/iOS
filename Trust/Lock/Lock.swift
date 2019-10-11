@@ -1,8 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import UIKit
-import SAMKeychain
 import KeychainSwift
+import SAMKeychain
+import UIKit
 
 protocol LockInterface {
     func isPasscodeSet() -> Bool
@@ -10,7 +12,6 @@ protocol LockInterface {
 }
 
 final class Lock: LockInterface {
-
     private struct Keys {
         static let service = "trust.lock"
         static let account = "trust.account"
@@ -43,7 +44,7 @@ final class Lock: LockInterface {
     }
 
     func setAutoLockType(type: AutoLock) {
-         keychain.set(String(type.rawValue), forKey: autoLockType)
+        keychain.set(String(type.rawValue), forKey: autoLockType)
     }
 
     func getAutoLockType() -> AutoLock {
@@ -85,7 +86,7 @@ final class Lock: LockInterface {
     }
 
     func resetPasscodeAttemptHistory() {
-         keychain.delete(passcodeAttempts)
+        keychain.delete(passcodeAttempts)
     }
 
     func recordIncorrectPasscodeAttempt() {
@@ -102,7 +103,7 @@ final class Lock: LockInterface {
     }
 
     func incorrectMaxAttemptTimeIsSet() -> Bool {
-        guard let timeString = keychain.get(maxAttemptTime), !timeString.isEmpty  else {
+        guard let timeString = keychain.get(maxAttemptTime), !timeString.isEmpty else {
             return false
         }
         return true

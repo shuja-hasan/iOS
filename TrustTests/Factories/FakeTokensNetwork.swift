@@ -1,20 +1,22 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
+import BigInt
 import Foundation
 import Moya
+import PromiseKit
+import Result
+import enum Result.Result
 @testable import Trust
-import BigInt
 import TrustCore
 import TrustKeystore
-import Result
-import PromiseKit
-import enum Result.Result
 
 enum FakeTokensNetworkError: Error {
     case notImplmented
 }
 
-//class FakeTokensNetwork: NetworkProtocol {
+// class FakeTokensNetwork: NetworkProtocol {
 //
 //    var provider: MoyaProvider<TrustService>
 //    var APIProvider: MoyaProvider<TrustAPI>
@@ -96,4 +98,4 @@ enum FakeTokensNetworkError: Error {
 //            seal.fulfill(token)
 //        }
 //    }
-//}
+// }

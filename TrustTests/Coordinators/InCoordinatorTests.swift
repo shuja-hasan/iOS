@@ -1,11 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import XCTest
 @testable import Trust
 import TrustCore
+import XCTest
 
 class InCoordinatorTests: XCTestCase {
-    
     func testShowTabBar() {
         let config: Config = .make()
         let coordinator = InCoordinator(
@@ -39,7 +40,7 @@ class InCoordinatorTests: XCTestCase {
         let keystore = FakeKeystore(
             wallets: [
                 account1,
-                account2
+                account2,
             ]
         )
         let coordinator = InCoordinator(
@@ -59,7 +60,7 @@ class InCoordinatorTests: XCTestCase {
     }
 
     func testShowSendFlow() {
-       let coordinator = InCoordinator(
+        let coordinator = InCoordinator(
             navigationController: FakeNavigationController(),
             wallet: .make(),
             keystore: FakeEtherKeystore(),

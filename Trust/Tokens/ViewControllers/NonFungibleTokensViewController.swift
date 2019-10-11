@@ -1,9 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import UIKit
-import StatefulViewController
-import RealmSwift
 import PromiseKit
+import RealmSwift
+import StatefulViewController
+import UIKit
 
 protocol NonFungibleTokensViewControllerDelegate: class {
     func didPressDiscover()
@@ -11,7 +13,6 @@ protocol NonFungibleTokensViewControllerDelegate: class {
 }
 
 final class NonFungibleTokensViewController: UIViewController {
-
     private var viewModel: NonFungibleTokenViewModel
     let tableView: UITableView
     let refreshControl = UIRefreshControl()
@@ -22,7 +23,7 @@ final class NonFungibleTokensViewController: UIViewController {
         viewModel: NonFungibleTokenViewModel
     ) {
         self.viewModel = viewModel
-        self.tableView = UITableView(frame: .zero, style: .grouped)
+        tableView = UITableView(frame: .zero, style: .grouped)
         super.init(nibName: nil, bundle: nil)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
@@ -54,13 +55,13 @@ final class NonFungibleTokensViewController: UIViewController {
         title = viewModel.title
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.applyTintAdjustment()
+        navigationController?.applyTintAdjustment()
 
         fetch()
     }
@@ -101,11 +102,11 @@ extension NonFungibleTokensViewController: StatefulViewController {
 }
 
 extension NonFungibleTokensViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return viewModel.cellHeight
     }
 
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForFooterInSection _: Int) -> CGFloat {
         return 0.0
     }
 }
@@ -118,23 +119,23 @@ extension NonFungibleTokensViewController: UITableViewDataSource {
         return cell
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfItems(in: section)
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         return viewModel.numberOfSections()
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return hederView(for: section)
     }
 
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_: UITableView, viewForFooterInSection _: Int) -> UIView? {
         return UIView()
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         return StyleLayout.CollectibleView.heightForHeaderInSection
     }
 }

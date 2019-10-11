@@ -1,12 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
 
 final class ContainerView: UIView {
-
     public init(innerView: UIView, layoutMargins: UIEdgeInsets) {
-
         super.init(frame: .zero)
 
         let containerView = UIView()
@@ -32,7 +32,7 @@ final class ContainerView: UIView {
         ])
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

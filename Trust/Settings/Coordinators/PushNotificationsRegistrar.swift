@@ -1,13 +1,14 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UserNotifications
-import UIKit
 import Moya
 import TrustCore
+import UIKit
+import UserNotifications
 
 final class PushNotificationsRegistrar {
-
     private let provider = TrustProviderFactory.makeProvider()
     let config = Config()
 
@@ -21,7 +22,7 @@ final class PushNotificationsRegistrar {
     }
 
     func register() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _  in }
+        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _ in }
         UIApplication.shared.registerForRemoteNotifications()
     }
 
@@ -40,7 +41,7 @@ final class PushNotificationsRegistrar {
 
     func didRegister(with deviceToken: Data, networks: [Int: [String]]) {
         let token = deviceToken.map { data -> String in
-            return String(format: "%02.2hhx", data)
+            String(format: "%02.2hhx", data)
         }.joined()
 
         let device = PushDevice(

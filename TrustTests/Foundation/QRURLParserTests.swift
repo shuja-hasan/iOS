@@ -1,10 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import XCTest
 @testable import Trust
+import XCTest
 
 class QRURLParserTests: XCTestCase {
-    
     func testEmptyString() {
         let result = QRURLParser.from(string: "")
 
@@ -65,10 +66,10 @@ class QRURLParserTests: XCTestCase {
         XCTAssertEqual(1, result?.params.count)
         XCTAssertEqual("0x123", result?.params["data"])
     }
-    
+
     func testParseMultipleValues() {
         let result = QRURLParser.from(string: "ethereum:0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c?data=0x123&amount=1.0")
-        
+
         XCTAssertEqual("ethereum", result?.protocolName)
         XCTAssertEqual("0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c", result?.address)
         XCTAssertEqual(2, result?.params.count)

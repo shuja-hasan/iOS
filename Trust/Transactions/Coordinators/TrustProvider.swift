@@ -1,12 +1,14 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Alamofire
 import Foundation
 import Moya
 
 struct TrustProviderFactory {
-    static let policies: [String: ServerTrustPolicy] = [
-        :
+    static let policies: [String: ServerTrustPolicy] = [:
+
 //        Disabled until: https://github.com/TrustWallet/trust-wallet-ios/pull/129#issuecomment-353718512
 //        "trustwalletapp.com": .pinPublicKeys(
 //            publicKeys: ServerTrustPolicy.publicKeys(in: Bundle.main),

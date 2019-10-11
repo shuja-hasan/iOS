@@ -1,11 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import UIKit
 import Kingfisher
+import UIKit
 
 final class NonFungibleTokenViewCell: UITableViewCell {
-
-    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private var collectionView: UICollectionView!
 
     fileprivate var viewModel: NonFungibleTokenCellViewModel?
     weak var delegate: NonFungibleTokensViewControllerDelegate?
@@ -26,7 +27,7 @@ final class NonFungibleTokenViewCell: UITableViewCell {
 
 extension NonFungibleTokenViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let model = viewModel, let cell = collectionView.cellForItem(at: indexPath) as? NonFungibleCollectionViewCell, let color = cell.imageViewBackground.backgroundColor  else {
+        guard let model = viewModel, let cell = collectionView.cellForItem(at: indexPath) as? NonFungibleCollectionViewCell, let color = cell.imageViewBackground.backgroundColor else {
             return
         }
         let token = model.token(for: indexPath)
@@ -35,7 +36,7 @@ extension NonFungibleTokenViewCell: UICollectionViewDelegate {
 }
 
 extension NonFungibleTokenViewCell: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return viewModel?.numberOfItemsInSection ?? 0
     }
 

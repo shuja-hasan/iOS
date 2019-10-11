@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -7,7 +9,6 @@ protocol BrowserErrorViewDelegate: class {
 }
 
 final class BrowserErrorView: UIView {
-
     weak var delegate: BrowserErrorViewDelegate?
 
     private let topMargin: CGFloat = 120
@@ -42,12 +43,12 @@ final class BrowserErrorView: UIView {
         finishInit()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func show(error: Error) {
-        self.isHidden = false
+        isHidden = false
         textLabel.text = error.localizedDescription
         textLabel.textAlignment = .center
         textLabel.setNeedsLayout()
@@ -58,7 +59,7 @@ final class BrowserErrorView: UIView {
     }
 
     private func finishInit() {
-        self.backgroundColor = .white
+        backgroundColor = .white
         addSubview(textLabel)
         addSubview(reloadButton)
         NSLayoutConstraint.activate([

@@ -1,10 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
 
 struct StateViewModel {
-
     var titleTextColor: UIColor {
         return UIColor(hex: "438FCA")
     }

@@ -1,9 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 final class TrustDocumentPickerViewController: UIDocumentPickerViewController {
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UINavigationBar.appearance().tintColor = AppGlobalStyle.docPickerNavigationBarTintColor

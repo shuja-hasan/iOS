@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -14,7 +16,7 @@ final class AddCustomNetworkCoordinator: Coordinator {
     weak var delegate: AddCustomNetworkCoordinatorDelegate?
 
     lazy var addNetworkItem: UIBarButtonItem = {
-        return UIBarButtonItem(
+        UIBarButtonItem(
             barButtonSystemItem: .add,
             target: self,
             action: #selector(addNetwork)
@@ -42,7 +44,7 @@ final class AddCustomNetworkCoordinator: Coordinator {
         addCustomNetworkController.addNetwork { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .success(let network):
+            case let .success(network):
                 self.delegate?.didAddNetwork(network: network, in: self)
             case .failure: break
             }

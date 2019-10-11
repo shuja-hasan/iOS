@@ -1,8 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
 import TrustKeystore
+import UIKit
 
 protocol VerifyPassphraseViewControllerDelegate: class {
     func didFinish(in controller: VerifyPassphraseViewController, with account: Wallet)
@@ -34,7 +36,7 @@ enum VerifyStatus {
     static func from(initialWords: [String], progressWords: [String]) -> VerifyStatus {
         guard !progressWords.isEmpty else { return .empty }
 
-        if initialWords == progressWords && initialWords.count == progressWords.count {
+        if initialWords == progressWords, initialWords.count == progressWords.count {
             return .correct
         }
 
@@ -46,12 +48,9 @@ enum VerifyStatus {
     }
 }
 
-class DarkVerifyPassphraseViewController: VerifyPassphraseViewController {
-
-}
+class DarkVerifyPassphraseViewController: VerifyPassphraseViewController {}
 
 class SubtitleBackupLabel: UILabel {
-
     init() {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
@@ -61,13 +60,12 @@ class SubtitleBackupLabel: UILabel {
         textColor = Colors.gray
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 class VerifyPassphraseViewController: UIViewController {
-
     let contentView = PassphraseView()
     let proposalView = PassphraseView()
     let account: Wallet
@@ -117,7 +115,7 @@ class VerifyPassphraseViewController: UIViewController {
     ) {
         self.account = account
         self.words = words
-        self.shuffledWords = words.shuffled()
+        shuffledWords = words.shuffled()
 
         super.init(nibName: nil, bundle: nil)
 
@@ -207,11 +205,11 @@ class VerifyPassphraseViewController: UIViewController {
         statusLabel.textColor = status.textColor
     }
 
-    @objc private func doneAction(_ sender: UIButton) {
+    @objc private func doneAction(_: UIButton) {
         delegate?.didFinish(in: self, with: account)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

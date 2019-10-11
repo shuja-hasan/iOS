@@ -1,10 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
 
 final class PassphraseView: UIView {
-
     lazy var layout: UICollectionViewLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 8
@@ -13,6 +14,7 @@ final class PassphraseView: UIView {
         layout.sectionInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         return layout
     }()
+
     lazy var collectionView: DynamicCollectionView = {
         let collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isScrollEnabled = false
@@ -24,6 +26,7 @@ final class PassphraseView: UIView {
             collectionView.reloadData()
         }
     }
+
     var isEditable: Bool = false
     var didDeleteItem: ((String) -> Void)?
 
@@ -45,17 +48,17 @@ final class PassphraseView: UIView {
         ])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension PassphraseView: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return words.count
     }
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in _: UICollectionView) -> Int {
         return 1
     }
 
@@ -68,7 +71,6 @@ extension PassphraseView: UICollectionViewDataSource {
 
 extension PassphraseView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
         guard isEditable else { return }
 
         let item = words[indexPath.row]

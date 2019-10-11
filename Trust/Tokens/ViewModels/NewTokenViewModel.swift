@@ -1,10 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import PromiseKit
 
 struct NewTokenViewModel {
-
     private var tokensNetwork: NetworkProtocol
     let token: ERC20Token?
     private let session: WalletSession

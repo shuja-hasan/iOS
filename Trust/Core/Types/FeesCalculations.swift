@@ -1,9 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 struct FeeCalculator {
-
     static func estimate(fee: String, with price: String) -> Double? {
         guard let feeInDouble = Double(fee) else {
             return nil
@@ -17,5 +18,4 @@ struct FeeCalculator {
     static func format(fee: Double, formatter: NumberFormatter = CurrencyFormatter.formatter) -> String? {
         return formatter.string(from: NSNumber(value: fee))
     }
-
 }

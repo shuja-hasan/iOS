@@ -1,9 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 final class TransactionViewCell: UITableViewCell {
-
     static let identifier = "TransactionTableViewCell"
 
     let statusImageView = UIImageView()
@@ -61,12 +62,11 @@ final class TransactionViewCell: UITableViewCell {
         updateSeparatorInset()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func configure(viewModel: TransactionCellViewModel) {
-
         statusImageView.image = viewModel.statusImage
 
         titleLabel.text = viewModel.title

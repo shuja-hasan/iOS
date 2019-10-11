@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -25,7 +27,7 @@ enum Analitics: String {
     var isEnabled: Bool {
         let preferencesController = PreferencesController()
         guard let object = preferencesController.get(for: self.rawValue), let number = object as? NSNumber else {
-            preferencesController.set(value: NSNumber(booleanLiteral: true), for: self.rawValue)
+            preferencesController.set(value: NSNumber(booleanLiteral: true), for: rawValue)
             return true
         }
         return number.boolValue
@@ -33,6 +35,6 @@ enum Analitics: String {
 
     func update(with state: Bool) {
         let preferencesController = PreferencesController()
-        preferencesController.set(value: NSNumber(booleanLiteral: state), for: self.rawValue)
+        preferencesController.set(value: NSNumber(booleanLiteral: state), for: rawValue)
     }
 }

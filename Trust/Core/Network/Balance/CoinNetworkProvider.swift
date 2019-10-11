@@ -1,14 +1,15 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
-import TrustCore
-import PromiseKit
-import BigInt
 import APIKit
+import BigInt
+import Foundation
 import JSONRPCKit
+import PromiseKit
+import TrustCore
 
 final class CoinNetworkProvider: BalanceNetworkProvider {
-
     let server: RPCServer
     let address: Address
     let addressUpdate: EthereumAddress
@@ -28,9 +29,9 @@ final class CoinNetworkProvider: BalanceNetworkProvider {
             let request = EtherServiceRequest(for: server, batch: BatchFactory().create(BalanceRequest(address: address.description)))
             Session.send(request) { result in
                 switch result {
-                case .success(let balance):
+                case let .success(balance):
                     seal.fulfill(balance.value)
-                case .failure(let error):
+                case let .failure(error):
                     seal.reject(error)
                 }
             }

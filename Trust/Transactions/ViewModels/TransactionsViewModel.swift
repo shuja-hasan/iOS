@@ -1,10 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
 import RealmSwift
+import UIKit
 //
-//struct TransactionsViewModel {
+// struct TransactionsViewModel {
 //
 //    var title: String {
 //        return NSLocalizedString("transactions.tabbar.item.title", value: "Transactions", comment: "")
@@ -146,4 +148,4 @@ import RealmSwift
 //    static func convert(from title: String) -> Date? {
 //        return titleFormmater.date(from: title)
 //    }
-//}
+// }

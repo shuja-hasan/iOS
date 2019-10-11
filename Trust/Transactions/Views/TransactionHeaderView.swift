@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -17,13 +19,11 @@ struct TransactionHeaderViewViewModel {
 }
 
 final class TransactionHeaderView: UIView {
-
     let imageView = UIImageView()
     let amountLabel = UILabel()
     let monetaryAmountLabel = UILabel()
 
     override init(frame: CGRect = .zero) {
-
         super.init(frame: frame)
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +60,7 @@ final class TransactionHeaderView: UIView {
         ])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

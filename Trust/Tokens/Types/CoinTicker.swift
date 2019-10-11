@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import Realm
@@ -24,7 +26,7 @@ final class CoinTicker: Object, Decodable {
         self.contract = contract.description
         self.tickersKey = tickersKey
 
-        self.key = CoinTickerKeyMaker.makePrimaryKey(contract: contract, currencyKey: tickersKey)
+        key = CoinTickerKeyMaker.makePrimaryKey(contract: contract, currencyKey: tickersKey)
     }
 
     required init() {

@@ -1,10 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
 
 final class ButtonsFooterView: UIView {
-
     lazy var sendButton: Button = {
         let sendButton = Button(size: .large, style: .squared)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +64,7 @@ final class ButtonsFooterView: UIView {
         layer.shadowOffset = CGSize(width: 0.0, height: 1)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

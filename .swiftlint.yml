@@ -1,4 +1,4 @@
-swiftlint_version: 0.21.0
+swiftlint_version:           0.35.0
 disabled_rules:
   - cyclomatic_complexity
   - force_cast
@@ -24,23 +24,26 @@ excluded:
   - Trust/Vendors
   - Trust/R.generated.swift
 function_parameter_count:
-  warning: 20
-  error: 25
+  warning:                   20
+  error:                     25
 line_length:
-  warning: 250
-  error: 450
+  warning:                   250
+  error:                     450
 large_tuple:
-  warning: 4
+  warning:                   4
 type_body_length:
-  warning: 450
-  error: 650
-function_body_length: 80
+  warning:                   450
+  error:                     650
+function_body_length:        80
 file_length:
-  warning: 600
-  error: 1200
+  warning:                   600
+  error:                     1200
 trailing_comma:
-  mandatory_comma: true
+  mandatory_comma:           true
 file_header:
-  required_pattern: "// Copyright DApps Platform Inc. All rights reserved.\n"
+  required_pattern:
+  "// Copyright DApps Platform Inc. All rights reserved.\n
+  // Copyright Ether-1 Developers. All rights reserved.\n
+  // Copyright Xerom Developers. All rights reserved.\n"
 superfluous_disable_command: warning
-reporter: "xcode"
+reporter:                    "xcode"

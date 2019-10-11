@@ -1,15 +1,16 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
 import Eureka
+import Foundation
 
 open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
-
     private var awakeFromNibCalled = false
 
-    @IBOutlet open weak var titleLabel: UILabel!
-    @IBOutlet open weak var valueLabel: UILabel!
-    @IBOutlet open weak var slider: UISlider!
+    @IBOutlet open var titleLabel: UILabel!
+    @IBOutlet open var valueLabel: UILabel!
+    @IBOutlet open var slider: UISlider!
 
     lazy var textField: UITextField = {
         let textField = UITextField()
@@ -29,10 +30,10 @@ open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
 
     open var formatter: NumberFormatter?
 
-    public required init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public required init(style _: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .value1, reuseIdentifier: reuseIdentifier)
 
-        let _ = NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: nil) { [weak self] _ in
+        _ = NotificationCenter.default.addObserver(forName: UIContentSizeCategory.didChangeNotification, object: nil, queue: nil) { [weak self] _ in
             guard let me = self else { return }
             if me.shouldShowTitle {
                 me.titleLabel = me.textLabel
@@ -47,7 +48,7 @@ open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
         NotificationCenter.default.removeObserver(self, name: UIContentSizeCategory.didChangeNotification, object: nil)
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         awakeFromNibCalled = true
     }
@@ -63,7 +64,7 @@ open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
             let title = textLabel
             textLabel?.translatesAutoresizingMaskIntoConstraints = false
             textLabel?.setContentHuggingPriority(UILayoutPriority(500), for: .horizontal)
-            self.titleLabel = title
+            titleLabel = title
 
 //            let value = detailTextLabel
 //            value?.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +79,7 @@ open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
 
             if shouldShowTitle {
                 contentView.addSubview(titleLabel)
-                //contentView.addSubview(valueLabel!)
+                // contentView.addSubview(valueLabel!)
                 contentView.addSubview(textField)
             }
             contentView.addSubview(slider)
@@ -93,8 +94,8 @@ open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
     open override func update() {
         super.update()
         titleLabel.text = row.title
-        //valueLabel.text = row.displayValueFor?(row.value)
-        //valueLabel.isHidden = !shouldShowTitle && !awakeFromNibCalled
+        // valueLabel.text = row.displayValueFor?(row.value)
+        // valueLabel.isHidden = !shouldShowTitle && !awakeFromNibCalled
         titleLabel.isHidden = textField.isHidden
         slider.value = row.value ?? 0.0
         slider.isEnabled = !row.isDisabled
@@ -125,7 +126,7 @@ open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
         if steps > 0 {
             let stepValue = round((slider.value - slider.minimumValue) / (slider.maximumValue - slider.minimumValue) * steps)
             let stepAmount = (slider.maximumValue - slider.minimumValue) / steps
-            roundedValue = stepValue * stepAmount + self.slider.minimumValue
+            roundedValue = stepValue * stepAmount + slider.minimumValue
         } else {
             roundedValue = slider.value
         }
@@ -158,7 +159,7 @@ open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
         slider.value = value
     }
 
-    @objc public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    @objc public func textFieldShouldReturn(_: UITextField) -> Bool {
         return true
     }
 
@@ -166,7 +167,7 @@ open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
         return !row.isDisabled && textField.canBecomeFirstResponder == true
     }
 
-    open override func cellBecomeFirstResponder(withDirection: Direction) -> Bool {
+    open override func cellBecomeFirstResponder(withDirection _: Direction) -> Bool {
         return textField.becomeFirstResponder()
     }
 
@@ -177,12 +178,11 @@ open class SliderTextFieldCell: Cell<Float>, CellType, UITextFieldDelegate {
 
 /// A row that displays a UISlider. If there is a title set then the title and value will appear above the UISlider.
 public final class SliderTextFieldRow: Row<SliderTextFieldCell>, RowType {
-
     public var minimumValue: Float = 0.0
     public var maximumValue: Float = 10.0
     public var steps: UInt = 20
 
-    required public init(tag: String?) {
+    public required init(tag: String?) {
         super.init(tag: tag)
     }
 }

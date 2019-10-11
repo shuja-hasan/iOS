@@ -1,11 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
+import PromiseKit
 import RealmSwift
 import TrustCore
-import PromiseKit
 import TrustKeystore
+import UIKit
 
 protocol TokensViewModelDelegate: class {
     func refresh()
@@ -59,7 +61,7 @@ final class TokensViewModel: NSObject {
 
     var all: [TokenViewModel] {
         return Array(tokens).map { token in
-            return TokenViewModel(token: token, config: config, store: store, transactionsStore: transactionStore, tokensNetwork: tokensNetwork, session: session)
+            TokenViewModel(token: token, config: config, store: store, transactionsStore: transactionStore, tokensNetwork: tokensNetwork, session: session)
         }
     }
 
@@ -76,7 +78,7 @@ final class TokensViewModel: NSObject {
         self.config = config
         self.store = store
         self.tokensNetwork = tokensNetwork
-        self.tokens = store.tokens
+        tokens = store.tokens
         self.transactionStore = transactionStore
         super.init()
     }
@@ -87,7 +89,7 @@ final class TokensViewModel: NSObject {
 
     private var amount: String? {
         let totalAmount = tokens.lazy.map { $0.balance }.reduce(0.0, +)
-        
+
         if config.currency.rawValue == "BTC" {
             let nf = NumberFormatter()
             nf.numberStyle = .decimal
@@ -102,7 +104,7 @@ final class TokensViewModel: NSObject {
         return CurrencyFormatter.formatter.string(from: NSNumber(value: totalAmount))
     }
 
-    func numberOfItems(for section: Int) -> Int {
+    func numberOfItems(for _: Int) -> Int {
         return tokens.count
     }
 
@@ -131,7 +133,7 @@ final class TokensViewModel: NSObject {
         firstly {
             tokensNetwork.tokensList()
         }.done { [weak self] tokens in
-             self?.store.update(tokens: tokens, action: .updateInfo)
+            self?.store.update(tokens: tokens, action: .updateInfo)
         }.catch { error in
             NSLog("tokensInfo \(error)")
         }.finally { [weak self] in
@@ -158,7 +160,7 @@ final class TokensViewModel: NSObject {
 
     private func balances(for tokens: [TokenObject]) {
         let balances: [BalanceNetworkProvider] = tokens.compactMap {
-            return TokenViewModel.balance(for: $0, wallet: session.account)
+            TokenViewModel.balance(for: $0, wallet: session.account)
         }
         let operationQueue: OperationQueue = OperationQueue()
         operationQueue.qualityOfService = .background
@@ -195,9 +197,8 @@ extension Array where Element: Operation {
     /// Execute block after all operations from the array.
     func onFinish(block: @escaping () -> Void) {
         let doneOperation = BlockOperation(block: block)
-        self.forEach { [unowned doneOperation] in
+        forEach { [unowned doneOperation] in
             doneOperation.addDependency($0)
-
         }
         OperationQueue().addOperation(doneOperation)
     }

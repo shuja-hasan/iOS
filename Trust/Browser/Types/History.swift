@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import RealmSwift
@@ -13,7 +15,7 @@ final class History: Object {
         self.init()
         self.url = url
         self.title = title
-        self.id = "\(url)|\(createdAt.timeIntervalSince1970)"
+        id = "\(url)|\(createdAt.timeIntervalSince1970)"
     }
 
     var URL: URL? {

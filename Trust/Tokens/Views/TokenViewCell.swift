@@ -1,13 +1,14 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
 import Kingfisher
 import RealmSwift
 import TrustCore
+import UIKit
 
 final class TokenViewCell: UITableViewCell {
-
     static let identifier = "TokenViewCell"
 
     let titleLabel = UILabel()
@@ -106,12 +107,11 @@ final class TokenViewCell: UITableViewCell {
         updateSeparatorInset()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func configure(viewModel: TokenViewCellViewModel) {
-
         containerForImageView.badge(text: badgeText(for: viewModel.viewModel.token, in: viewModel.store))
 
         titleLabel.text = viewModel.title
@@ -146,7 +146,7 @@ final class TokenViewCell: UITableViewCell {
     private func updateSeparatorInset() {
         separatorInset = UIEdgeInsets(
             top: 0,
-            left: layoutInsets.left + TokensLayout.cell.stackVericalOffset + TokensLayout.cell.imageSize +  TokensLayout.cell.stackVericalOffset +  TokensLayout.cell.arrangedSubviewsOffset,
+            left: layoutInsets.left + TokensLayout.cell.stackVericalOffset + TokensLayout.cell.imageSize + TokensLayout.cell.stackVericalOffset + TokensLayout.cell.arrangedSubviewsOffset,
             bottom: 0, right: 0
         )
     }

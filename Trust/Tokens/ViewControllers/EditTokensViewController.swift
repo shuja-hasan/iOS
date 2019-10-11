@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -10,17 +12,17 @@ protocol EditTokensViewControllerDelegate: class {
 }
 
 final class EditTokensViewController: UITableViewController {
-
     let session: WalletSession
     let storage: TokensDataStore
     let network: NetworkProtocol
 
     lazy var viewModel: EditTokenViewModel = {
-        return EditTokenViewModel(
+        EditTokenViewModel(
             network: network,
             storage: storage
         )
     }()
+
     weak var delegate: EditTokensViewControllerDelegate?
 
     lazy var searchController: UISearchController = {
@@ -44,7 +46,7 @@ final class EditTokensViewController: UITableViewController {
     }()
 
     lazy var searchClosure: (String) -> Void = {
-        return debounce(delay: .milliseconds(250), action: { [weak self] (query) in
+        debounce(delay: .milliseconds(250), action: { [weak self] query in
             self?.search(token: query)
         })
     }()
@@ -66,7 +68,7 @@ final class EditTokensViewController: UITableViewController {
         configureTableView()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -84,23 +86,23 @@ final class EditTokensViewController: UITableViewController {
         fetch()
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in _: UITableView) -> Int {
         return viewModel.numberOfSections
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRowsInSection(section)
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.editTokenTableViewCell.name, for: indexPath) as! EditTokenTableViewCell
-        let token = self.viewModel.token(for: indexPath)
+        let token = viewModel.token(for: indexPath)
         configCell(cell, token: token)
         cell.delegate = self
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return TokensLayout.tableView.height
     }
 
@@ -128,17 +130,17 @@ final class EditTokensViewController: UITableViewController {
     private func search(token: String) {
         let localResults = viewModel.searchLocal(token: token)
         searchResultsController.localResults = localResults
-        viewModel.searchNetwork(token: token) { [weak self] (tokens) in
+        viewModel.searchNetwork(token: token) { [weak self] tokens in
             self?.searchResultsController.remoteResults = tokens
         }
     }
 
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    override func tableView(_: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let token = viewModel.token(for: indexPath)
-        let delete = UITableViewRowAction(style: .destructive, title: R.string.localizable.delete()) { [unowned self] (_, _) in
+        let delete = UITableViewRowAction(style: .destructive, title: R.string.localizable.delete()) { [unowned self] _, _ in
             self.delegate?.didDelete(token: token.token, in: self)
         }
-        let edit = UITableViewRowAction(style: .normal, title: R.string.localizable.edit()) { [unowned self] (_, _) in
+        let edit = UITableViewRowAction(style: .normal, title: R.string.localizable.edit()) { [unowned self] _, _ in
             self.delegate?.didEdit(token: token.token, in: self)
         }
         if viewModel.canEdit(for: indexPath) {
@@ -154,16 +156,16 @@ extension EditTokensViewController: EditTokenTableViewCellDelegate {
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
-        self.viewModel.updateToken(indexPath: indexPath, action: .disable(!state))
+        viewModel.updateToken(indexPath: indexPath, action: .disable(!state))
     }
 }
 
 extension EditTokensViewController: SearchTokenResultsControllerDelegate {
     func searchResultsController(configureCell cell: EditTokenTableViewCell, with token: (token: TokenObject, local: Bool)) {
-        self.configCell(cell, token: token)
+        configCell(cell, token: token)
     }
 
-    func searchResultsController(didSelect cell: EditTokenTableViewCell, with token: (token: TokenObject, local: Bool)) {
+    func searchResultsController(didSelect _: EditTokenTableViewCell, with token: (token: TokenObject, local: Bool)) {
         if !token.local {
             storage.add(tokens: [token.token])
             feedbackGenerator.notificationOccurred(.success)
@@ -174,23 +176,22 @@ extension EditTokensViewController: SearchTokenResultsControllerDelegate {
     }
 
     func searchResultsController(didUpdate token: TokenObject, with action: TokenAction) {
-        self.storage.update(tokens: [token], action: action)
+        storage.update(tokens: [token], action: action)
         tableView.reloadData()
     }
 }
 
 extension EditTokensViewController: UISearchBarDelegate {
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.searchClosure(searchBar.text ?? "")
+    func searchBar(_ searchBar: UISearchBar, textDidChange _: String) {
+        searchClosure(searchBar.text ?? "")
     }
 
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        self.searchClosure(searchBar.text ?? "")
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange _: Int) {
+        searchClosure(searchBar.text ?? "")
     }
 
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.search(token: "")
+    func searchBarCancelButtonClicked(_: UISearchBar) {
+        search(token: "")
     }
 }
 
@@ -208,6 +209,6 @@ extension EditTokensViewController: UISearchControllerDelegate {
 
 extension EditTokensViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        self.searchClosure(searchController.searchBar.text ?? "")
+        searchClosure(searchController.searchBar.text ?? "")
     }
 }

@@ -1,15 +1,18 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
+import Eureka
 import Foundation
 import UIKit
-import Eureka
 
 @IBDesignable public class FloatLabelTextField: UITextField {
     let animationDuration = 0.3
     var title = UILabel()
 
     // MARK: - Properties
-    override public var accessibilityLabel: String! {
+
+    public override var accessibilityLabel: String! {
         get {
             if text?.isEmpty ?? true {
                 return title.text
@@ -22,14 +25,14 @@ import Eureka
         }
     }
 
-    override public var placeholder: String? {
+    public override var placeholder: String? {
         didSet {
             title.text = placeholder
             title.sizeToFit()
         }
     }
 
-    override public var attributedPlaceholder: NSAttributedString? {
+    public override var attributedPlaceholder: NSAttributedString? {
         didSet {
             title.text = attributedPlaceholder?.string
             title.sizeToFit()
@@ -70,7 +73,8 @@ import Eureka
     }
 
     // MARK: - Init
-    required public init?(coder aDecoder: NSCoder) {
+
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
@@ -81,11 +85,12 @@ import Eureka
     }
 
     // MARK: - Overrides
-    override public func layoutSubviews() {
+
+    public override func layoutSubviews() {
         super.layoutSubviews()
         setTitlePositionForTextAlignment()
         let isResp = isFirstResponder
-        if isResp && !(text?.isEmpty ?? true) {
+        if isResp, !(text?.isEmpty ?? true) {
             title.textColor = titleActiveTextColour
         } else {
             title.textColor = titleTextColour
@@ -100,7 +105,7 @@ import Eureka
         }
     }
 
-    override public func textRect(forBounds bounds: CGRect) -> CGRect {
+    public override func textRect(forBounds bounds: CGRect) -> CGRect {
         var r = super.textRect(forBounds: bounds)
         if !(text?.isEmpty ?? true) {
             var top = ceil(title.font.lineHeight + hintYPadding)
@@ -110,7 +115,7 @@ import Eureka
         return r.integral
     }
 
-    override public func editingRect(forBounds bounds: CGRect) -> CGRect {
+    public override func editingRect(forBounds bounds: CGRect) -> CGRect {
         var r = super.editingRect(forBounds: bounds)
         if !(text?.isEmpty ?? true) {
             var top = ceil(title.font.lineHeight + hintYPadding)
@@ -120,7 +125,7 @@ import Eureka
         return r.integral
     }
 
-    override public func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
+    public override func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
         var r = super.clearButtonRect(forBounds: bounds)
         if !(text?.isEmpty ?? true) {
             var top = ceil(title.font.lineHeight + hintYPadding)
@@ -133,6 +138,7 @@ import Eureka
     // MARK: - Public Methods
 
     // MARK: - Private Methods
+
     private func setup() {
         borderStyle = UITextField.BorderStyle.none
         titleActiveTextColour = tintColor
@@ -144,7 +150,7 @@ import Eureka
             title.text = str
             title.sizeToFit()
         }
-        self.addSubview(title)
+        addSubview(title)
     }
 
     private func maxTopInset() -> CGFloat {

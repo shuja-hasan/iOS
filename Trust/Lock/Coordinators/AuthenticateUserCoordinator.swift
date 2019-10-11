@@ -1,15 +1,16 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 
 final class AuthenticateUserCoordinator: Coordinator {
-
     var coordinators: [Coordinator] = []
     let navigationController: NavigationController
     private let model: LockEnterPasscodeViewModel
     private let lock: LockInterface
     private lazy var lockEnterPasscodeViewController: LockEnterPasscodeViewController = {
-        return LockEnterPasscodeViewController(model: model)
+        LockEnterPasscodeViewController(model: model)
     }()
 
     init(
@@ -21,7 +22,7 @@ final class AuthenticateUserCoordinator: Coordinator {
         self.model = model
         self.lock = lock
 
-        lockEnterPasscodeViewController.unlockWithResult = { [weak self] (state, bioUnlock) in
+        lockEnterPasscodeViewController.unlockWithResult = { [weak self] state, _ in
             if state {
                 self?.stop()
             }

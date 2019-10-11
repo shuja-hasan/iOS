@@ -1,9 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 
 struct BrowserConfigurationViewModel {
-
     var title: String {
         return NSLocalizedString("settings.browser.title", value: "DApp Browser", comment: "")
     }

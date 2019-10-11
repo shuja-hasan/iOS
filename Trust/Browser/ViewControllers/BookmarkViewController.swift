@@ -1,22 +1,23 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
 import StatefulViewController
+import UIKit
 
 protocol BookmarkViewControllerDelegate: class {
     func didSelectBookmark(_ bookmark: Bookmark, in viewController: BookmarkViewController)
 }
 
 final class BookmarkViewController: UIViewController {
-
     let tableView = UITableView(frame: .zero, style: .plain)
 
     weak var delegate: BookmarkViewControllerDelegate?
     private let bookmarksStore: BookmarksStore
 
     lazy var viewModel: BookmarksViewModel = {
-        return BookmarksViewModel(bookmarksStore: bookmarksStore)
+        BookmarksViewModel(bookmarksStore: bookmarksStore)
     }()
 
     init(
@@ -58,11 +59,11 @@ final class BookmarkViewController: UIViewController {
         confirm(title: NSLocalizedString("browser.bookmarks.confirm.delete.title", value: "Are you sure you would like to delete this bookmark?", comment: ""),
                 okTitle: R.string.localizable.delete(),
                 okStyle: .destructive) { result in
-                    switch result {
-                    case .success:
-                        self.delete(bookmark: bookmark, index: index)
-                    case .failure: break
-                    }
+            switch result {
+            case .success:
+                self.delete(bookmark: bookmark, index: index)
+            case .failure: break
+            }
         }
     }
 
@@ -72,7 +73,7 @@ final class BookmarkViewController: UIViewController {
         transitionViewStates()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -84,24 +85,23 @@ extension BookmarkViewController: StatefulViewController {
 }
 
 extension BookmarkViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return viewModel.numberOfRows
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: R.nib.bookmarkViewCell.name, for: indexPath) as! BookmarkViewCell
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: R.nib.bookmarkViewCell.name, for: indexPath) as! BookmarkViewCell
         cell.viewModel = BookmarkViewModel(bookmark: viewModel.bookmark(for: indexPath))
         return cell
     }
 }
 
 extension BookmarkViewController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_: UITableView, canEditRowAt _: IndexPath) -> Bool {
         return true
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let bookmark = viewModel.bookmark(for: indexPath)
             confirmDelete(bookmark: bookmark, index: indexPath)

@@ -1,8 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import RealmSwift
-import Realm
 import BigInt
+import Realm
+import RealmSwift
 import TrustCore
 
 final class CollectibleTokenObject: Object, Decodable {
@@ -32,7 +34,7 @@ final class CollectibleTokenObject: Object, Decodable {
         self.annotation = annotation
         self.imagePath = imagePath
         self.externalPath = externalPath
-        self.uniqueID = id + contract
+        uniqueID = id + contract
     }
 
     override static func primaryKey() -> String? {
@@ -42,17 +44,17 @@ final class CollectibleTokenObject: Object, Decodable {
     private enum NonFungibleTokenCodingKeys: String, CodingKey {
         case id = "token_id"
         case contract = "contract_address"
-        case name = "name"
-        case category = "category"
+        case name
+        case category
         case annotation = "description"
         case imagePath = "image_url"
         case externalPath = "external_link"
     }
 
-    convenience required init(from decoder: Decoder) throws {
+    required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: NonFungibleTokenCodingKeys.self)
-        let id = try container.decodeIfPresent(String.self, forKey: .id)  ?? ""
-        let contract = try container.decodeIfPresent(String.self, forKey: .contract)  ?? ""
+        let id = try container.decodeIfPresent(String.self, forKey: .id) ?? ""
+        let contract = try container.decodeIfPresent(String.self, forKey: .contract) ?? ""
         let name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
         let category = try container.decodeIfPresent(String.self, forKey: .category) ?? ""
         let annotation = try container.decodeIfPresent(String.self, forKey: .annotation) ?? ""

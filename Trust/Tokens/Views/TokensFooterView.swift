@@ -1,9 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 final class TokensFooterView: UIView {
-
     lazy var textLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textAlignment = .center
@@ -31,7 +32,7 @@ final class TokensFooterView: UIView {
         ])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

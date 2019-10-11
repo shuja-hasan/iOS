@@ -1,8 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
 import TrustKeystore
+import UIKit
 
 protocol PassphraseViewControllerDelegate: class {
     func didPressVerify(in controller: PassphraseViewController, with account: Wallet, words: [String])
@@ -13,12 +15,9 @@ enum PassphraseMode {
     case showAndVerify
 }
 
-final class DarkPassphraseViewController: PassphraseViewController {
-
-}
+final class DarkPassphraseViewController: PassphraseViewController {}
 
 class PassphraseViewController: UIViewController {
-
     let viewModel = PassphraseViewModel()
     let account: Wallet
     let words: [String]
@@ -28,6 +27,7 @@ class PassphraseViewController: UIViewController {
         button.setTitle(R.string.localizable.next(), for: .normal)
         return button
     }()
+
     let subTitleLabel: SubtitleBackupLabel = {
         let label = SubtitleBackupLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +38,7 @@ class PassphraseViewController: UIViewController {
         )
         return label
     }()
+
     let copyButton = Button(size: .extraLarge, style: .clear)
     weak var delegate: PassphraseViewControllerDelegate?
 
@@ -156,11 +157,11 @@ class PassphraseViewController: UIViewController {
         presentShare(in: sender.view!)
     }
 
-    @objc private func nextAction(_ sender: UIButton) {
+    @objc private func nextAction(_: UIButton) {
         delegate?.didPressVerify(in: self, with: account, words: words)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

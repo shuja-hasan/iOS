@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import RealmSwift
@@ -43,7 +45,7 @@ final class LocalizedOperationObject: Object, Decodable {
         case contract
     }
 
-    convenience required init(from decoder: Decoder) throws {
+    required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: LocalizedOperationObjectKeys.self)
         let from = try container.decode(String.self, forKey: .from)
         let to = try container.decode(String.self, forKey: .to)
@@ -51,10 +53,10 @@ final class LocalizedOperationObject: Object, Decodable {
         guard
             let fromAddress = EthereumAddress(string: from),
             let toAddress = EthereumAddress(string: to) else {
-                let context = DecodingError.Context(codingPath: [LocalizedOperationObjectKeys.from,
-                                                                 LocalizedOperationObjectKeys.to, ],
-                                                    debugDescription: "Address can't be decoded as a TrustKeystore.Address")
-                throw DecodingError.dataCorrupted(context)
+            let context = DecodingError.Context(codingPath: [LocalizedOperationObjectKeys.from,
+                                                             LocalizedOperationObjectKeys.to],
+                                                debugDescription: "Address can't be decoded as a TrustKeystore.Address")
+            throw DecodingError.dataCorrupted(context)
         }
         let type = try container.decode(OperationType.self, forKey: .type)
         let value = try container.decode(String.self, forKey: .value)
@@ -67,8 +69,7 @@ final class LocalizedOperationObject: Object, Decodable {
                   value: value,
                   symbol: contract.symbol,
                   name: contract.name,
-                  decimals: contract.decimals
-        )
+                  decimals: contract.decimals)
     }
 
     var operationType: OperationType {

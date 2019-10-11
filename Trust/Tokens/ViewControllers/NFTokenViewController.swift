@@ -1,16 +1,17 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
-import StackViewController
 import Kingfisher
+import StackViewController
+import UIKit
 
 protocol NFTokenViewControllerDelegate: class {
     func didPressLink(url: URL, in viewController: NFTokenViewController)
 }
 
 final class NFTokenViewController: UIViewController {
-
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,8 +50,9 @@ final class NFTokenViewController: UIViewController {
     }()
 
     lazy var viewModel: NFTDetailsViewModel = {
-        return NFTDetailsViewModel(token: token, server: server)
+        NFTDetailsViewModel(token: token, server: server)
     }()
+
     weak var delegate: NFTokenViewControllerDelegate?
 
     init(token: CollectibleTokenObject, server: RPCServer) {
@@ -58,7 +60,7 @@ final class NFTokenViewController: UIViewController {
         self.server = server
         super.init(nibName: nil, bundle: nil)
 
-        self.view.addSubview(scrollView)
+        view.addSubview(scrollView)
         scrollView.addSubview(stackView)
 
         let titleLabel = UILabel()
@@ -91,8 +93,8 @@ final class NFTokenViewController: UIViewController {
         stackView.addArrangedSubview(.spacer(height: 15))
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(.spacer(height: 15))
-        //stackView.addArrangedSubview(sendButton)
-        //stackView.addArrangedSubview(.spacer(height: 15))
+        // stackView.addArrangedSubview(sendButton)
+        // stackView.addArrangedSubview(.spacer(height: 15))
         stackView.addArrangedSubview(internalButton)
         stackView.addArrangedSubview(.spacer(height: 10))
         stackView.addArrangedSubview(externalButton)
@@ -111,21 +113,19 @@ final class NFTokenViewController: UIViewController {
         ])
     }
 
-    @objc func sendTap() {
-
-    }
+    @objc func sendTap() {}
 
     @objc func internalTap() {
         guard let url = viewModel.internalURL else { return }
         delegate?.didPressLink(url: url, in: self)
     }
 
-    @objc  func externalTap() {
+    @objc func externalTap() {
         guard let url = viewModel.externalURL else { return }
         delegate?.didPressLink(url: url, in: self)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

@@ -1,12 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
+import MBProgressHUD
 import TrustCore
 import UIKit
-import MBProgressHUD
 
 final class ExportPrivateKeyViewConroller: UIViewController {
-
     private struct Layout {
         static var widthAndHeight: CGFloat = 260
     }
@@ -60,11 +61,12 @@ final class ExportPrivateKeyViewConroller: UIViewController {
 
         let stackView = UIStackView(
             arrangedSubviews: [
-            hintLabel,
-            imageView,
-            warningKeyLabel,
-            copyButton,
-        ])
+                hintLabel,
+                imageView,
+                warningKeyLabel,
+                copyButton,
+            ]
+        )
         stackView.axis = .vertical
         stackView.spacing = 20
         stackView.alignment = .center
@@ -103,7 +105,7 @@ final class ExportPrivateKeyViewConroller: UIViewController {
         showShareActivity(from: sender, with: [viewModel.privateKeyString])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

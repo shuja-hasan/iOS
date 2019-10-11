@@ -1,20 +1,21 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import UIKit
 import Eureka
-import TrustCore
 import QRCodeReaderViewController
+import TrustCore
+import UIKit
 
 protocol ImportWalletViewControllerDelegate: class {
     func didImportAccount(account: WalletInfo, fields: [WalletInfoField], in viewController: ImportWalletViewController)
 }
 
 final class ImportWalletViewController: FormViewController {
-
     let keystore: Keystore
     let coin: Coin
     private lazy var viewModel: ImportWalletViewModel = {
-        return ImportWalletViewModel(coin: coin)
+        ImportWalletViewModel(coin: coin)
     }()
 
     struct Values {
@@ -30,21 +31,27 @@ final class ImportWalletViewController: FormViewController {
     var segmentRow: SegmentedRow<String>? {
         return form.rowBy(tag: Values.segment)
     }
+
     var keystoreRow: TextAreaRow? {
         return form.rowBy(tag: Values.keystore)
     }
+
     var phraseRow: TextAreaRow? {
         return form.rowBy(tag: Values.phrase)
     }
+
     var privateKeyRow: TextAreaRow? {
         return form.rowBy(tag: Values.privateKey)
     }
+
     var passwordRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.password)
     }
+
     var addressRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.watch)
     }
+
     var nameRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.name)
     }
@@ -95,9 +102,9 @@ final class ImportWalletViewController: FormViewController {
 
             // Keystore JSON
             +++ Section(footer: ImportSelectionType.keystore.footerTitle) {
-                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
-                    return self?.segmentRow?.value != ImportSelectionType.keystore.title
-                })
+                $0.hidden = Eureka.Condition.function([Values.segment]) { [weak self] _ in
+                    self?.segmentRow?.value != ImportSelectionType.keystore.title
+                }
             }
             <<< AppFormAppearance.textArea(tag: Values.keystore) { [weak self] in
                 $0.placeholder = self?.viewModel.keystorePlaceholder
@@ -114,9 +121,9 @@ final class ImportWalletViewController: FormViewController {
 
             // Private Key
             +++ Section(footer: ImportSelectionType.privateKey.footerTitle) {
-                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
-                    return self?.segmentRow?.value != ImportSelectionType.privateKey.title
-                })
+                $0.hidden = Eureka.Condition.function([Values.segment]) { [weak self] _ in
+                    self?.segmentRow?.value != ImportSelectionType.privateKey.title
+                }
             }
             <<< AppFormAppearance.textArea(tag: Values.privateKey) { [weak self] in
                 $0.placeholder = self?.viewModel.privateKeyPlaceholder
@@ -127,9 +134,9 @@ final class ImportWalletViewController: FormViewController {
 
             // Mnemonic
             +++ Section(footer: ImportSelectionType.mnemonic.footerTitle) {
-                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
-                    return self?.segmentRow?.value != ImportSelectionType.mnemonic.title
-                })
+                $0.hidden = Eureka.Condition.function([Values.segment]) { [weak self] _ in
+                    self?.segmentRow?.value != ImportSelectionType.mnemonic.title
+                }
             }
             <<< AppFormAppearance.textArea(tag: Values.phrase) { [weak self] in
                 $0.placeholder = self?.viewModel.mnemonicPlaceholder
@@ -140,9 +147,9 @@ final class ImportWalletViewController: FormViewController {
 
             // Watch
             +++ Section(footer: ImportSelectionType.address.footerTitle) {
-                $0.hidden = Eureka.Condition.function([Values.segment], { [weak self] _ in
-                    return self?.segmentRow?.value != ImportSelectionType.address.title
-                })
+                $0.hidden = Eureka.Condition.function([Values.segment]) { [weak self] _ in
+                    self?.segmentRow?.value != ImportSelectionType.address.title
+                }
             }
             <<< AppFormAppearance.textFieldFloat(tag: Values.watch) {
                 $0.add(rule: RuleRequired())
@@ -211,16 +218,16 @@ final class ImportWalletViewController: FormViewController {
         keystore.importWallet(type: importType, coin: coin) { result in
             self.hideLoading(animated: false)
             switch result {
-            case .success(let account):
+            case let .success(account):
                 self.didImport(account: account, name: name)
-            case .failure(let error):
+            case let .failure(error):
                 self.displayError(error: error)
             }
         }
     }
 
     @objc func demo() {
-        //Used for taking screenshots to the App Store by snapshot
+        // Used for taking screenshots to the App Store by snapshot
         let demoWallet = WalletType.address(Coin.ethereum, EthereumAddress(string: "0xD663bE6b87A992C5245F054D32C7f5e99f5aCc47")!)
         let walletInfo = WalletInfo(type: demoWallet, info: WalletObject.from(demoWallet))
         delegate?.didImportAccount(account: walletInfo, fields: [], in: self)
@@ -254,7 +261,7 @@ final class ImportWalletViewController: FormViewController {
         tableView.reloadData()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -264,6 +271,7 @@ extension ImportWalletViewController: QRCodeReaderDelegate {
         reader.stopScanning()
         reader.dismiss(animated: true, completion: nil)
     }
+
     func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
         reader.stopScanning()
         setValueForCurrentField(string: result)
@@ -280,7 +288,6 @@ extension WalletInfo {
         if numberOfWallets == 0 {
             return R.string.localizable.mainWallet()
         }
-        return String(format: "%@ %@", R.string.localizable.wallet(), "\(numberOfWallets + 1)"
-        )
+        return String(format: "%@ %@", R.string.localizable.wallet(), "\(numberOfWallets + 1)")
     }
 }

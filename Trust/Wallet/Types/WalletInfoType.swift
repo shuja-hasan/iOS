@@ -1,9 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
+import TrustCore
 import TrustKeystore
 import UIKit
-import TrustCore
 
 enum WalletInfoType {
     case exportRecoveryPhrase(Wallet)
@@ -41,13 +43,13 @@ enum WalletInfoType {
 extension WalletInfoType: Equatable {
     static func == (lhs: WalletInfoType, rhs: WalletInfoType) -> Bool {
         switch (lhs, rhs) {
-        case (let .exportRecoveryPhrase(lhs), let .exportRecoveryPhrase(rhs)):
+        case let (.exportRecoveryPhrase(lhs), .exportRecoveryPhrase(rhs)):
             return lhs == rhs
-        case (let .exportKeystore(lhs), let .exportKeystore(rhs)):
+        case let (.exportKeystore(lhs), .exportKeystore(rhs)):
             return lhs == rhs
-        case (let .exportPrivateKey(lhs), let .exportPrivateKey(rhs)):
+        case let (.exportPrivateKey(lhs), .exportPrivateKey(rhs)):
             return lhs == rhs
-        case (let .copyAddress(lhs), let .copyAddress(rhs)):
+        case let (.copyAddress(lhs), .copyAddress(rhs)):
             return lhs.data == rhs.data
         case (_, .exportRecoveryPhrase),
              (_, .exportKeystore),

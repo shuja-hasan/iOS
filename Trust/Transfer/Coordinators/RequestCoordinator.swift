@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -17,12 +19,15 @@ final class RequestCoordinator: RootCoordinator {
         controller.hidesBottomBarWhenPushed = true
         return controller
     }()
+
     lazy var shareBarButtonitem: UIBarButtonItem = {
-        return UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
+        UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
     }()
+
     private lazy var viewModel: RequestViewModel = {
-        return RequestViewModel(coinTypeViewModel: coinTypeViewModel)
+        RequestViewModel(coinTypeViewModel: coinTypeViewModel)
     }()
+
     private let coinTypeViewModel: CoinTypeViewModel
 
     init(

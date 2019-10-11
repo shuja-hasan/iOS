@@ -1,9 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import XCTest
 
 class Screenshots: XCTestCase {
-        
     override func setUp() {
         super.setUp()
         let app = XCUIApplication()
@@ -13,7 +14,7 @@ class Screenshots: XCTestCase {
 
     func testMakeScreenshots() {
         let app = XCUIApplication()
-        
+
         snapshot("0Launch")
 
         app.buttons["import-wallet"].tap()

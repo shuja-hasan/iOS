@@ -1,11 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
-import Result
 import APIKit
-import RealmSwift
 import BigInt
+import Foundation
 import Moya
+import RealmSwift
+import Result
 import TrustCore
 
 enum TokenAction {
@@ -18,17 +20,21 @@ class TokensDataStore {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO"))
             .sorted(byKeyPath: "order", ascending: true)
     }
+
     // tokens that needs balance and value update
     var tokensBalance: Results<TokenObject> {
         return realm.objects(TokenObject.self).filter(NSPredicate(format: "isDisabled == NO || rawType = \"coin\""))
             .sorted(byKeyPath: "order", ascending: true)
     }
+
     var nonFungibleTokens: Results<CollectibleTokenCategory> {
         return realm.objects(CollectibleTokenCategory.self).sorted(byKeyPath: "name", ascending: true)
     }
+
     var tickers: Results<CoinTicker> {
         return realm.objects(CoinTicker.self).filter("tickersKey == %@", CoinTickerKeyMaker.makeCurrencyKey())
     }
+
     let realm: Realm
     let account: WalletInfo
     var objects: [TokenObject] {
@@ -36,6 +42,7 @@ class TokensDataStore {
             .sorted(byKeyPath: "order", ascending: true)
             .filter { !$0.contract.isEmpty }
     }
+
     var enabledObject: [TokenObject] {
         return realm.objects(TokenObject.self)
             .sorted(byKeyPath: "order", ascending: true)
@@ -48,7 +55,7 @@ class TokensDataStore {
     ) {
         self.realm = realm
         self.account = account
-        self.addNativeCoins()
+        addNativeCoins()
     }
 
     private func addNativeCoins() {
@@ -166,11 +173,11 @@ class TokensDataStore {
         }
     }
 
-    //Background update of the Realm model.
+    // Background update of the Realm model.
     func update(balance: BigInt, for address: Address) {
         if let token = getToken(for: address) {
             let tokenBalance = getBalance(for: token.address, with: balance, and: token.decimals)
-            self.realm.writeAsync(obj: token) { (realm, _ ) in
+            realm.writeAsync(obj: token) { realm, _ in
                 let update = self.objectToUpdate(for: (address, balance), tokenBalance: tokenBalance)
                 realm.create(TokenObject.self, value: update, update: true)
             }
@@ -189,7 +196,7 @@ class TokensDataStore {
         try? realm.write {
             for token in tokens {
                 switch action {
-                case .disable(let value):
+                case let .disable(value):
                     token.isDisabled = value
                 case .updateInfo:
                     let update: [String: Any] = [
@@ -249,14 +256,14 @@ class TokensDataStore {
 extension Coin {
     var server: RPCServer {
         switch self {
-        case .bitcoin: return RPCServer.main //TODO
+        case .bitcoin: return RPCServer.main // TODO:
         case .ethereum: return RPCServer.main
         case .ethereumClassic: return RPCServer.classic
         case .gochain: return RPCServer.gochain
         case .callisto: return RPCServer.callisto
         case .poa: return RPCServer.poa
         case .ether1: return RPCServer.ether1
-//        case .xerom: return RPCServer.xerom
+        case .xerom: return RPCServer.xerom
         }
     }
 }

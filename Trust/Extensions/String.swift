@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 
@@ -18,7 +20,7 @@ extension String {
             return false
         }
         let regex = try! NSRegularExpression(pattern: "^0x[0-9A-Fa-f]*$")
-        if regex.matches(in: self, range: NSRange(self.startIndex..., in: self)).isEmpty {
+        if regex.matches(in: self, range: NSRange(startIndex..., in: self)).isEmpty {
             return false
         }
         return true
@@ -40,7 +42,7 @@ extension String {
     }
 
     var trimmed: String {
-        return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        return trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
 
     var asDictionary: [String: Any]? {
@@ -56,8 +58,8 @@ extension String {
     }
 
     var drop0x: String {
-        if self.count > 2 && self.substring(with: 0..<2) == "0x" {
-            return String(self.dropFirst(2))
+        if count > 2, substring(with: 0 ..< 2) == "0x" {
+            return String(dropFirst(2))
         }
         return self
     }
@@ -69,7 +71,7 @@ extension String {
 
 extension String {
     func index(from: Int) -> Index {
-        return self.index(startIndex, offsetBy: from)
+        return index(startIndex, offsetBy: from)
     }
 
     func substring(from: Int) -> String {
@@ -85,6 +87,6 @@ extension String {
     func substring(with r: Range<Int>) -> String {
         let startIndex = index(from: r.lowerBound)
         let endIndex = index(from: r.upperBound)
-        return String(self[startIndex..<endIndex])
+        return String(self[startIndex ..< endIndex])
     }
 }

@@ -1,10 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import TrustCore
 
 struct ImageURLFormatter {
-
     func image(for coin: Coin) -> String {
         return Constants.images + "/coins/\(coin.rawValue).png"
     }

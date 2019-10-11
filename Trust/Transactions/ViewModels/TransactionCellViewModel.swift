@@ -1,12 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import BigInt
 import Foundation
-import UIKit
 import TrustKeystore
+import UIKit
 
 struct TransactionCellViewModel {
-
     private let transaction: Transaction
     private let config: Config
     private let chainState: ChainState
@@ -28,7 +29,7 @@ struct TransactionCellViewModel {
         self.config = config
         self.chainState = chainState
         self.currentAccount = currentAccount
-        self.transactionViewModel = TransactionViewModel(
+        transactionViewModel = TransactionViewModel(
             transaction: transaction,
             config: config,
             currentAccount: currentAccount,

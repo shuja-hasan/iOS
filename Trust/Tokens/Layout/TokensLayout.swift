@@ -1,8 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
+import BigInt
 import Foundation
 import UIKit
-import BigInt
 
 struct TokensLayout {
     struct tableView {
@@ -16,9 +18,10 @@ struct TokensLayout {
         static var imageSize: CGFloat {
             return 52
             // TODO: return 44 for 2 scale, same for xib file.
-            //if UIScreen.main.scale == 3 { return 54 }
-            //return 44
+            // if UIScreen.main.scale == 3 { return 54 }
+            // return 44
         }
+
         static let amountTextColor = Colors.black
         static let currencyAmountTextColor = Colors.lightGray
         static let fiatAmountTextColor = Colors.gray
@@ -39,7 +42,7 @@ struct TokensLayout {
             guard let ticker = ticker, let price = Double(ticker.price), price > 0 else { return nil }
             let amount = token.balance
             guard amount > 0 else { return nil }
-            if (ticker.tickersKey == "tickers-BTC") {
+            if ticker.tickersKey == "tickers-BTC" {
                 let nf = NumberFormatter()
                 nf.numberStyle = .decimal
                 nf.minimumIntegerDigits = 1
@@ -52,22 +55,21 @@ struct TokensLayout {
             }
             return CurrencyFormatter.formatter.string(from: NSNumber(value: amount))
         }
-        
+
         static func marketPrice(for ticker: CoinTicker?) -> String? {
             guard let ticker = ticker, let price = Double(ticker.price), price > 0 else { return nil }
-            if (ticker.tickersKey == "tickers-BTC") {
+            if ticker.tickersKey == "tickers-BTC" {
                 let nf = NumberFormatter()
                 nf.numberStyle = .decimal
                 nf.minimumIntegerDigits = 1
                 nf.minimumFractionDigits = 0
                 nf.maximumFractionDigits = 0
-                let res = nf.string(from: NSNumber(value: (price * 100000000)))
+                let res = nf.string(from: NSNumber(value: price * 100_000_000))
                 if res != nil {
                     return res! + " sats"
                 }
             }
             return CurrencyFormatter.formatter.string(from: NSNumber(value: price))
         }
-
     }
 }

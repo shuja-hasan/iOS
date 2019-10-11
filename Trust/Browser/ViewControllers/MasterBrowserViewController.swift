@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -19,7 +21,6 @@ enum BookmarksViewType: Int {
 }
 
 final class MasterBrowserViewController: UIViewController {
-
     private lazy var segmentController: UISegmentedControl = {
         let items = [
             R.string.localizable.new(),
@@ -78,9 +79,9 @@ final class MasterBrowserViewController: UIViewController {
             UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
         ]
-        self.toolbarItems = items
-        self.navigationController?.isToolbarHidden = false
-        self.navigationController?.toolbar.isTranslucent = false
+        toolbarItems = items
+        navigationController?.isToolbarHidden = false
+        navigationController?.toolbar.isTranslucent = false
         updateView()
     }
 
@@ -113,7 +114,7 @@ final class MasterBrowserViewController: UIViewController {
         delegate?.didPressAction(.qrCode)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

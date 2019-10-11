@@ -1,10 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
+import Branch
 import Foundation
 import TrustCore
 import UIKit
 import URLNavigator
-import Branch
 
 class AppCoordinator: NSObject, Coordinator {
     let navigationController: NavigationController
@@ -13,6 +15,7 @@ class AppCoordinator: NSObject, Coordinator {
         controller.delegate = self
         return controller
     }()
+
     let pushNotificationRegistrar = PushNotificationsRegistrar()
     private let lock = Lock()
     private var keystore: Keystore
@@ -20,7 +23,7 @@ class AppCoordinator: NSObject, Coordinator {
     private var navigator: URLNavigatorCoordinator
 
     var inCoordinator: InCoordinator? {
-        return self.coordinators.compactMap { $0 as? InCoordinator }.first
+        return coordinators.compactMap { $0 as? InCoordinator }.first
     }
 
     var coordinators: [Coordinator] = []
@@ -52,7 +55,6 @@ class AppCoordinator: NSObject, Coordinator {
         } else {
             resetToWelcomeScreen()
         }
-        
         Analitics.branch.update(with: false)
         Analitics.answer.update(with: false)
     }
@@ -83,9 +85,9 @@ class AppCoordinator: NSObject, Coordinator {
             SkipBackupFilesInitializer(paths: paths),
         ]
         initializers.forEach { $0.perform() }
-        //We should clean passcode if there is no wallets. This step is required for app reinstall.
+        // We should clean passcode if there is no wallets. This step is required for app reinstall.
         if !keystore.hasWallets {
-           lock.clear()
+            lock.clear()
         }
     }
 
@@ -102,7 +104,7 @@ class AppCoordinator: NSObject, Coordinator {
             message: "We have made a huge progress towards supporting and simplifying management of your tokens across blockchains. \n\nTake a look on how to create Multi-Coin Wallet in Trust!",
             preferredStyle: UIAlertController.Style.alert
         )
-        alertController.popoverPresentationController?.sourceView = self.navigationController.view
+        alertController.popoverPresentationController?.sourceView = navigationController.view
         alertController.addAction(
             UIAlertAction(
                 title: R.string.localizable.learnMore(),
@@ -168,11 +170,11 @@ class AppCoordinator: NSObject, Coordinator {
 }
 
 extension AppCoordinator: WelcomeViewControllerDelegate {
-    func didPressCreateWallet(in viewController: WelcomeViewController) {
+    func didPressCreateWallet(in _: WelcomeViewController) {
         showInitialWalletCoordinator(entryPoint: .createInstantWallet)
     }
 
-    func didPressImportWallet(in viewController: WelcomeViewController) {
+    func didPressImportWallet(in _: WelcomeViewController) {
         showInitialWalletCoordinator(entryPoint: .importWallet)
     }
 }
@@ -197,7 +199,7 @@ extension AppCoordinator: InCoordinatorDelegate {
         reset()
     }
 
-    func didUpdateAccounts(in coordinator: InCoordinator) {
+    func didUpdateAccounts(in _: InCoordinator) {
         pushNotificationRegistrar.reRegister()
     }
 }

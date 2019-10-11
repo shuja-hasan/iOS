@@ -1,17 +1,21 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 final class LockCreatePasscodeViewController: LockPasscodeViewController {
     private lazy var lockCreatePasscodeViewModel: LockCreatePasscodeViewModel? = {
-        return self.model as? LockCreatePasscodeViewModel
+        self.model as? LockCreatePasscodeViewModel
     }()
+
     private var firstPasscode: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = lockCreatePasscodeViewModel?.title
-        self.lockView.lockTitle.text = lockCreatePasscodeViewModel?.initialLabelText
+        title = lockCreatePasscodeViewModel?.title
+        lockView.lockTitle.text = lockCreatePasscodeViewModel?.initialLabelText
     }
+
     override func enteredPasscode(_ passcode: String) {
         super.enteredPasscode(passcode)
         if let first = firstPasscode {
@@ -28,10 +32,12 @@ final class LockCreatePasscodeViewController: LockPasscodeViewController {
             showConfirmPasscodeView()
         }
     }
+
     private func showFirstPasscodeView() {
-        self.lockView.lockTitle.text = lockCreatePasscodeViewModel?.initialLabelText
+        lockView.lockTitle.text = lockCreatePasscodeViewModel?.initialLabelText
     }
+
     private func showConfirmPasscodeView() {
-        self.lockView.lockTitle.text = lockCreatePasscodeViewModel?.confirmLabelText
+        lockView.lockTitle.text = lockCreatePasscodeViewModel?.confirmLabelText
     }
 }

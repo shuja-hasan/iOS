@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -7,7 +9,6 @@ protocol BrowserNavigationBarDelegate: class {
 }
 
 final class BrowserNavigationBar: UINavigationBar {
-
     let textField = UITextField()
     let moreButton = UIButton()
     let homeButton = UIButton()
@@ -87,11 +88,11 @@ final class BrowserNavigationBar: UINavigationBar {
         browserDelegate?.did(action: .more(sender: sender))
     }
 
-    @objc private func homeAction(_ sender: UIView) {
+    @objc private func homeAction(_: UIView) {
         browserDelegate?.did(action: .home)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -103,7 +104,7 @@ extension BrowserNavigationBar: UITextFieldDelegate {
         return true
     }
 
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    func textFieldDidBeginEditing(_: UITextField) {
         browserDelegate?.did(action: .beginEditing)
     }
 }

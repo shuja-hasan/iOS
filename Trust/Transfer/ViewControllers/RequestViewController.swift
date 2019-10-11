@@ -1,13 +1,14 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
-import UIKit
 import CoreImage
+import Foundation
 import MBProgressHUD
 import StackViewController
+import UIKit
 
 class RequestViewController: UIViewController {
-
     let stackViewController = StackViewController()
 
     lazy var imageView: UIImageView = {
@@ -91,7 +92,7 @@ class RequestViewController: UIViewController {
         changeQRCode(value: Int(textField.text ?? "0") ?? 0)
     }
 
-    func changeQRCode(value: Int) {
+    func changeQRCode(value _: Int) {
         let string = viewModel.myAddressText
 
         // EIP67 format not being used much yet, use hex value for now
@@ -113,7 +114,8 @@ class RequestViewController: UIViewController {
         hud.label.text = viewModel.addressCopiedText
         hud.hide(animated: true, afterDelay: 1.5)
     }
-    required init?(coder aDecoder: NSCoder) {
+
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

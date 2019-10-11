@@ -1,19 +1,20 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
+import RealmSwift
 import Result
 import TrustCore
-import RealmSwift
+import UIKit
 
 protocol TokensViewControllerDelegate: class {
-    func didPressAddToken( in viewController: UIViewController)
+    func didPressAddToken(in viewController: UIViewController)
     func didSelect(token: TokenObject, in viewController: UIViewController)
     func didRequest(token: TokenObject, in viewController: UIViewController)
 }
 
 final class TokensViewController: UIViewController {
-
     fileprivate var viewModel: TokensViewModel
 
     lazy var header: TokensHeaderView = {
@@ -57,7 +58,7 @@ final class TokensViewController: UIViewController {
     let intervalToETHRefresh = 10.0
 
     lazy var fetchClosure: () -> Void = {
-        return debounce(delay: .seconds(7), action: { [weak self] () in
+        debounce(delay: .seconds(7), action: { [weak self] () in
             self?.viewModel.fetch()
         })
     }()
@@ -95,7 +96,7 @@ final class TokensViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.applyTintAdjustment()
+        navigationController?.applyTintAdjustment()
     }
 
     @objc func pullToRefresh() {
@@ -111,7 +112,7 @@ final class TokensViewController: UIViewController {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -176,7 +177,7 @@ extension TokensViewController: UITableViewDelegate {
     }
 
     @available(iOS 11.0, *)
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let token = viewModel.item(for: indexPath)
         let deleteAction = UIContextualAction(style: .normal, title: R.string.localizable.transactionsReceiveButtonTitle()) { _, _, handler in
             self.delegate?.didRequest(token: token, in: self)
@@ -187,30 +188,35 @@ extension TokensViewController: UITableViewDelegate {
         return configuration
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
         return TokensLayout.tableView.height
     }
 }
+
 extension TokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TokenViewCell.identifier, for: indexPath) as! TokenViewCell
         cell.isExclusiveTouch = true
         return cell
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return viewModel.tokens.count
     }
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-       guard let tokenViewCell = cell as? TokenViewCell else { return }
-       tokenViewCell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
+
+    func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let tokenViewCell = cell as? TokenViewCell else { return }
+        tokenViewCell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
     }
 }
+
 extension TokensViewController: TokensViewModelDelegate {
     func refresh() {
-        self.tableView.reloadData()
-        self.refreshHeaderView()
+        tableView.reloadData()
+        refreshHeaderView()
     }
 }
+
 extension TokensViewController: Scrollable {
     func scrollOnTop() {
         tableView.scrollOnTop()

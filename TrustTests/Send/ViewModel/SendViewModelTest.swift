@@ -1,12 +1,14 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import XCTest
 import BigInt
 @testable import Trust
+import XCTest
 
 class SendViewModelTest: XCTestCase {
     var sendViewModel = SendViewModel(
-        transfer: Transfer(server: .make(), type: .ether(.make(), destination: .none)) ,
+        transfer: Transfer(server: .make(), type: .ether(.make(), destination: .none)),
         config: .make(),
         chainState: .make(),
         storage: FakeTokensDataStore(),
@@ -17,17 +19,19 @@ class SendViewModelTest: XCTestCase {
         sendViewModel.amount = "198212312.123123"
         super.setUp()
     }
+
     func testPairRateRepresantetio() {
         let expectedFiatResult = sendViewModel.stringFormatter.currency(with: 128.9, and: sendViewModel.config.currency.rawValue)
         sendViewModel.pairRate = 128.9
         let fiatRepresentation = sendViewModel.pairRateRepresantetion()
         XCTAssertEqual("~ \(expectedFiatResult) USD", fiatRepresentation)
-        let expectedCryptoResult = sendViewModel.stringFormatter.token(with: 298981.983212, and: sendViewModel.decimals)
-        sendViewModel.pairRate = 298981.983212
+        let expectedCryptoResult = sendViewModel.stringFormatter.token(with: 298_981.983212, and: sendViewModel.decimals)
+        sendViewModel.pairRate = 298_981.983212
         sendViewModel.currentPair = sendViewModel.currentPair.swapPair()
         let cryptoRepresentation = sendViewModel.pairRateRepresantetion()
         XCTAssertEqual("~ \(expectedCryptoResult) \(sendViewModel.transfer.type.token.symbol)", cryptoRepresentation)
     }
+
     func testUpdatePairRate() {
         XCTAssertEqual(0.0, sendViewModel.pairRate)
         sendViewModel.updatePairRate(with: 1.8, and: 300.2)
@@ -36,11 +40,13 @@ class SendViewModelTest: XCTestCase {
         sendViewModel.updatePairRate(with: 24.3, and: 967)
         XCTAssertEqual(sendViewModel.pairRate.doubleValue, 39.794238683127, accuracy: 0.000000000001)
     }
+
     func testAmountUpdate() {
         XCTAssertEqual("198212312.123123", sendViewModel.amount)
         sendViewModel.updateAmount(with: "1.245")
         XCTAssertEqual("1.245", sendViewModel.amount)
     }
+
     func testRate() {
         let expectedFiatResult = sendViewModel.stringFormatter.currency(with: 298.124453, and: sendViewModel.config.currency.rawValue)
         sendViewModel.pairRate = 298.124453
@@ -52,12 +58,15 @@ class SendViewModelTest: XCTestCase {
         _ = sendViewModel.pairRateRepresantetion()
         XCTAssertEqual(expectedCryptoResult, sendViewModel.rate)
     }
+
     func testAmount() {
         XCTAssertEqual("198212312.123123", sendViewModel.amount)
     }
+
     func testDecimals() {
         XCTAssertEqual(18, sendViewModel.decimals)
     }
+
     func testStringToDecimal() {
         let curentLocaleSeparator = Locale.current.decimalSeparator ?? "."
         let amount = sendViewModel.decimalAmount(with: "256\(curentLocaleSeparator)32")
@@ -65,8 +74,9 @@ class SendViewModelTest: XCTestCase {
         let failAmount = sendViewModel.decimalAmount(with: "xxxxx")
         XCTAssertEqual(0, failAmount)
         let bigAmount = sendViewModel.decimalAmount(with: "100000000\(curentLocaleSeparator)000000000000001")
-        XCTAssertEqual(100000000.000000000000001, bigAmount)
+        XCTAssertEqual(100_000_000.000000000000001, bigAmount)
     }
+
     func testMaxButtonVisability() {
         XCTAssertEqual(false, sendViewModel.isMaxButtonHidden())
         sendViewModel.currentPair = sendViewModel.currentPair.swapPair()

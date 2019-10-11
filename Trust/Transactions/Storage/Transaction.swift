@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import RealmSwift
@@ -43,7 +45,7 @@ final class Transaction: Object, Decodable {
     ) {
         self.init()
         self.id = id
-        self.uniqueID = from + "-" + String(nonce)
+        uniqueID = from + "-" + String(nonce)
         self.blockNumber = blockNumber
         self.from = from
         self.to = to
@@ -54,7 +56,7 @@ final class Transaction: Object, Decodable {
         self.nonce = nonce
         self.date = date
         self.coin = coin
-        self.internalState = state.rawValue
+        internalState = state.rawValue
 
         let list = List<LocalizedOperationObject>()
         localizedOperations.forEach { element in
@@ -80,7 +82,7 @@ final class Transaction: Object, Decodable {
         case coin
     }
 
-    convenience required init(from decoder: Decoder) throws {
+    required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: TransactionCodingKeys.self)
         let id = try container.decode(String.self, forKey: .id)
         let blockNumber = try container.decode(Int.self, forKey: .blockNumber)
@@ -98,9 +100,9 @@ final class Transaction: Object, Decodable {
 
         guard
             let fromAddress = EthereumAddress(string: from) else {
-                let context = DecodingError.Context(codingPath: [TransactionCodingKeys.from],
-                                                    debugDescription: "Address can't be decoded as a TrustKeystore.Address")
-                throw DecodingError.dataCorrupted(context)
+            let context = DecodingError.Context(codingPath: [TransactionCodingKeys.from],
+                                                debugDescription: "Address can't be decoded as a TrustKeystore.Address")
+            throw DecodingError.dataCorrupted(context)
         }
 
         let state: TransactionState = {
@@ -132,7 +134,7 @@ final class Transaction: Object, Decodable {
     }
 
     var state: TransactionState {
-        return TransactionState(int: self.internalState)
+        return TransactionState(int: internalState)
     }
 
     var toAddress: EthereumAddress? {
@@ -148,7 +150,7 @@ final class Transaction: Object, Decodable {
             let operation = operation,
             let contract = operation.contract,
             let contractAddress = EthereumAddress(string: contract) else {
-                return .none
+            return .none
         }
         return contractAddress
     }

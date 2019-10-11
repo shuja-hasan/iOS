@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -26,6 +28,7 @@ class WalletViewController: UIViewController {
         }
         return segmentedControl
     }()
+
     var tokensViewController: TokensViewController
     var nonFungibleTokensViewController: NonFungibleTokensViewController
 
@@ -40,7 +43,7 @@ class WalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.navigationItem.titleView = segmentController
+        // self.navigationItem.titleView = segmentController
         setupView()
     }
 
@@ -60,25 +63,25 @@ class WalletViewController: UIViewController {
         }
     }
 
-    @objc func selectionDidChange(_ sender: UISegmentedControl) {
+    @objc func selectionDidChange(_: UISegmentedControl) {
         updateView()
     }
 
     private func showBarButtonItems() {
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
-        self.navigationItem.rightBarButtonItem?.isEnabled = true
-        self.navigationItem.leftBarButtonItem?.isEnabled = true
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+        navigationItem.rightBarButtonItem?.isEnabled = true
+        navigationItem.leftBarButtonItem?.isEnabled = true
     }
 
     private func hideBarButtonItems() {
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.clear
-        self.navigationItem.rightBarButtonItem?.isEnabled = false
-        self.navigationItem.leftBarButtonItem?.isEnabled = false
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.clear
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        navigationItem.leftBarButtonItem?.isEnabled = false
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

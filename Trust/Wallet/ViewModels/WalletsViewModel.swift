@@ -1,15 +1,16 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
-import UIKit
 import TrustCore
+import UIKit
 
 protocol WalletsViewModelProtocol: class {
     func update()
 }
 
 class WalletsViewModel {
-
     private let keystore: Keystore
     private let networks: [WalletInfo] = []
     private let importedWallet: [WalletInfo] = []
@@ -25,29 +26,28 @@ class WalletsViewModel {
     }
 
     func refresh() {
-        self.sections = self.keystore.wallets.compactMap {
-            return WalletAccountViewModel(keystore: keystore, wallet: $0, account: $0.currentAccount, currentWallet: keystore.recentlyUsedWallet)
+        sections = keystore.wallets.compactMap {
+            WalletAccountViewModel(keystore: keystore, wallet: $0, account: $0.currentAccount, currentWallet: keystore.recentlyUsedWallet)
         }
     }
 
     func fetchBalances() {
-
         guard operationQueue.operationCount == 0 else { return }
 
         var valueProviders = [(WalletBalanceProvider, WalletObject)]()
 
-        for wallet in self.keystore.wallets {
-            guard let server = wallet.coin?.server, let address = EthereumAddress(string: wallet.currentAccount.address.description)   else { continue }
+        for wallet in keystore.wallets {
+            guard let server = wallet.coin?.server, let address = EthereumAddress(string: wallet.currentAccount.address.description) else { continue }
             valueProviders.append((WalletBalanceProvider(server: server, addressUpdate: address), wallet.info))
         }
 
         let operations: [WalletValueOperation] = valueProviders.compactMap {
-            return  WalletValueOperation(balanceProvider: $0.0, keystore: keystore, wallet: $0.1)
+            WalletValueOperation(balanceProvider: $0.0, keystore: keystore, wallet: $0.1)
         }
 
         operations.onFinish { [weak self] in
             DispatchQueue.main.async {
-                 self?.delegate?.update()
+                self?.delegate?.update()
             }
         }
 
@@ -62,7 +62,7 @@ class WalletsViewModel {
         return 1
     }
 
-    func numberOfRows(in section: Int) -> Int {
+    func numberOfRows(in _: Int) -> Int {
         return sections.count
     }
 

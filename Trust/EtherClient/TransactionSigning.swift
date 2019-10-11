@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import BigInt
 import CryptoSwift
@@ -52,10 +54,10 @@ struct HomesteadSigner: Signer {
         ])!
     }
 
-    func values(transaction: SignTransaction, signature: Data) -> (r: BigInt, s: BigInt, v: BigInt) {
+    func values(transaction _: SignTransaction, signature: Data) -> (r: BigInt, s: BigInt, v: BigInt) {
         precondition(signature.count == 65, "Wrong size for signature")
         let r = BigInt(sign: .plus, magnitude: BigUInt(Data(signature[..<32])))
-        let s = BigInt(sign: .plus, magnitude: BigUInt(Data(signature[32..<64])))
+        let s = BigInt(sign: .plus, magnitude: BigUInt(Data(signature[32 ..< 64])))
         let v = BigInt(sign: .plus, magnitude: BigUInt(Data(bytes: [signature[64] + 27])))
         return (r, s, v)
     }

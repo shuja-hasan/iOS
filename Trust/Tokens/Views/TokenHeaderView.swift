@@ -1,9 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 final class TokenHeaderView: UIView {
-
     private struct Layout {
         static let imageSize: CGFloat = 70
     }
@@ -122,7 +123,7 @@ final class TokenHeaderView: UIView {
         buttonsView.backgroundColor = Colors.veryVeryLightGray
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

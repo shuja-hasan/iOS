@@ -1,9 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
-import JSONRPCKit
 import APIKit
 import BigInt
+import Foundation
+import JSONRPCKit
 import Result
 import TrustCore
 
@@ -58,10 +60,10 @@ final class GetNonceProvider: NonceProvider {
         fetch { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .success(let nonce):
+            case let .success(nonce):
                 let res = self.nextNonce ?? nonce + 1
                 completion(.success(res))
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(error))
             }
         }
@@ -75,11 +77,11 @@ final class GetNonceProvider: NonceProvider {
         Session.send(request) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .success(let count):
+            case let .success(count):
                 let nonce = count - 1
                 self.remoteNonce = nonce
                 completion(.success(nonce))
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(AnyError(error)))
             }
         }

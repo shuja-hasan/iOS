@@ -1,18 +1,19 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import UIKit
-import StackViewController
 import Result
 import SafariServices
+import StackViewController
+import UIKit
 
 protocol TransactionViewControllerDelegate: class {
     func didPressURL(_ url: URL)
 }
 
 final class TransactionViewController: UIViewController {
-
     private lazy var viewModel: TransactionDetailsViewModel = {
-        return TransactionDetailsViewModel(
+        TransactionDetailsViewModel(
             transaction: self.transaction,
             config: self.config,
             chainState: ChainState(server: tokenViewModel.server),
@@ -22,6 +23,7 @@ final class TransactionViewController: UIViewController {
             token: tokenViewModel.token
         )
     }()
+
     let stackViewController = StackViewController()
 
     let session: WalletSession
@@ -100,9 +102,9 @@ final class TransactionViewController: UIViewController {
     private func item(
         title: String,
         value: String,
-        subTitleMinimumScaleFactor: CGFloat  = 0.7
+        subTitleMinimumScaleFactor: CGFloat = 0.7
     ) -> UIView {
-        return  TransactionAppearance.item(
+        return TransactionAppearance.item(
             title: title,
             subTitle: value,
             subTitleMinimumScaleFactor: subTitleMinimumScaleFactor
@@ -127,7 +129,7 @@ final class TransactionViewController: UIViewController {
         return stackView
     }
 
-    func showAlertSheet(title: String, value: String, sourceView: UIView) {
+    func showAlertSheet(title _: String, value: String, sourceView: UIView) {
         let alertController = UIAlertController(
             title: nil,
             message: value,
@@ -156,7 +158,7 @@ final class TransactionViewController: UIViewController {
         navigationController?.present(activityViewController, animated: true, completion: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

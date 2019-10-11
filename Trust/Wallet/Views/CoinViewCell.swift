@@ -1,11 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 class CoinViewCell: UITableViewCell {
-
-    @IBOutlet weak var coinImageView: TokenImageView!
-    @IBOutlet weak var coinLabel: UILabel!
+    @IBOutlet var coinImageView: TokenImageView!
+    @IBOutlet var coinLabel: UILabel!
 
     override func layoutSubviews() {
         super.layoutSubviews()

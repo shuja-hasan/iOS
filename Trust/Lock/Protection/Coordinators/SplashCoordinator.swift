@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -8,10 +10,12 @@ final class SplashCoordinator: Coordinator {
     init(window: UIWindow) {
         self.window = window
     }
+
     func start() {
         window.rootViewController = SplashViewController()
         window.isHidden = false
     }
+
     func stop() {
         window.isHidden = true
     }

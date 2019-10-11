@@ -1,14 +1,16 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import Foundation
-import UIKit
-import Eureka
-import JSONRPCKit
 import APIKit
 import BigInt
+import Eureka
+import Foundation
+import JSONRPCKit
 import QRCodeReaderViewController
 import TrustCore
 import TrustKeystore
+import UIKit
 
 protocol SendViewControllerDelegate: class {
     func didPressConfirm(
@@ -23,11 +25,13 @@ class SendViewController: FormViewController {
         let balance = Balance(value: transfer.type.token.valueBigInt)
         return .init(transfer: transfer, config: session.config, chainState: chainState, storage: storage, balance: balance)
     }()
+
     weak var delegate: SendViewControllerDelegate?
     struct Values {
         static let address = "address"
         static let amount = "amount"
     }
+
     let session: WalletSession
     let account: Account
     let transfer: Transfer
@@ -36,9 +40,11 @@ class SendViewController: FormViewController {
     var addressRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.address) as? TextFloatLabelRow
     }
+
     var amountRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.amount) as? TextFloatLabelRow
     }
+
     lazy var maxButton: UIButton = {
         let button = Button(size: .normal, style: .borderless)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -46,10 +52,12 @@ class SendViewController: FormViewController {
         button.addTarget(self, action: #selector(useMaxAmount), for: .touchUpInside)
         return button
     }()
+
     private var allowedCharacters: String = {
         let decimalSeparator = Locale.current.decimalSeparator ?? "."
         return "0123456789" + decimalSeparator
     }()
+
     private var data = Data()
     init(
         session: WalletSession,
@@ -84,7 +92,7 @@ class SendViewController: FormViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.applyTintAdjustment()
+        navigationController?.applyTintAdjustment()
     }
 
     private func fields() -> [BaseRow] {
@@ -135,7 +143,7 @@ class SendViewController: FormViewController {
         return AppFormAppearance.textFieldFloat(tag: Values.amount) {
             $0.add(rule: RuleRequired())
             $0.validationOptions = .validatesOnDemand
-        }.cellUpdate {[weak self] cell, _ in
+        }.cellUpdate { [weak self] cell, _ in
             cell.textField.isCopyPasteDisabled = true
             cell.textField.textAlignment = .left
             cell.textField.delegate = self
@@ -166,7 +174,7 @@ class SendViewController: FormViewController {
             switch transfer.type {
             case .ether, .dapp:
                 return EtherNumberFormatter.full.number(from: amountString, units: .ether)
-            case .token(let token):
+            case let .token(token):
                 return EtherNumberFormatter.full.number(from: amountString, decimals: token.decimals)
             }
         }()
@@ -182,13 +190,15 @@ class SendViewController: FormViewController {
             gasPrice: viewModel.gasPrice,
             nonce: .none
         )
-        self.delegate?.didPressConfirm(transaction: transaction, transfer: transfer, in: self)
+        delegate?.didPressConfirm(transaction: transaction, transfer: transfer, in: self)
     }
+
     @objc func openReader() {
         let controller = QRCodeReaderViewController()
         controller.delegate = self
         present(controller, animated: true, completion: nil)
     }
+
     @objc func pasteAction() {
         guard let value = UIPasteboard.general.string?.trimmed else {
             return displayError(error: SendInputErrors.emptyClipBoard)
@@ -201,41 +211,46 @@ class SendViewController: FormViewController {
         addressRow?.reload()
         activateAmountView()
     }
+
     @objc func useMaxAmount() {
         amountRow?.value = viewModel.sendMaxAmount()
         updatePriceSection()
         amountRow?.reload()
     }
+
     @objc func fiatAction(sender: UIButton) {
         let swappedPair = viewModel.currentPair.swapPair()
-        //New pair for future calculation we should swap pair each time we press fiat button.
+        // New pair for future calculation we should swap pair each time we press fiat button.
         viewModel.currentPair = swappedPair
-        //Update button title.
+        // Update button title.
         sender.setTitle(viewModel.currentPair.right, for: .normal)
-        //Hide max button
+        // Hide max button
         maxButton.isHidden = viewModel.isMaxButtonHidden()
-        //Reset amountRow value.
+        // Reset amountRow value.
         amountRow?.value = nil
         amountRow?.reload()
-        //Reset pair value.
+        // Reset pair value.
         viewModel.pairRate = 0.0
-        //Update section.
+        // Update section.
         updatePriceSection()
-        //Set focuse on pair change.
+        // Set focuse on pair change.
         activateAmountView()
     }
+
     func activateAmountView() {
         amountRow?.cell.textField.becomeFirstResponder()
     }
-    required init?(coder aDecoder: NSCoder) {
+
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     private func updatePriceSection() {
-        //Update section only if fiat view is visible.
+        // Update section only if fiat view is visible.
         guard !viewModel.isFiatViewHidden() else {
             return
         }
-        //We use this section update to prevent update of the all section including cells.
+        // We use this section update to prevent update of the all section including cells.
         UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
         if let containerView = tableView.footerView(forSection: 1) {
@@ -246,15 +261,17 @@ class SendViewController: FormViewController {
         UIView.setAnimationsEnabled(true)
     }
 }
+
 extension SendViewController: QRCodeReaderDelegate {
     func readerDidCancel(_ reader: QRCodeReaderViewController!) {
         reader.stopScanning()
         reader.dismiss(animated: true, completion: nil)
     }
+
     func reader(_ reader: QRCodeReaderViewController!, didScanResult result: String!) {
         reader.stopScanning()
         reader.dismiss(animated: true) { [weak self] in
-           self?.activateAmountView()
+            self?.activateAmountView()
         }
 
         guard let result = QRURLParser.from(string: result) else { return }
@@ -279,30 +296,31 @@ extension SendViewController: QRCodeReaderDelegate {
         updatePriceSection()
     }
 }
+
 extension SendViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let input = textField.text else {
             return true
         }
-        //In this step we validate only allowed characters it is because of the iPad keyboard.
-        let characterSet = NSCharacterSet(charactersIn: self.allowedCharacters).inverted
+        // In this step we validate only allowed characters it is because of the iPad keyboard.
+        let characterSet = NSCharacterSet(charactersIn: allowedCharacters).inverted
         let separatedChars = string.components(separatedBy: characterSet)
         let filteredNumbersAndSeparator = separatedChars.joined(separator: "")
         if string != filteredNumbersAndSeparator {
             return false
         }
-        //This is required to prevent user from input of numbers like 1.000.25 or 1,000,25.
-        if string == "," || string == "." ||  string == "'" {
+        // This is required to prevent user from input of numbers like 1.000.25 or 1,000,25.
+        if string == "," || string == "." || string == "'" {
             return !input.contains(string)
         }
-        //Total amount of the user input.
+        // Total amount of the user input.
         let stringAmount = (input as NSString).replacingCharacters(in: range, with: string)
-        //Convert to deciaml for pair rate update.
+        // Convert to deciaml for pair rate update.
         let amount = viewModel.decimalAmount(with: stringAmount)
-        //Update of the pair rate.
+        // Update of the pair rate.
         viewModel.updatePairPrice(with: amount)
         updatePriceSection()
-        //Update of the total amount.
+        // Update of the total amount.
         viewModel.updateAmount(with: stringAmount)
         return true
     }

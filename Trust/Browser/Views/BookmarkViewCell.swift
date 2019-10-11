@@ -1,13 +1,14 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
 
 final class BookmarkViewCell: UITableViewCell {
-
-    @IBOutlet weak var bookmarkTitleLabel: UILabel!
-    @IBOutlet weak var urlLabel: UILabel!
-    @IBOutlet weak var faviconImage: UIImageView!
+    @IBOutlet var bookmarkTitleLabel: UILabel!
+    @IBOutlet var urlLabel: UILabel!
+    @IBOutlet var faviconImage: UIImageView!
     var viewModel: URLViewModel? {
         didSet {
             guard let model = viewModel else {

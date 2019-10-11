@@ -1,8 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import RealmSwift
-import Realm
 import Foundation
+import Realm
+import RealmSwift
 
 final class CollectibleTokenCategory: Object, Decodable {
     @objc dynamic var name: String = ""
@@ -26,7 +28,7 @@ final class CollectibleTokenCategory: Object, Decodable {
         case items
     }
 
-    convenience required init(from decoder: Decoder) throws {
+    required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CollectibleTokenCategoryCodingKeys.self)
         let name = try container.decode(String.self, forKey: .name)
         let itemsArray = try container.decode([CollectibleTokenObject].self, forKey: .items)

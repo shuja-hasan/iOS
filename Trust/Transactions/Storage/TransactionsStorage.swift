@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import RealmSwift
@@ -10,7 +12,6 @@ struct TransactionSection {
 }
 
 class TransactionsStorage {
-
     let realm: Realm
 
     var transactions: Results<Transaction> {
@@ -68,7 +69,7 @@ class TransactionsStorage {
                 let contract = EthereumAddress(string: operation.contract ?? ""),
                 let name = operation.name,
                 let symbol = operation.symbol
-                else { return nil }
+            else { return nil }
             return Token(
                 address: contract,
                 name: name,
@@ -113,12 +114,12 @@ class TransactionsStorage {
 
     func mappedSections(for transactions: [Transaction]) -> [TransactionSection] {
         var items = [TransactionSection]()
-        let headerDates = NSOrderedSet(array: transactions.map { titleFormmater.string(from: $0.date ) })
+        let headerDates = NSOrderedSet(array: transactions.map { titleFormmater.string(from: $0.date) })
         headerDates.forEach {
             guard let dateKey = $0 as? String else {
                 return
             }
-            let filteredTransactionByDate = Array(transactions.filter { titleFormmater.string(from: $0.date ) == dateKey })
+            let filteredTransactionByDate = Array(transactions.filter { titleFormmater.string(from: $0.date) == dateKey })
             items.append(TransactionSection(title: dateKey, items: filteredTransactionByDate))
         }
         return items

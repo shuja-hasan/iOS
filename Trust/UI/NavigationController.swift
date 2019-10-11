@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -17,16 +19,20 @@ public class NavigationController: UIViewController {
         get { return childNavigationController.viewControllers }
         set { childNavigationController.viewControllers = newValue }
     }
+
     var navigationBar: UINavigationBar {
         return childNavigationController.navigationBar
     }
+
     var isToolbarHidden: Bool {
         get { return childNavigationController.isToolbarHidden }
         set { childNavigationController.isToolbarHidden = newValue }
     }
+
     var topViewController: UIViewController? {
         return childNavigationController.topViewController
     }
+
     let childNavigationController: UINavigationController
 
     @discardableResult
@@ -48,7 +54,7 @@ public class NavigationController: UIViewController {
 
     init(rootViewController: UIViewController = UIViewController()) {
         self.rootViewController = rootViewController
-        self.childNavigationController = UINavigationController(rootViewController: rootViewController)
+        childNavigationController = UINavigationController(rootViewController: rootViewController)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -56,15 +62,15 @@ public class NavigationController: UIViewController {
         navigationBarClass: Swift.AnyClass?,
         toolbarClass: Swift.AnyClass?
     ) {
-        self.rootViewController = UIViewController()
-        self.childNavigationController = UINavigationController(
+        rootViewController = UIViewController()
+        childNavigationController = UINavigationController(
             navigationBarClass: navigationBarClass,
             toolbarClass: toolbarClass
         )
         super.init(nibName: nil, bundle: nil)
     }
 
-    override public func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         childNavigationController.delegate = self
@@ -96,11 +102,11 @@ public class NavigationController: UIViewController {
         childNavigationController.pushViewController(viewController, animated: animated)
     }
 
-    override public func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+    public override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         childNavigationController.dismiss(animated: flag, completion: completion)
     }
 
-    override public func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+    public override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
         childNavigationController.present(viewControllerToPresent, animated: flag, completion: completion)
     }
 
@@ -131,10 +137,9 @@ public class NavigationController: UIViewController {
         if
             rootTabBarController is MasterBrowserViewController ||
             childNavigationController.topViewController is MasterBrowserViewController ||
-                childNavigationController.topViewController is DarkPassphraseViewController ||
-                childNavigationController.topViewController is DarkVerifyPassphraseViewController ||
-                childNavigationController.topViewController is WalletCreatedController
-        {
+            childNavigationController.topViewController is DarkPassphraseViewController ||
+            childNavigationController.topViewController is DarkVerifyPassphraseViewController ||
+            childNavigationController.topViewController is WalletCreatedController {
             preferredStyle = .default
         } else {
             preferredStyle = .lightContent
@@ -142,7 +147,7 @@ public class NavigationController: UIViewController {
         return preferredStyle
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -158,7 +163,7 @@ extension NavigationController: Scrollable {
 // MARK: - UIGestureRecognizerDelegate
 
 extension NavigationController: UIGestureRecognizerDelegate {
-    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer) -> Bool {
         // Necessary to get the child navigation controller’s interactive pop gesture recognizer to work.
         return true
     }
@@ -167,7 +172,7 @@ extension NavigationController: UIGestureRecognizerDelegate {
 // MARK: - UINavigationControllerDelegate
 
 extension NavigationController: UINavigationControllerDelegate {
-    public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+    public func navigationController(_: UINavigationController, didShow _: UIViewController, animated _: Bool) {
         cleanUpChildCoordinators()
     }
 

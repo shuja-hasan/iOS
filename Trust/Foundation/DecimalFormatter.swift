@@ -1,4 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 
@@ -13,6 +15,7 @@ final class DecimalFormatter {
         formatter.isLenient = true
         return formatter
     }()
+
     /// usFormatter of a `DecimalFormatter` to represent decimal separator ".".
     private lazy var usFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -21,6 +24,7 @@ final class DecimalFormatter {
         formatter.isLenient = true
         return formatter
     }()
+
     /// frFormatter of a `DecimalFormatter` to represent decimal separator ",".
     private lazy var frFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -29,6 +33,7 @@ final class DecimalFormatter {
         formatter.isLenient = true
         return formatter
     }()
+
     /// enCaFormatter of a `DecimalFormatter` to represent decimal separator "'".
     private lazy var enCaFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -37,28 +42,31 @@ final class DecimalFormatter {
         formatter.isLenient = true
         return formatter
     }()
+
     /// Initializes a `DecimalFormatter` with a `Locale`.
     init(locale: Locale = .current) {
         self.locale = locale
-        self.numberFormatter = NumberFormatter()
-        self.numberFormatter.locale = self.locale
-        self.numberFormatter.numberStyle = .decimal
-        self.numberFormatter.isLenient = true
+        numberFormatter = NumberFormatter()
+        numberFormatter.locale = self.locale
+        numberFormatter.numberStyle = .decimal
+        numberFormatter.isLenient = true
     }
+
     /// Converts a String to a `NSumber`.
     ///
     /// - Parameters:
     ///   - string: string to convert.
     /// - Returns: `NSumber` represenation.
     func number(from string: String) -> NSNumber? {
-        return self.numberFormatter.number(from: string) ?? self.usFormatter.number(from: string) ?? self.frFormatter.number(from: string) ?? self.enCaFormatter.number(from: string)
+        return numberFormatter.number(from: string) ?? usFormatter.number(from: string) ?? frFormatter.number(from: string) ?? enCaFormatter.number(from: string)
     }
+
     /// Converts a NSumber to a `String`.
     ///
     /// - Parameters:
     ///   - number: nsnumber to convert.
     /// - Returns: `NSumber` represenation.
     func string(from number: NSNumber) -> String? {
-        return self.numberFormatter.string(from: number)
+        return numberFormatter.string(from: number)
     }
 }

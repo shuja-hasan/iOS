@@ -1,10 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
+// Copyright Ether-1 Developers. All rights reserved.
+// Copyright Xerom Developers. All rights reserved.
 
-import UIKit
 import Branch
+import UIKit
 
 final class BranchCoordinator {
-
     private struct Keys {
         static let isFirstSession = "is_first_session"
         static let clickedBranchLink = "clicked_branch_link"
@@ -21,7 +22,7 @@ final class BranchCoordinator {
             guard
                 error == nil,
                 let params = params as? [String: AnyObject] else {
-                    return
+                return
             }
             if
                 let _ = params[Keys.isFirstSession] as? Bool,
