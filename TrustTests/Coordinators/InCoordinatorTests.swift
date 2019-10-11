@@ -49,11 +49,11 @@ class InCoordinatorTests: XCTestCase {
             config: .make()
         )
 
-        coordinator.showTabBar(for: account1)
+        coordinator.showTabBar(for: account1, tab: Tabs.wallet(.none))
 
         XCTAssertEqual(coordinator.keystore.recentlyUsedWallet, account1)
 
-        coordinator.showTabBar(for: account2)
+        coordinator.showTabBar(for: account2, tab: Tabs.wallet(.none))
 
         XCTAssertEqual(coordinator.keystore.recentlyUsedWallet, account2)
     }
@@ -65,7 +65,7 @@ class InCoordinatorTests: XCTestCase {
             keystore: FakeEtherKeystore(),
             config: .make()
         )
-        coordinator.showTabBar(for: .make())
+        coordinator.showTabBar(for: .make(), tab: Tabs.wallet(.none))
 
         coordinator.sendFlow(for: .make())
 
@@ -81,7 +81,7 @@ class InCoordinatorTests: XCTestCase {
             keystore: FakeEtherKeystore(),
             config: .make()
         )
-        coordinator.showTabBar(for: .make())
+        coordinator.showTabBar(for: .make(), tab: Tabs.wallet(.none))
 
         coordinator.requestFlow(for: .make())
 
@@ -97,7 +97,7 @@ class InCoordinatorTests: XCTestCase {
             keystore: FakeEtherKeystore(),
             config: .make()
         )
-        coordinator.showTabBar(for: .make())
+        coordinator.showTabBar(for: .make(), tab: Tabs.wallet(.none))
 
         coordinator.showTab(.wallet(.none))
 

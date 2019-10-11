@@ -12,9 +12,9 @@ enum ConfirmationError: LocalizedError {
 
 extension UIViewController {
     func displayError(error: Error) {
-        let alertController = UIAlertController(title: error.prettyError, message: "", preferredStyle: UIAlertControllerStyle.alert)
+        let alertController = UIAlertController(title: error.prettyError, message: "", preferredStyle: UIAlertController.Style.alert)
         alertController.popoverPresentationController?.sourceView = self.view
-        alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: UIAlertActionStyle.default, handler: nil))
+        alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: UIAlertAction.Style.default, handler: nil))
         present(alertController, animated: true, completion: nil)
     }
 
@@ -22,7 +22,7 @@ extension UIViewController {
         title: String? = .none,
         message: String? = .none,
         okTitle: String = R.string.localizable.oK(),
-        okStyle: UIAlertActionStyle = .default,
+        okStyle: UIAlertAction.Style = .default,
         completion: @escaping (Result<Void, ConfirmationError>) -> Void
     ) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -56,17 +56,17 @@ extension UIViewController {
     }
 
     func add(asChildViewController viewController: UIViewController) {
-        addChildViewController(viewController)
+        addChild(viewController)
         view.addSubview(viewController.view)
         viewController.view.frame = view.bounds
         viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        viewController.didMove(toParentViewController: self)
+        viewController.didMove(toParent: self)
     }
 
     func remove(asChildViewController viewController: UIViewController) {
-        viewController.willMove(toParentViewController: nil)
+        viewController.willMove(toParent: nil)
         viewController.view.removeFromSuperview()
-        viewController.removeFromParentViewController()
+        viewController.removeFromParent()
     }
 
     func showShareActivity(from sender: UIView, with items: [Any], completion: (() -> Swift.Void)? = nil) {

@@ -17,7 +17,7 @@ target 'Trust' do
   pod 'KeychainSwift'
   pod 'SwiftLint'
   pod 'SeedStackViewController'
-  pod 'RealmSwift'
+  pod 'RealmSwift', '~> 3.19.0'
   pod 'Moya', '~> 10.0.1'
   pod 'CryptoSwift', '~> 0.10.0'
   pod 'Kingfisher', '~> 4.0'

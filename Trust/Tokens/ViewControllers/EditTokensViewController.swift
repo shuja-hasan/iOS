@@ -111,7 +111,7 @@ final class EditTokensViewController: UITableViewController {
         tableView.separatorColor = StyleLayout.TableView.separatorColor
         tableView.backgroundColor = .white
         tableView.cellLayoutMarginsFollowReadableWidth = false
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .onDrag
     }

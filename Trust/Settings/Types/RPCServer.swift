@@ -149,7 +149,7 @@ enum RPCServer {
         case .poa: return Coin.poa
         case .gochain: return Coin.gochain
         case .ether1: return Coin.ether1
-        case .xerom: return Coin.xerom
+        case .xerom: return Coin.ether1
         }
     }
 }

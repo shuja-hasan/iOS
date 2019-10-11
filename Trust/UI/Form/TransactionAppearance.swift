@@ -73,7 +73,7 @@ struct TransactionAppearance {
         return stackView
     }
 
-    static func horizontalItem(views: [UIView], distribution: UIStackViewDistribution = .fillProportionally) -> UIView {
+    static func horizontalItem(views: [UIView], distribution: UIStackView.Distribution = .fillProportionally) -> UIView {
         let view = UIStackView(arrangedSubviews: views)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.distribution = distribution

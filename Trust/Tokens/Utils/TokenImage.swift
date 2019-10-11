@@ -13,9 +13,9 @@ class TokenImageGenerator {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = .center
             let attrs = [
-                NSAttributedStringKey.font: UIFont.systemFont(ofSize: labelFont, weight: .medium),
-                NSAttributedStringKey.foregroundColor: UIColor(hex: "ABABAB"),
-                NSAttributedStringKey.paragraphStyle: paragraphStyle,
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: labelFont, weight: .medium),
+                NSAttributedString.Key.foregroundColor: UIColor(hex: "ABABAB"),
+                NSAttributedString.Key.paragraphStyle: paragraphStyle,
             ]
             let y = size/2 - labelFont - 2
             let string = title
@@ -48,7 +48,7 @@ extension Coin {
         case .ethereumClassic: return "ETC\n20"
         case .gochain: return "GO\n20"
         case .callisto: return "CLO\n20"
-        case .xerom: return "XERO\n20"
+//        case .xerom: return "XERO\n20"
         case .ether1: return "ETHO\n20"
         default: return "ERC\n20"
         }
@@ -62,7 +62,7 @@ extension Coin {
         case .ethereumClassic: return R.image.ethereum61()
         case .gochain: return R.image.ethereum60()
         case .callisto: return R.image.ethereum820()
-        case .xerom: return R.image.ethereum1313500()
+//        case .xerom: return R.image.ethereum1313500()
         case .ether1: return R.image.ethereum64()
         default: return R.image.ethereum1313500()
             }

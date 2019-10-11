@@ -98,7 +98,7 @@ final class BrowserViewController: UIViewController {
         injectUserAgent()
 
         webView.addSubview(progressView)
-        webView.bringSubview(toFront: progressView)
+        webView.bringSubviewToFront(progressView)
         view.addSubview(errorView)
 
         NSLayoutConstraint.activate([

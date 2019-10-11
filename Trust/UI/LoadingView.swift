@@ -8,7 +8,7 @@ final class LoadingView: UIView {
 
     let label = UILabel()
     let imageView = UIImageView()
-    let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let loadingIndicator = UIActivityIndicatorView(style: .gray)
     let insets: UIEdgeInsets
     private let viewModel = StateViewModel()
 

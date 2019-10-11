@@ -59,7 +59,7 @@ struct CoinTypeViewModel {
         case .callisto: return RPCServer.callisto
         case .bitcoin: return RPCServer.main
         case .ether1: return RPCServer.ether1
-        case .xerom: return RPCServer.xerom
+//        case .xerom: return RPCServer.xerom
         }
     }
 }
