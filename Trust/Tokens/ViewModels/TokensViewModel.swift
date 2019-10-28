@@ -36,7 +36,7 @@ final class TokensViewModel: NSObject {
     }
 
     var headerBalanceFont: UIFont {
-        return UIFont.systemFont(ofSize: 28, weight: .medium)
+        return UIFont(name: "Trenda-Regular", size: 28) ?? UIFont.systemFont(ofSize: 28, weight: .medium)
     }
 
     var title: String {
@@ -56,7 +56,7 @@ final class TokensViewModel: NSObject {
     }
 
     var footerTextFont: UIFont {
-        return UIFont.systemFont(ofSize: 13, weight: .light)
+        return UIFont(name: "Trenda-Light", size: 13) ?? UIFont.systemFont(ofSize: 13, weight: .light)
     }
 
     var all: [TokenViewModel] {

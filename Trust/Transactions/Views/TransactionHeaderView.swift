@@ -7,7 +7,7 @@ import UIKit
 
 struct TransactionHeaderAppereance {
     static let amountFont = AppStyle.largeAmount.font
-    static let monetaryFont = UIFont.systemFont(ofSize: 13, weight: .light)
+    static let monetaryFont = UIFont(name: "Trenda-Light", size: 13) ?? UIFont.systemFont(ofSize: 13, weight: .light)
     static let monetaryTextColor = TokensLayout.cell.fiatAmountTextColor
 }
 

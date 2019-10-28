@@ -19,7 +19,7 @@ final class BrowserErrorView: UIView {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = Colors.gray
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont(name: "Trenda-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

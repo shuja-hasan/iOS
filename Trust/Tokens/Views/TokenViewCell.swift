@@ -11,28 +11,20 @@ import UIKit
 final class TokenViewCell: UITableViewCell {
     static let identifier = "TokenViewCell"
 
-    let titleLabel = UILabel()
-    let amountLabel = UILabel()
-    let currencyAmountLabel = UILabel()
-    let symbolImageView = TokenImageView()
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var amountLabel: UILabel!
+    @IBOutlet var currencyAmountLabel: UILabel!
+    @IBOutlet var symbolImageView: TokenImageView!
+    @IBOutlet var marketPrice: UILabel!
+    @IBOutlet var marketPercentageChange: UILabel!
+//    let titleLabel = UILabel()
+//    let amountLabel = UILabel()
+//    let currencyAmountLabel = UILabel()
+//    let symbolImageView = TokenImageView()
     let containerForImageView = UIView()
     private var pendingTokenTransactionsObserver: NotificationToken?
 
-    lazy var marketPrice: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    lazy var marketPercentageChange: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+    override func awakeFromNib() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.lineBreakMode = .byTruncatingMiddle
         titleLabel.adjustsFontSizeToFitWidth = true
@@ -44,72 +36,102 @@ final class TokenViewCell: UITableViewCell {
         amountLabel.translatesAutoresizingMaskIntoConstraints = false
         amountLabel.textAlignment = .right
 
-        containerForImageView.translatesAutoresizingMaskIntoConstraints = false
-
         currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
         currencyAmountLabel.textAlignment = .right
-
-        let marketPriceStackView = UIStackView(arrangedSubviews: [
-            marketPrice,
-            marketPercentageChange,
-        ])
-
-        containerForImageView.addSubview(symbolImageView)
-
-        marketPriceStackView.translatesAutoresizingMaskIntoConstraints = false
-        marketPriceStackView.alignment = .firstBaseline
-        marketPriceStackView.distribution = .equalSpacing
-        marketPriceStackView.spacing = TokensLayout.cell.arrangedSubviewsOffset
-
-        let leftStackView = UIStackView(arrangedSubviews: [titleLabel, marketPriceStackView])
-        leftStackView.translatesAutoresizingMaskIntoConstraints = false
-        leftStackView.axis = .vertical
-        leftStackView.spacing = 6
-        leftStackView.alignment = .leading
-
-        let rightStackView = UIStackView(arrangedSubviews: [amountLabel, currencyAmountLabel])
-        rightStackView.translatesAutoresizingMaskIntoConstraints = false
-        rightStackView.axis = .vertical
-        rightStackView.spacing = TokensLayout.cell.arrangedSubviewsOffset
-
-        let stackView = UIStackView(arrangedSubviews: [containerForImageView, leftStackView, rightStackView])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.spacing = 15
-        stackView.alignment = .center
-
-        symbolImageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        titleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-        rightStackView.setContentHuggingPriority(.required, for: .horizontal)
-        stackView.setContentHuggingPriority(.required, for: .horizontal)
-
-        contentView.addSubview(stackView)
-
-        NSLayoutConstraint.activate([
-            containerForImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: TokensLayout.cell.stackVericalOffset),
-            containerForImageView.widthAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
-            containerForImageView.heightAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
-            symbolImageView.centerXAnchor.constraint(equalTo: containerForImageView.centerXAnchor),
-            symbolImageView.centerYAnchor.constraint(equalTo: containerForImageView.centerYAnchor),
-            symbolImageView.widthAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
-            symbolImageView.heightAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
-            stackView.topAnchor.constraint(equalTo: topAnchor, constant: TokensLayout.cell.stackVericalOffset),
-            stackView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -TokensLayout.cell.stackVericalOffset),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -TokensLayout.cell.stackVericalOffset),
-            stackView.leadingAnchor.constraint(equalTo: containerForImageView.leadingAnchor),
-        ])
     }
+
+    /* lazy var marketPrice: UILabel = {
+         let label = UILabel()
+         label.translatesAutoresizingMaskIntoConstraints = false
+         return label
+     }()
+
+     lazy var marketPercentageChange: UILabel = {
+         let label = UILabel()
+         label.translatesAutoresizingMaskIntoConstraints = false
+         return label
+     }() */
+
+//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+//        super.init(style: style, reuseIdentifier: reuseIdentifier)
+//
+    ////        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+    ////        titleLabel.lineBreakMode = .byTruncatingMiddle
+    ////        titleLabel.adjustsFontSizeToFitWidth = true
+    ////        titleLabel.minimumScaleFactor = 0.7
+    ////
+    ////        symbolImageView.translatesAutoresizingMaskIntoConstraints = false
+    ////        symbolImageView.contentMode = .scaleAspectFit
+    ////
+    ////        amountLabel.translatesAutoresizingMaskIntoConstraints = false
+    ////        amountLabel.textAlignment = .right
+//
+    ////        containerForImageView.translatesAutoresizingMaskIntoConstraints = false
+//
+    ////        currencyAmountLabel.translatesAutoresizingMaskIntoConstraints = false
+    ////        currencyAmountLabel.textAlignment = .right
+//
+    ////        let marketPriceStackView = UIStackView(arrangedSubviews: [
+    ////            marketPrice,
+    ////            marketPercentageChange,
+    ////        ])
+//
+    ////        containerForImageView.addSubview(symbolImageView)
+//
+    ////        marketPriceStackView.translatesAutoresizingMaskIntoConstraints = false
+    ////        marketPriceStackView.alignment = .firstBaseline
+    ////        marketPriceStackView.distribution = .equalSpacing
+    ////        marketPriceStackView.spacing = TokensLayout.cell.arrangedSubviewsOffset
+//
+    ////        let leftStackView = UIStackView(arrangedSubviews: [titleLabel, marketPriceStackView])
+    ////        leftStackView.translatesAutoresizingMaskIntoConstraints = false
+    ////        leftStackView.axis = .vertical
+    ////        leftStackView.spacing = 6
+    ////        leftStackView.alignment = .leading
+//
+    ////        let rightStackView = UIStackView(arrangedSubviews: [amountLabel, currencyAmountLabel])
+    ////        rightStackView.translatesAutoresizingMaskIntoConstraints = false
+    ////        rightStackView.axis = .vertical
+    ////        rightStackView.spacing = TokensLayout.cell.arrangedSubviewsOffset
+//
+    ////        let stackView = UIStackView(arrangedSubviews: [containerForImageView, leftStackView, rightStackView])
+    ////        stackView.translatesAutoresizingMaskIntoConstraints = false
+    ////        stackView.axis = .horizontal
+    ////        stackView.spacing = 6 // 15
+    ////        stackView.alignment = .center
+//
+    ////        symbolImageView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    ////        titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    ////        titleLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+//
+    ////        rightStackView.setContentHuggingPriority(.required, for: .horizontal)
+    ////        stackView.setContentHuggingPriority(.required, for: .horizontal)
+    ////
+    ////        contentView.addSubview(stackView)
+//
+    ////        NSLayoutConstraint.activate([
+    ////            containerForImageView.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: TokensLayout.cell.stackVericalOffset),
+    ////            containerForImageView.widthAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
+    ////            containerForImageView.heightAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
+    ////            symbolImageView.centerXAnchor.constraint(equalTo: containerForImageView.centerXAnchor),
+    ////            symbolImageView.centerYAnchor.constraint(equalTo: containerForImageView.centerYAnchor),
+    ////            symbolImageView.widthAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
+    ////            symbolImageView.heightAnchor.constraint(equalToConstant: TokensLayout.cell.imageSize),
+    ////            stackView.topAnchor.constraint(equalTo: topAnchor, constant: TokensLayout.cell.stackVericalOffset),
+    ////            stackView.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: -TokensLayout.cell.stackVericalOffset),
+    ////            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -TokensLayout.cell.stackVericalOffset),
+    ////            stackView.leadingAnchor.constraint(equalTo: containerForImageView.leadingAnchor),
+    ////        ])
+//    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         updateSeparatorInset()
     }
 
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
 
     func configure(viewModel: TokenViewCellViewModel) {
         containerForImageView.badge(text: badgeText(for: viewModel.viewModel.token, in: viewModel.store))
@@ -139,7 +161,7 @@ final class TokenViewCell: UITableViewCell {
             placeholder: viewModel.placeholderImage
         )
 
-        backgroundColor = viewModel.backgroundColor
+//        backgroundColor = viewModel.backgroundColor
         observePendingTransactions(from: viewModel.store, with: viewModel.viewModel.token)
     }
 

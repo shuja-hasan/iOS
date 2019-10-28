@@ -55,6 +55,7 @@ class AppCoordinator: NSObject, Coordinator {
         } else {
             resetToWelcomeScreen()
         }
+
         Analitics.branch.update(with: false)
         Analitics.answer.update(with: false)
     }

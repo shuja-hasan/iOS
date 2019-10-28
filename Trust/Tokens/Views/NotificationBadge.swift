@@ -54,7 +54,7 @@ extension UIView {
         }
 
         badgeLabel.text = badgeText
-        badgeLabel.font = UIFont.systemFont(ofSize: appearance.textSize)
+        badgeLabel.font = UIFont(name: "Trenda-Regular", size: appearance.textSize) ?? UIFont.systemFont(ofSize: appearance.textSize)
 
         badgeLabel.sizeToFit()
         badgeLabel.textAlignment = appearance.textAlignment

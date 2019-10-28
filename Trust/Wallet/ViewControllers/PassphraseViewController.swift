@@ -66,7 +66,7 @@ class PassphraseViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = viewModel.title
         titleLabel.adjustsFontSizeToFitWidth = true
-        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        titleLabel.font = UIFont(name: "Trenda-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .regular)
         titleLabel.textAlignment = .center
 
         copyButton.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +78,7 @@ class PassphraseViewController: UIViewController {
         wordsLabel.numberOfLines = 0
         wordsLabel.text = words.joined(separator: "  ")
         wordsLabel.backgroundColor = .clear
-        wordsLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        wordsLabel.font = UIFont(name: "Trenda-Regular", size: 17) ?? UIFont.systemFont(ofSize: 17, weight: .regular)
         wordsLabel.textColor = Colors.black
         wordsLabel.textAlignment = .center
         wordsLabel.numberOfLines = 3

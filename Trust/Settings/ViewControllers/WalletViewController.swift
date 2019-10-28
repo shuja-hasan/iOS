@@ -19,7 +19,7 @@ class WalletViewController: UIViewController {
         segmentedControl.selectedSegmentIndex = DetailsViewType.tokens.rawValue
         segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: Colors.darkRed]
+        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: Colors.newDesignNavBarBlue] // .darkRed]
         segmentedControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
         segmentedControl.setDividerImage(UIImage.filled(with: UIColor.white), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)

@@ -30,7 +30,7 @@ enum ButtonStyle: Int {
 
     var backgroundColor: UIColor {
         switch self {
-        case .solid, .squared: return Colors.darkRed
+        case .solid, .squared: return Colors.newDesignNavBarBlue // .darkRed
         case .border, .borderless: return .white
         case .clear: return .clear
         }
@@ -38,8 +38,8 @@ enum ButtonStyle: Int {
 
     var backgroundColorHighlighted: UIColor {
         switch self {
-        case .solid, .squared: return Colors.darkRed
-        case .border: return Colors.darkRed
+        case .solid, .squared: return Colors.newDesignNavBarBlue // .darkRed
+        case .border: return Colors.newDesignNavBarBlue // .darkRed
         case .borderless: return .white
         case .clear: return .clear
         }
@@ -63,14 +63,14 @@ enum ButtonStyle: Int {
              .border,
              .borderless,
              .clear:
-            return UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
+            return UIFont(name: "Trenda-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
         }
     }
 
     var textColor: UIColor {
         switch self {
         case .solid, .squared: return .white
-        case .border, .borderless, .clear: return Colors.darkRed
+        case .border, .borderless, .clear: return Colors.newDesignNavBarBlue // .darkRed
         }
     }
 
@@ -78,13 +78,13 @@ enum ButtonStyle: Int {
         switch self {
         case .solid, .squared: return UIColor(white: 1, alpha: 0.8)
         case .border: return .white
-        case .borderless, .clear: return Colors.darkRed
+        case .borderless, .clear: return Colors.newDesignNavBarBlue // .darkRed
         }
     }
 
     var borderColor: UIColor {
         switch self {
-        case .solid, .squared, .border: return Colors.darkRed
+        case .solid, .squared, .border: return Colors.newDesignNavBarBlue // .darkRed
         case .borderless, .clear: return .clear
         }
     }

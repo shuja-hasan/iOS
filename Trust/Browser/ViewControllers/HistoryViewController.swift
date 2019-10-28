@@ -26,7 +26,8 @@ final class HistoryViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = Colors.veryLightGray
         tableView.rowHeight = 60
         tableView.register(R.nib.bookmarkViewCell(), forCellReuseIdentifier: R.nib.bookmarkViewCell.name)
         view.addSubview(tableView)
@@ -89,6 +90,10 @@ extension HistoryViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let history = viewModel.item(for: indexPath)
         delegate?.didSelect(history: history, in: self)
+    }
+
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 
     func tableView(_: UITableView, canEditRowAt _: IndexPath) -> Bool {

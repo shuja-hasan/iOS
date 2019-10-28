@@ -29,7 +29,7 @@ final class LockView: UIView {
     }
 
     private func configLabel() {
-        lockTitle.font = UIFont.systemFont(ofSize: 19)
+        lockTitle.font = UIFont(name: "Trenda-Regular", size: 19) ?? UIFont.systemFont(ofSize: 19)
         lockTitle.textAlignment = .center
         lockTitle.translatesAutoresizingMaskIntoConstraints = false
         lockTitle.numberOfLines = 0

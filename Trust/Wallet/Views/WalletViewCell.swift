@@ -29,7 +29,7 @@ final class WalletViewCell: UITableViewCell {
             title.text = model.title
             subtitle.text = model.address
             glassesImageView.isHidden = !model.isWatch
-            infoButton.tintColor = Colors.darkRed
+            infoButton.tintColor = Colors.newDesignNavBarBlue // .darkRed
             identiconImageView.image = model.image
             selectedImageView.image = model.selectedImage
             balance.isHidden = model.isBalanceHidden

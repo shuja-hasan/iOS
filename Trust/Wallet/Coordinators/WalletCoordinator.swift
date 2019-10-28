@@ -94,7 +94,7 @@ final class WalletCoordinator: Coordinator {
     }
 
     func configureWhiteNavigation() {
-        navigationController.navigationBar.tintColor = Colors.darkRed
+        navigationController.navigationBar.tintColor = Colors.newDesignNavBarBlue // .darkRed
         navigationController.navigationBar.barTintColor = .white
         navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController.navigationBar.shadowImage = UIImage()

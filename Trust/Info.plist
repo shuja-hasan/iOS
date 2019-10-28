@@ -2,6 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Trenda ExtraLight.otf</string>
+		<string>Trenda Heavy.otf</string>
+		<string>Trenda Light.otf</string>
+		<string>Trenda Regular.otf</string>
+		<string>Trenda Semibold.otf</string>
+		<string>Trenda Thin.otf</string>
+		<string>Trenda Bold.otf</string>
+		<string>Trenda Black.otf</string>
+	</array>
 	<key>CFBundleAllowMixedLocalizations</key>
 	<string>true</string>
 	<key>CFBundleDevelopmentRegion</key>

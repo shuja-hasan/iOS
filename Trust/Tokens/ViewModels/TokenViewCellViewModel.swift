@@ -27,7 +27,7 @@ struct TokenViewCellViewModel {
     }
 
     var titleFont: UIFont {
-        return UIFont.systemFont(ofSize: 17, weight: .medium)
+        return UIFont(name: "Trenda-Regular", size: 17) ?? UIFont.systemFont(ofSize: 17, weight: .medium)
     }
 
     var titleTextColor: UIColor {
@@ -43,11 +43,11 @@ struct TokenViewCellViewModel {
     }
 
     var amountFont: UIFont {
-        return UIFont.systemFont(ofSize: 17, weight: .medium)
+        return UIFont(name: "Trenda-Regular", size: 17) ?? UIFont.systemFont(ofSize: 17, weight: .medium)
     }
 
     var currencyAmountFont: UIFont {
-        return UIFont.systemFont(ofSize: 13, weight: .regular)
+        return UIFont(name: "Trenda-Regular", size: 13) ?? UIFont.systemFont(ofSize: 13, weight: .regular)
     }
 
     var backgroundColor: UIColor {
@@ -73,7 +73,7 @@ struct TokenViewCellViewModel {
     }
 
     var percentChangeFont: UIFont {
-        return UIFont.systemFont(ofSize: 12, weight: .light)
+        return UIFont(name: "Trenda-Light", size: 12) ?? UIFont.systemFont(ofSize: 12, weight: .light)
     }
 
     var placeholderImage: UIImage? {
@@ -83,7 +83,7 @@ struct TokenViewCellViewModel {
     // Market Price
 
     var marketPriceFont: UIFont {
-        return UIFont.systemFont(ofSize: 12, weight: .regular)
+        return UIFont(name: "Trenda-Regular", size: 12) ?? UIFont.systemFont(ofSize: 12, weight: .regular)
     }
 
     var marketPriceTextColor: UIColor {

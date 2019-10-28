@@ -28,9 +28,10 @@ class SelectCoinViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.separatorStyle = .none
         tableView.separatorColor = StyleLayout.TableView.separatorColor
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.backgroundColor = Colors.veryLightGray
         tableView.register(R.nib.coinViewCell(), forCellReuseIdentifier: R.nib.coinViewCell.name)
         tableView.tableFooterView = UIView()
         navigationItem.title = viewModel.title
@@ -48,6 +49,10 @@ class SelectCoinViewController: UITableViewController {
 
     override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRows(in: section)
+    }
+
+    override func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
