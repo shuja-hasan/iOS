@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -197,13 +195,13 @@ extension EditTokensViewController: UISearchBarDelegate {
 
 extension EditTokensViewController: UISearchControllerDelegate {
     func willPresentSearchController(_ searchController: UISearchController) {
-        searchController.searchBar.barTintColor = Colors.newDesignNavBarBlue // .darkRed
+        searchController.searchBar.barTintColor = Colors.darkRed
         searchController.searchBar.tintColor = .white
     }
 
     func willDismissSearchController(_ searchController: UISearchController) {
         searchController.searchBar.barTintColor = Colors.lightGray
-        searchController.searchBar.tintColor = Colors.newDesignNavBarBlue // .darkRed
+        searchController.searchBar.tintColor = Colors.darkRed
     }
 }
 

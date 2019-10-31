@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -19,7 +17,7 @@ class WalletViewController: UIViewController {
         segmentedControl.selectedSegmentIndex = DetailsViewType.tokens.rawValue
         segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
         let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: Colors.newDesignNavBarBlue] // .darkRed]
+        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: Colors.darkRed]
         segmentedControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
         segmentedControl.setDividerImage(UIImage.filled(with: UIColor.white), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)

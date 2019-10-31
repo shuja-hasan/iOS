@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Eureka
 import Foundation
@@ -18,17 +16,17 @@ func applyStyle() {
         .foregroundColor: UIColor.white,
     ]
 
-    UITextField.appearance().tintColor = Colors.newDesignNavBarBlue // .darkRed
+    UITextField.appearance().tintColor = Colors.darkRed
 
-    UIImageView.appearance().tintColor = Colors.newDesignNavBarBlue // .darkRed
+    UIImageView.appearance().tintColor = Colors.darkRed
 
     BrowserNavigationBar.appearance().setBackgroundImage(.filled(with: .white), for: .default)
 }
 
 struct AppGlobalStyle {
     static let navigationBarTintColor = UIColor.white
-    static let docPickerNavigationBarTintColor = Colors.newDesignNavBarBlue // Colors.darkRed
-    static let barTintColor = Colors.newDesignNavBarBlue // Colors.darkRed
+    static let docPickerNavigationBarTintColor = Colors.darkRed
+    static let barTintColor = Colors.darkRed
 }
 
 struct StyleLayout {

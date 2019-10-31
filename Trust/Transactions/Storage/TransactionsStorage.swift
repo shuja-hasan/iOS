@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import RealmSwift
@@ -8,7 +6,7 @@ import TrustCore
 
 struct TransactionSection {
     let title: String
-    let items: [Transaction]
+    var items: [Transaction]
 }
 
 class TransactionsStorage {

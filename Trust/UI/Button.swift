@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -30,7 +28,7 @@ enum ButtonStyle: Int {
 
     var backgroundColor: UIColor {
         switch self {
-        case .solid, .squared: return Colors.newDesignNavBarBlue // .darkRed
+        case .solid, .squared: return Colors.darkRed
         case .border, .borderless: return .white
         case .clear: return .clear
         }
@@ -38,8 +36,8 @@ enum ButtonStyle: Int {
 
     var backgroundColorHighlighted: UIColor {
         switch self {
-        case .solid, .squared: return Colors.newDesignNavBarBlue // .darkRed
-        case .border: return Colors.newDesignNavBarBlue // .darkRed
+        case .solid, .squared: return Colors.darkRed
+        case .border: return Colors.darkRed
         case .borderless: return .white
         case .clear: return .clear
         }
@@ -70,7 +68,7 @@ enum ButtonStyle: Int {
     var textColor: UIColor {
         switch self {
         case .solid, .squared: return .white
-        case .border, .borderless, .clear: return Colors.newDesignNavBarBlue // .darkRed
+        case .border, .borderless, .clear: return Colors.darkRed
         }
     }
 
@@ -78,13 +76,13 @@ enum ButtonStyle: Int {
         switch self {
         case .solid, .squared: return UIColor(white: 1, alpha: 0.8)
         case .border: return .white
-        case .borderless, .clear: return Colors.newDesignNavBarBlue // .darkRed
+        case .borderless, .clear: return Colors.darkRed
         }
     }
 
     var borderColor: UIColor {
         switch self {
-        case .solid, .squared, .border: return Colors.newDesignNavBarBlue // .darkRed
+        case .solid, .squared, .border: return Colors.darkRed
         case .borderless, .clear: return .clear
         }
     }

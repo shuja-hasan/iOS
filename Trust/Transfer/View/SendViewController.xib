@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Trenda Regular.otf">
+            <string>Trenda-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendViewController" customModule="Trust" customModuleProvider="target">
+            <connections>
+                <outlet property="amountTextField" destination="nEt-UK-EO9" id="JBZ-cF-8Dm"/>
+                <outlet property="memoTextField" destination="NxL-9l-K80" id="aK4-rv-0Tg"/>
+                <outlet property="recipientAddressTextField" destination="4wa-Nh-c1D" id="jXb-FD-8Id"/>
+                <outlet property="sendButton" destination="aeb-Pq-6b1" id="U23-J8-rUU"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Z0f-2O-WIv"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="I9G-4L-Yzf">
+                    <rect key="frame" x="25" y="94" width="364" height="260"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eCH-bh-QGe">
+                            <rect key="frame" x="0.0" y="0.0" width="364" height="60"/>
+                            <subviews>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4wa-Nh-c1D">
+                                    <rect key="frame" x="10" y="10" width="344" height="40"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstItem="4wa-Nh-c1D" firstAttribute="leading" secondItem="eCH-bh-QGe" secondAttribute="leading" constant="10" id="2ds-R3-uQY"/>
+                                <constraint firstAttribute="bottom" secondItem="4wa-Nh-c1D" secondAttribute="bottom" constant="10" id="9YH-Ol-JNm"/>
+                                <constraint firstAttribute="trailing" secondItem="4wa-Nh-c1D" secondAttribute="trailing" constant="10" id="Uy8-Tf-atS"/>
+                                <constraint firstItem="4wa-Nh-c1D" firstAttribute="top" secondItem="eCH-bh-QGe" secondAttribute="top" constant="10" id="rY2-Pd-0iP"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Tc-zR-ODY">
+                            <rect key="frame" x="0.0" y="80" width="364" height="60"/>
+                            <subviews>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nEt-UK-EO9">
+                                    <rect key="frame" x="10" y="10" width="344" height="40"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="nEt-UK-EO9" secondAttribute="trailing" constant="10" id="ONw-Cn-Gcb"/>
+                                <constraint firstItem="nEt-UK-EO9" firstAttribute="leading" secondItem="4Tc-zR-ODY" secondAttribute="leading" constant="10" id="XVy-Va-SdV"/>
+                                <constraint firstAttribute="bottom" secondItem="nEt-UK-EO9" secondAttribute="bottom" constant="10" id="dKg-BR-5J3"/>
+                                <constraint firstItem="nEt-UK-EO9" firstAttribute="top" secondItem="4Tc-zR-ODY" secondAttribute="top" constant="10" id="k2P-Xh-zVK"/>
+                            </constraints>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="0L5-mn-2oI">
+                            <rect key="frame" x="0.0" y="160" width="364" height="20"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Qn5-nk-MnI">
+                                    <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="20" id="RHr-cf-2nx"/>
+                                        <constraint firstAttribute="height" constant="20" id="cej-0X-sga"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spendable: 12,901 BTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qUb-md-ARj">
+                                    <rect key="frame" x="35" y="1" width="329" height="18"/>
+                                    <fontDescription key="fontDescription" name="Trenda-Regular" family="Trenda" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hV2-Ns-mtV">
+                            <rect key="frame" x="0.0" y="200" width="364" height="60"/>
+                            <subviews>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NxL-9l-K80">
+                                    <rect key="frame" x="10" y="10" width="344" height="40"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstItem="NxL-9l-K80" firstAttribute="top" secondItem="hV2-Ns-mtV" secondAttribute="top" constant="10" id="9FI-OB-f10"/>
+                                <constraint firstAttribute="trailing" secondItem="NxL-9l-K80" secondAttribute="trailing" constant="10" id="Hq3-l4-IQ6"/>
+                                <constraint firstItem="NxL-9l-K80" firstAttribute="leading" secondItem="hV2-Ns-mtV" secondAttribute="leading" constant="10" id="VNd-jP-wcy"/>
+                                <constraint firstAttribute="bottom" secondItem="NxL-9l-K80" secondAttribute="bottom" constant="10" id="cIi-a9-I0c"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeb-Pq-6b1">
+                    <rect key="frame" x="30" y="752" width="354" height="60"/>
+                    <color key="backgroundColor" red="0.59607843137254901" green="0.098039215686274508" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="wA5-Dd-nMm"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Trenda-Regular" family="Trenda" pointSize="18"/>
+                    <state key="normal" title="Send">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="didTapSend" destination="-1" eventType="touchUpInside" id="1DF-cM-2Le"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="aeb-Pq-6b1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="Iew-tx-evR"/>
+                <constraint firstItem="I9G-4L-Yzf" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="25" id="MUu-cJ-whs"/>
+                <constraint firstItem="I9G-4L-Yzf" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="50" id="NOn-SF-zwN"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="aeb-Pq-6b1" secondAttribute="trailing" constant="30" id="e4i-eK-6K2"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="I9G-4L-Yzf" secondAttribute="trailing" constant="25" id="jRV-uH-84q"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="aeb-Pq-6b1" secondAttribute="bottom" constant="50" id="nJI-Wp-RPI"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="139" y="88"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="info_icon" width="18" height="18"/>
+    </resources>
+</document>

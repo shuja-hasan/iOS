@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import TrustCore
 import UIKit
@@ -29,7 +27,7 @@ final class WalletViewCell: UITableViewCell {
             title.text = model.title
             subtitle.text = model.address
             glassesImageView.isHidden = !model.isWatch
-            infoButton.tintColor = Colors.newDesignNavBarBlue // .darkRed
+            infoButton.tintColor = Colors.darkRed
             identiconImageView.image = model.image
             selectedImageView.image = model.selectedImage
             balance.isHidden = model.isBalanceHidden

@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import TrustCore
@@ -94,7 +92,7 @@ final class WalletCoordinator: Coordinator {
     }
 
     func configureWhiteNavigation() {
-        navigationController.navigationBar.tintColor = Colors.newDesignNavBarBlue // .darkRed
+        navigationController.navigationBar.tintColor = Colors.darkRed
         navigationController.navigationBar.barTintColor = .white
         navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController.navigationBar.shadowImage = UIImage()

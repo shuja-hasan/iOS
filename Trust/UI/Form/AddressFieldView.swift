@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -24,7 +22,7 @@ class AddressFieldView: UIView {
             qrButton,
         ])
         recipientRightView.translatesAutoresizingMaskIntoConstraints = false
-        recipientRightView.distribution = .equalSpacing
+        recipientRightView.distribution = .fill
         recipientRightView.spacing = 2
         recipientRightView.axis = .horizontal
 

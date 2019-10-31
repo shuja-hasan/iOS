@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import JavaScriptCore
@@ -69,7 +67,7 @@ final class BrowserViewController: UIViewController {
     lazy var progressView: UIProgressView = {
         let progressView = UIProgressView(progressViewStyle: .default)
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.tintColor = Colors.newDesignNavBarBlue // .darkRed
+        progressView.tintColor = Colors.darkRed
         progressView.trackTintColor = .clear
         return progressView
     }()

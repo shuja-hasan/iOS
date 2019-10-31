@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import RealmSwift
@@ -12,6 +10,7 @@ protocol TokensViewControllerDelegate: class {
     func didPressAddToken(in viewController: UIViewController)
     func didSelect(token: TokenObject, in viewController: UIViewController)
     func didRequest(token: TokenObject, in viewController: UIViewController)
+    func didTapCreateWallet(in viewController: UIViewController)
 }
 
 final class TokensViewController: UIViewController {
@@ -29,13 +28,14 @@ final class TokensViewController: UIViewController {
 
     lazy var footer: TokensFooterView = {
         let footer = TokensFooterView(frame: .zero)
-        footer.textLabel.text = viewModel.footerTitle
+        footer.textLabel.text = "Empty Wallet!" // viewModel.footerTitle
         footer.textLabel.font = viewModel.footerTextFont
         footer.textLabel.textColor = viewModel.footerTextColor
         footer.frame.size = footer.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
         footer.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(missingToken))
         )
+        footer.createButton.addTarget(self, action: #selector(createWallet), for: .touchUpInside)
         return footer
     }()
 
@@ -92,7 +92,7 @@ final class TokensViewController: UIViewController {
         startTokenObservation()
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
-        footer.textLabel.text = viewModel.footerTitle
+        footer.textLabel.text = "Empty Wallet!" // viewModel.footerTitle
 
         fetch(force: true)
     }
@@ -100,6 +100,17 @@ final class TokensViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.applyTintAdjustment()
+
+        if viewModel.tokens.isEmpty {
+            footer.emptyWalletImageView.isHidden = false
+            footer.textLabel.isHidden = false
+            footer.createButton.isHidden = false
+        } else {
+            footer.emptyWalletImageView.isHidden = true
+            footer.textLabel.isHidden = true
+            footer.createButton.isHidden = true
+        }
+        tableView.tableFooterView = footer
     }
 
     @objc func pullToRefresh() {
@@ -113,6 +124,10 @@ final class TokensViewController: UIViewController {
         } else {
             fetchClosure()
         }
+    }
+
+    @objc func createWallet() {
+        delegate?.didTapCreateWallet(in: self)
     }
 
     required init?(coder _: NSCoder) {
@@ -186,7 +201,7 @@ extension TokensViewController: UITableViewDelegate {
             self.delegate?.didRequest(token: token, in: self)
             handler(true)
         }
-        deleteAction.backgroundColor = Colors.newDesignNavBarBlue // .darkRed
+        deleteAction.backgroundColor = Colors.darkRed
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         return configuration
     }

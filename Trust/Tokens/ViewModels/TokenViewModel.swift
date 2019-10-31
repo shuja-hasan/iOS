@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import BigInt
 import Foundation
@@ -17,6 +15,8 @@ final class TokenViewModel {
     private let transactionsStore: TransactionsStorage
     private var tokenTransactions: Results<Transaction>?
     private var tokenTransactionSections: [TransactionSection] = []
+    private var tokenTransactionSendSections: [TransactionSection] = []
+    private var tokenTransactionRecievedSections: [TransactionSection] = []
     private var notificationToken: NotificationToken?
     private var transactionToken: NotificationToken?
 
@@ -65,10 +65,6 @@ final class TokenViewModel {
             shortFormatter.string(from: BigInt(token.value) ?? BigInt(), decimals: token.decimals),
             symbol
         )
-    }
-
-    var numberOfSections: Int {
-        return tokenTransactionSections.count
     }
 
     var server: RPCServer {
@@ -181,20 +177,53 @@ final class TokenViewModel {
         }
     }
 
-    func numberOfItems(for section: Int) -> Int {
-        return tokenTransactionSections[section].items.count
+    func numberOfSections(type: TokenViewType) -> Int {
+        switch type {
+        case .All:
+            return tokenTransactionSections.count
+        case .Send:
+            return tokenTransactionSendSections.count
+        case .Recieve:
+            return tokenTransactionRecievedSections.count
+        }
     }
 
-    func item(for row: Int, section: Int) -> Transaction {
-        return tokenTransactionSections[section].items[row]
+    func numberOfItems(for section: Int, type: TokenViewType) -> Int {
+        switch type {
+        case .All:
+            return tokenTransactionSections[section].items.count
+        case .Send:
+            return tokenTransactionSendSections[section].items.count
+        case .Recieve:
+            return tokenTransactionRecievedSections[section].items.count
+        }
+    }
+
+    func item(for row: Int, section: Int, type: TokenViewType) -> Transaction {
+        switch type {
+        case .All:
+            return tokenTransactionSections[section].items[row]
+        case .Send:
+            return tokenTransactionSendSections[section].items[row]
+        case .Recieve:
+            return tokenTransactionRecievedSections[section].items[row]
+        }
     }
 
     func convert(from title: String) -> Date? {
         return titleFormmater.date(from: title)
     }
 
-    func titleForHeader(in section: Int) -> String {
-        let stringDate = tokenTransactionSections[section].title
+    func titleForHeader(in section: Int, type: TokenViewType) -> String {
+        var stringDate = tokenTransactionSections[section].title
+        switch type {
+        case .All:
+            stringDate = tokenTransactionSections[section].title
+        case .Send:
+            stringDate = tokenTransactionSendSections[section].title
+        case .Recieve:
+            stringDate = tokenTransactionRecievedSections[section].title
+        }
         guard let date = convert(from: stringDate) else {
             return stringDate
         }
@@ -208,15 +237,36 @@ final class TokenViewModel {
         return stringDate
     }
 
-    func cellViewModel(for indexPath: IndexPath) -> TransactionCellViewModel {
-        return TransactionCellViewModel(
-            transaction: tokenTransactionSections[indexPath.section].items[indexPath.row],
-            config: config,
-            chainState: ChainState(server: server),
-            currentAccount: currentAccount,
-            server: token.coin.server,
-            token: token
-        )
+    func cellViewModel(for indexPath: IndexPath, type: TokenViewType) -> TransactionCellViewModel {
+        switch type {
+        case .All:
+            return TransactionCellViewModel(
+                transaction: tokenTransactionSections[indexPath.section].items[indexPath.row],
+                config: config,
+                chainState: ChainState(server: server),
+                currentAccount: currentAccount,
+                server: token.coin.server,
+                token: token
+            )
+        case .Send:
+            return TransactionCellViewModel(
+                transaction: tokenTransactionSendSections[indexPath.section].items[indexPath.row],
+                config: config,
+                chainState: ChainState(server: server),
+                currentAccount: currentAccount,
+                server: token.coin.server,
+                token: token
+            )
+        case .Recieve:
+            return TransactionCellViewModel(
+                transaction: tokenTransactionRecievedSections[indexPath.section].items[indexPath.row],
+                config: config,
+                chainState: ChainState(server: server),
+                currentAccount: currentAccount,
+                server: token.coin.server,
+                token: token
+            )
+        }
     }
 
     func hasContent() -> Bool {
@@ -299,6 +349,37 @@ final class TokenViewModel {
     private func updateSections() {
         guard let tokens = tokenTransactions else { return }
         tokenTransactionSections = transactionsStore.mappedSections(for: Array(tokens))
+        tokenTransactionSendSections = [TransactionSection]()
+        tokenTransactionRecievedSections = [TransactionSection]()
+        for each in tokenTransactionSections {
+            var sendItems = [Transaction]()
+            var recievedItems = [Transaction]()
+            for item in each.items {
+                let transaction = TransactionCellViewModel(
+                    transaction: item,
+                    config: config,
+                    chainState: ChainState(server: server),
+                    currentAccount: currentAccount,
+                    server: token.coin.server,
+                    token: token
+                )
+                if transaction.transactionViewModel.direction == .outgoing {
+                    sendItems.append(item)
+                } else {
+                    recievedItems.append(item)
+                }
+            }
+            if !sendItems.isEmpty {
+                var section = each
+                section.items = sendItems
+                tokenTransactionSendSections.append(section)
+            }
+            if !recievedItems.isEmpty {
+                var section = each
+                section.items = recievedItems
+                tokenTransactionRecievedSections.append(section)
+            }
+        }
     }
 
     func invalidateObservers() {
