@@ -16,7 +16,7 @@ final class BranchCoordinator {
     }
 
     func didFinishLaunchingWithOptions(launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-        Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { params, error in
+        Branch.getInstance()?.initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { params, error in
             guard
                 error == nil,
                 let params = params as? [String: AnyObject] else {
@@ -25,12 +25,28 @@ final class BranchCoordinator {
             if
                 let _ = params[Keys.isFirstSession] as? Bool,
                 let _ = params[Keys.clickedBranchLink] as? Bool {
-                Branch.getInstance().getLatestReferringParams()
+                Branch.getInstance()?.getLatestReferringParams()
             }
 
             guard let event = BranchEventParser.from(params: params) else { return }
             self.handleEvent(event)
         })
+//
+//        Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { params, error in
+//            guard
+//                error == nil,
+//                let params = params as? [String: AnyObject] else {
+//                    return
+//            }
+//            if
+//                let _ = params[Keys.isFirstSession] as? Bool,
+//                let _ = params[Keys.clickedBranchLink] as? Bool {
+//                Branch.getInstance().getLatestReferringParams()
+//            }
+//
+//            guard let event = BranchEventParser.from(params: params) else { return }
+//            self.handleEvent(event)
+//        })
     }
 
     func handleEvent(_ event: BranchEvent) {
@@ -47,10 +63,10 @@ final class BranchCoordinator {
     }
 
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return Branch.getInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        return Branch.getInstance()?.application(application, open: url, sourceApplication: sourceApplication, annotation: annotation) ?? false
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        return Branch.getInstance().application(app, open: url, options: options)
+        return Branch.getInstance()?.application(app, open: url, options: options) ?? false
     }
 }

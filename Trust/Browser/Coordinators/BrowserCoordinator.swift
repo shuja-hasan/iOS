@@ -235,18 +235,21 @@ final class BrowserCoordinator: NSObject, Coordinator {
         guard let url = rootViewController.browserViewController.webView.url else { return }
         rootViewController.displayLoading()
         let params = BranchEvent.openURL(url).params
-        Branch.getInstance().getShortURL(withParams: params) { [weak self] shortURLString, _ in
-            guard let `self` = self else { return }
-            let shareURL: URL = {
-                if let shortURLString = shortURLString, let shortURL = URL(string: shortURLString) {
-                    return shortURL
+
+        Branch.getInstance()?.getShortURL(withParams: params, andCallback: { shortURLString, error in
+            //            guard let `self` = self else { return }
+            if error == nil {
+                let shareURL: URL = {
+                    if let shortURLString = shortURLString, let shortURL = URL(string: shortURLString) {
+                        return shortURL
+                    }
+                    return url
+                }()
+                self.rootViewController.showShareActivity(from: UIView(), with: [shareURL]) { [weak self] in
+                    self?.rootViewController.hideLoading()
                 }
-                return url
-            }()
-            self.rootViewController.showShareActivity(from: UIView(), with: [shareURL]) { [weak self] in
-                self?.rootViewController.hideLoading()
             }
-        }
+        })
     }
 }
 
