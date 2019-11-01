@@ -31,7 +31,7 @@ final class EditTokensViewController: UITableViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = viewModel.searchPlaceholder
         searchController.searchBar.sizeToFit()
-        searchController.searchBar.barTintColor = Colors.lightGray
+        searchController.searchBar.barTintColor = Colors.veryVeryLightGray
         searchController.searchBar.delegate = self
         definesPresentationContext = true
         return searchController
@@ -195,12 +195,12 @@ extension EditTokensViewController: UISearchBarDelegate {
 
 extension EditTokensViewController: UISearchControllerDelegate {
     func willPresentSearchController(_ searchController: UISearchController) {
-        searchController.searchBar.barTintColor = Colors.darkRed
-        searchController.searchBar.tintColor = .white
+        searchController.searchBar.barTintColor = Colors.veryVeryLightGray
+        searchController.searchBar.tintColor = Colors.darkRed
     }
 
     func willDismissSearchController(_ searchController: UISearchController) {
-        searchController.searchBar.barTintColor = Colors.lightGray
+        searchController.searchBar.barTintColor = Colors.veryVeryLightGray
         searchController.searchBar.tintColor = Colors.darkRed
     }
 }

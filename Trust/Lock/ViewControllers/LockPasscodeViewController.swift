@@ -65,7 +65,9 @@ class LockPasscodeViewController: UIViewController {
     }
 
     func hideKeyboard() {
-        invisiblePasscodeField.resignFirstResponder()
+        if invisiblePasscodeField.isFirstResponder {
+            invisiblePasscodeField.resignFirstResponder()
+        }
     }
 
     func showKeyboard() {
