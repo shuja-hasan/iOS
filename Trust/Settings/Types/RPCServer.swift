@@ -93,7 +93,7 @@ enum RPCServer {
             case .main: return "https://mainnet.infura.io/llyrtzQ3YhkdESt2Fzrk"
             case .classic: return "https://etc-geth.0xinfra.com"
             case .callisto: return "https://clo-geth.0xinfra.com"
-            case .poa: return "https://poa.infura.io"
+            case .poa: return "https://core.poa.network"
             case .gochain: return "https://rpc.gochain.io"
             case .ether1: return "https://rpc.ether1.org"
             case .xerom: return "https://rpc.xerom.org"
