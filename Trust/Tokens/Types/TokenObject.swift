@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import BigInt
 import Foundation
@@ -26,7 +24,7 @@ final class TokenObject: Object, Decodable {
 
     @objc private dynamic var rawCoin = -1
     public var coin: Coin {
-        get { return Coin(rawValue: rawCoin)! }
+        get { return Coin(rawValue: rawCoin) ?? Coin.ethereum }
         set { rawCoin = newValue.rawValue }
     }
 

@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import BigInt
 import Foundation
@@ -37,8 +35,9 @@ final class SendCoordinator: RootCoordinator {
         controller.hidesBottomBarWhenPushed = true
         switch transfer.type {
         case let .ether(_, destination):
-            controller.addressRow?.value = destination?.description
-            controller.addressRow?.cell.row.updateCell()
+            controller.recipientAddressTextField.text = destination?.description
+//            controller.addressRow?.value = destination?.description
+//            controller.addressRow?.cell.row.updateCell()
         case .token, .dapp: break
         }
         controller.delegate = self

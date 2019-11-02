@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import RealmSwift
@@ -12,6 +10,7 @@ protocol TokensViewControllerDelegate: class {
     func didPressAddToken(in viewController: UIViewController)
     func didSelect(token: TokenObject, in viewController: UIViewController)
     func didRequest(token: TokenObject, in viewController: UIViewController)
+    func didTapCreateWallet(in viewController: UIViewController)
 }
 
 final class TokensViewController: UIViewController {
@@ -29,26 +28,30 @@ final class TokensViewController: UIViewController {
 
     lazy var footer: TokensFooterView = {
         let footer = TokensFooterView(frame: .zero)
-        footer.textLabel.text = viewModel.footerTitle
+        footer.textLabel.text = "Empty Wallet!" // viewModel.footerTitle
         footer.textLabel.font = viewModel.footerTextFont
         footer.textLabel.textColor = viewModel.footerTextColor
         footer.frame.size = footer.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
         footer.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(missingToken))
         )
+        footer.createButton.addTarget(self, action: #selector(createWallet), for: .touchUpInside)
         return footer
     }()
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = StyleLayout.TableView.separatorColor
-        tableView.backgroundColor = .white
-        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
+        tableView.separatorStyle = .none
+        tableView.separatorColor = UIColor.clear // StyleLayout.TableView.separatorColor
+        tableView.backgroundColor = Colors.veryLightGray // .white
+//        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
         tableView.tableHeaderView = header
         tableView.tableFooterView = footer
         tableView.addSubview(refreshControl)
+        tableView.register(UINib(nibName: "TokenViewCell", bundle: nil), forCellReuseIdentifier: "TokenViewCell")
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 65
         return tableView
     }()
 
@@ -89,7 +92,7 @@ final class TokensViewController: UIViewController {
         startTokenObservation()
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
-        footer.textLabel.text = viewModel.footerTitle
+        footer.textLabel.text = "Empty Wallet!" // viewModel.footerTitle
 
         fetch(force: true)
     }
@@ -97,6 +100,17 @@ final class TokensViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.applyTintAdjustment()
+
+        if viewModel.tokens.isEmpty {
+            footer.emptyWalletImageView.isHidden = false
+            footer.textLabel.isHidden = false
+            footer.createButton.isHidden = false
+        } else {
+            footer.emptyWalletImageView.isHidden = true
+            footer.textLabel.isHidden = true
+            footer.createButton.isHidden = true
+        }
+        tableView.tableFooterView = footer
     }
 
     @objc func pullToRefresh() {
@@ -110,6 +124,10 @@ final class TokensViewController: UIViewController {
         } else {
             fetchClosure()
         }
+    }
+
+    @objc func createWallet() {
+        delegate?.didTapCreateWallet(in: self)
     }
 
     required init?(coder _: NSCoder) {
@@ -189,7 +207,7 @@ extension TokensViewController: UITableViewDelegate {
     }
 
     func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return TokensLayout.tableView.height
+        return UITableView.automaticDimension // TokensLayout.tableView.height
     }
 }
 

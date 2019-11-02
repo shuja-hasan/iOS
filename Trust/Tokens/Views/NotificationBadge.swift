@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -54,7 +52,7 @@ extension UIView {
         }
 
         badgeLabel.text = badgeText
-        badgeLabel.font = UIFont.systemFont(ofSize: appearance.textSize)
+        badgeLabel.font = UIFont(name: "Trenda-Regular", size: appearance.textSize) ?? UIFont.systemFont(ofSize: appearance.textSize)
 
         badgeLabel.sizeToFit()
         badgeLabel.textAlignment = appearance.textAlignment

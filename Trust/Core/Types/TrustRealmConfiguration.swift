@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import RealmSwift
@@ -8,7 +6,7 @@ import TrustCore
 
 struct RealmConfiguration {
     static func sharedConfiguration() -> Realm.Configuration {
-        let config = Realm.Configuration()
+        var config = Realm.Configuration()
         let directory = config.fileURL!.deletingLastPathComponent()
         let url = directory.appendingPathComponent("shared.realm")
         return Realm.Configuration(fileURL: url)

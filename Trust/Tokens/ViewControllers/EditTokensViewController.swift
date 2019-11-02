@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -33,7 +31,7 @@ final class EditTokensViewController: UITableViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = viewModel.searchPlaceholder
         searchController.searchBar.sizeToFit()
-        searchController.searchBar.barTintColor = Colors.lightGray
+        searchController.searchBar.barTintColor = Colors.veryVeryLightGray
         searchController.searchBar.delegate = self
         definesPresentationContext = true
         return searchController
@@ -103,15 +101,15 @@ final class EditTokensViewController: UITableViewController {
     }
 
     override func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
-        return TokensLayout.tableView.height
+        return UITableView.automaticDimension // TokensLayout.tableView.height
     }
 
     func configureTableView() {
         tableView.register(R.nib.editTokenTableViewCell(), forCellReuseIdentifier: R.nib.editTokenTableViewCell.name)
         tableView.tableHeaderView = searchController.searchBar
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = StyleLayout.TableView.separatorColor
-        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.separatorColor = .clear // StyleLayout.TableView.separatorColor
+        tableView.backgroundColor = Colors.veryLightGray
         tableView.cellLayoutMarginsFollowReadableWidth = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.tableFooterView = UIView()
@@ -197,12 +195,12 @@ extension EditTokensViewController: UISearchBarDelegate {
 
 extension EditTokensViewController: UISearchControllerDelegate {
     func willPresentSearchController(_ searchController: UISearchController) {
-        searchController.searchBar.barTintColor = Colors.darkRed
-        searchController.searchBar.tintColor = .white
+        searchController.searchBar.barTintColor = Colors.veryVeryLightGray
+        searchController.searchBar.tintColor = Colors.darkRed
     }
 
     func willDismissSearchController(_ searchController: UISearchController) {
-        searchController.searchBar.barTintColor = Colors.lightGray
+        searchController.searchBar.barTintColor = Colors.veryVeryLightGray
         searchController.searchBar.tintColor = Colors.darkRed
     }
 }

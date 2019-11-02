@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 import Foundation
 
 import Eureka
@@ -14,22 +12,30 @@ protocol AboutViewControllerDelegate: class {
 final class AboutViewController: FormViewController {
     let viewModel = AboutViewModel()
     weak var delegate: AboutViewControllerDelegate?
+
     init() {
         super.init(nibName: nil, bundle: nil)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         navigationItem.title = viewModel.title
+
         form +++ Section()
+
             <<< linkProvider(type: .sourceCode)
             <<< linkProvider(type: .upstreamSourceCode)
+
             +++ Section()
+
             <<< linkProvider(type: .privacyPolicy)
             <<< linkProvider(type: .termsOfService)
             <<< linkProvider(type: .upstreamPrivacyPolicy)
             <<< linkProvider(type: .upstreamTermsOfService)
+
             +++ Section()
+
             <<< AppFormAppearance.button { button in
                 button.title = R.string.localizable.settingsEmailUsButtonTitle()
             }.onCellSelection { [weak self] _, _ in
@@ -39,7 +45,9 @@ final class AboutViewController: FormViewController {
                 cell.textLabel?.textAlignment = .left
                 cell.textLabel?.textColor = .black
             }
+
             +++ Section()
+
             <<< TextRow {
                 $0.title = R.string.localizable.settingsVersionLabelTitle()
                 $0.value = Bundle.main.fullVersion
@@ -73,6 +81,7 @@ final class AboutViewController: FormViewController {
         composerController.setToRecipients([Constants.supportEmail])
         composerController.setSubject(R.string.localizable.settingsFeedbackEmailTitle())
         composerController.setMessageBody(emailTemplate(), isHTML: false)
+
         if MFMailComposeViewController.canSendMail() {
             present(composerController, animated: true, completion: nil)
         }

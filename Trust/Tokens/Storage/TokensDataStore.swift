@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import APIKit
 import BigInt
@@ -263,7 +261,7 @@ extension Coin {
         case .callisto: return RPCServer.callisto
         case .poa: return RPCServer.poa
         case .ether1: return RPCServer.ether1
-        case .xerom: return RPCServer.xerom
+        case .Xerom: return RPCServer.Xerom
         }
     }
 }

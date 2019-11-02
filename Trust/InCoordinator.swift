@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import RealmSwift
@@ -60,7 +58,7 @@ struct CoinTypeViewModel {
         case .callisto: return RPCServer.callisto
         case .bitcoin: return RPCServer.main
         case .ether1: return RPCServer.ether1
-        case .xerom: return RPCServer.xerom
+        case .Xerom: return RPCServer.Xerom
         }
     }
 }

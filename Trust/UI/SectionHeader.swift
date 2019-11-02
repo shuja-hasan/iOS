@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -16,7 +14,7 @@ final class SectionHeader: UIView {
         borderColor: UIColor = UIColor(hex: "e1e1e1"),
         title: String?,
         textColor: UIColor = UIColor(hex: "555357"),
-        textFont: UIFont = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
+        textFont: UIFont = UIFont(name: "Trenda-Reglar", size: 14) ?? UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
     ) {
         self.fillColor = fillColor
         self.borderColor = borderColor

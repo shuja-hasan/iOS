@@ -4,9 +4,9 @@ PODS:
     - Result (~> 3.0)
   - BigInt (3.0.1):
     - SipHash (~> 1.2)
-  - Branch (0.25.3):
-    - Branch/Core (= 0.25.3)
-  - Branch/Core (0.25.3)
+  - Branch (0.29.3):
+    - Branch/Core (= 0.29.3)
+  - Branch/Core (0.29.3)
   - CryptoSwift (0.10.0)
   - Eureka (4.2.0)
   - JSONRPCKit (3.0.0):
@@ -85,7 +85,7 @@ DEPENDENCIES:
   - URLNavigator
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - APIKit
     - BigInt
@@ -154,7 +154,7 @@ SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
   BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
-  Branch: 9917f91a5381bc88ed8e4f080a18213267cf44e6
+  Branch: 9d40910c3d7f8516376fd166cb73a31cc7f73fcf
   CryptoSwift: 6c778d69282bed3b4e975ff97a79d074f20bb011
   Eureka: 0748c7bbb2560130e43c7bfa83e99c98854a1f42
   JSONRPCKit: 35aecfdf923a8e2053cef8e46d68ed3da66296c8
@@ -183,4 +183,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 87ca40f972d7aca4247395f3cef712345e265497
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.8.4

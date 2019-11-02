@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Branch
 import Foundation
@@ -55,6 +53,7 @@ class AppCoordinator: NSObject, Coordinator {
         } else {
             resetToWelcomeScreen()
         }
+
         Analitics.branch.update(with: false)
         Analitics.answer.update(with: false)
     }

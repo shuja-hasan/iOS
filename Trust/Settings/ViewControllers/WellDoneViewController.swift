@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 import UIKit
 
 enum WellDoneAction {
@@ -23,7 +21,7 @@ final class WellDoneViewController: UIViewController {
         let descriptionLabel = UILabel()
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.text = NSLocalizedString("welldone.description.label.text", value: "Help us grow by sharing this app with your friends!", comment: "")
-        descriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        descriptionLabel.font = UIFont(name: "Trenda-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .regular)
         descriptionLabel.textColor = Colors.darkRed
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center

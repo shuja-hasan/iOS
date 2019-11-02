@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 
@@ -31,7 +29,6 @@ final class AuthenticateUserCoordinator: Coordinator {
 
     func start() {
         guard lock.shouldShowProtection() else { return }
-
         navigationController.present(lockEnterPasscodeViewController, animated: true)
     }
 

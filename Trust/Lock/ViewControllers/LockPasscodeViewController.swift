@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -24,7 +22,9 @@ class LockPasscodeViewController: UIViewController {
         configureInvisiblePasscodeField()
         configureLockView()
         if !invisiblePasscodeField.isFirstResponder, !lock.incorrectMaxAttemptTimeIsSet() {
-            invisiblePasscodeField.becomeFirstResponder()
+            if !lock.shouldShowProtection() {
+                invisiblePasscodeField.becomeFirstResponder()
+            }
         }
     }
 
@@ -61,13 +61,17 @@ class LockPasscodeViewController: UIViewController {
 
     func clearPasscode() {
         invisiblePasscodeField.text = ""
-        for characterView in lockView.characters {
-            characterView.setEmpty(true)
+        if lockView != nil {
+            for characterView in lockView.characters {
+                characterView.setEmpty(true)
+            }
         }
     }
 
     func hideKeyboard() {
-        invisiblePasscodeField.resignFirstResponder()
+        if invisiblePasscodeField.isFirstResponder {
+            invisiblePasscodeField.resignFirstResponder()
+        }
     }
 
     func showKeyboard() {
@@ -75,7 +79,9 @@ class LockPasscodeViewController: UIViewController {
     }
 
     func finish(withResult success: Bool, animated _: Bool) {
-        invisiblePasscodeField.resignFirstResponder()
+        if invisiblePasscodeField.isFirstResponder {
+            invisiblePasscodeField.resignFirstResponder()
+        }
         if let finish = willFinishWithResult {
             finish(success)
         } else {

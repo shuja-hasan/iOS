@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -38,7 +36,7 @@ final class WelcomeViewController: UIViewController {
         let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("welcome.createWallet.button.title", value: "CREATE WALLET", comment: ""), for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+        button.titleLabel?.font = UIFont(name: "Trenda-Semibold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         button.backgroundColor = Colors.darkRed
         return button
     }()
@@ -47,7 +45,7 @@ final class WelcomeViewController: UIViewController {
         let importWalletButton = Button(size: .large, style: .border)
         importWalletButton.translatesAutoresizingMaskIntoConstraints = false
         importWalletButton.setTitle(NSLocalizedString("welcome.importWallet.button.title", value: "IMPORT WALLET", comment: ""), for: .normal)
-        importWalletButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+        importWalletButton.titleLabel?.font = UIFont(name: "Trenda-Semibold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         importWalletButton.accessibilityIdentifier = "import-wallet"
         return importWalletButton
     }()

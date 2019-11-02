@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import UIKit
@@ -25,7 +23,7 @@ struct EditTokenTableCellViewModel {
     }
 
     var titleFont: UIFont {
-        return UIFont.systemFont(ofSize: 18, weight: .medium)
+        return UIFont(name: "Trenda-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .medium)
     }
 
     var titleTextColor: UIColor {

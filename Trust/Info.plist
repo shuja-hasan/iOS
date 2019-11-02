@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -71,6 +71,17 @@
 	<string>Sending QR Code to your contacts</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Sending QR Code to your contacts</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Trenda ExtraLight.otf</string>
+		<string>Trenda Heavy.otf</string>
+		<string>Trenda Light.otf</string>
+		<string>Trenda Regular.otf</string>
+		<string>Trenda Semibold.otf</string>
+		<string>Trenda Thin.otf</string>
+		<string>Trenda Bold.otf</string>
+		<string>Trenda Black.otf</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

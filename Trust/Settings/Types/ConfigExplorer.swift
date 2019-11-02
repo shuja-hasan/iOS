@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 
@@ -29,7 +27,7 @@ struct ConfigExplorer {
                 return endpoint + "/tx/" + ID
             case .ether1:
                 return endpoint + "/tx/" + ID
-            case .xerom:
+            case .Xerom:
                 return endpoint + "/tx/" + ID
             }
         }()
@@ -51,7 +49,7 @@ struct ConfigExplorer {
             return "https://explorer.gochain.io"
         case .ether1:
             return "https://explorer.ether1.org"
-        case .xerom:
+        case .Xerom:
             return "https://explorer.xerom.org"
         }
     }

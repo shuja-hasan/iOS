@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import TrustKeystore
 import UIKit
@@ -28,7 +26,10 @@ class WalletsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.separatorColor = StyleLayout.TableView.separatorColor
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.backgroundColor = Colors.veryLightGray
+        tableView.separatorColor = .clear // StyleLayout.TableView.separatorColor
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(R.nib.walletViewCell(), forCellReuseIdentifier: R.nib.walletViewCell.name)
         navigationItem.title = viewModel.title
@@ -75,6 +76,10 @@ class WalletsViewController: UITableViewController {
         let viewModel = self.viewModel.cellViewModel(for: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.didSelect(wallet: viewModel.wallet, account: viewModel.account, in: self)
+    }
+
+    override func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 
     func confirmDelete(wallet: WalletInfo) {

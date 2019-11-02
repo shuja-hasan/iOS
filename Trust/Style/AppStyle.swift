@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -18,23 +16,23 @@ enum AppStyle {
     var font: UIFont {
         switch self {
         case .heading:
-            return UIFont.systemFont(ofSize: 18, weight: .regular)
+            return UIFont(name: "Trenda-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .regular)
         case .headingSemiBold:
-            return UIFont.systemFont(ofSize: 18, weight: .semibold)
+            return UIFont(name: "Trenda-Semibold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .semibold)
         case .paragraph:
-            return UIFont.systemFont(ofSize: 15, weight: .regular)
+            return UIFont(name: "Trenda-Regular", size: 15) ?? UIFont.systemFont(ofSize: 15, weight: .regular)
         case .paragraphSmall:
-            return UIFont.systemFont(ofSize: 14, weight: .regular)
+            return UIFont(name: "Trenda-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14, weight: .regular)
         case .paragraphLight:
-            return UIFont.systemFont(ofSize: 15, weight: .light)
+            return UIFont(name: "Trenda-Light", size: 15) ?? UIFont.systemFont(ofSize: 15, weight: .light)
         case .largeAmount:
-            return UIFont.systemFont(ofSize: 20, weight: .medium)
+            return UIFont(name: "Trenda-Regular", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .medium)
         case .error:
-            return UIFont.systemFont(ofSize: 13, weight: .light)
+            return UIFont(name: "Trenda-Light", size: 13) ?? UIFont.systemFont(ofSize: 13, weight: .light)
         case .formHeader:
-            return UIFont.systemFont(ofSize: 14, weight: .regular)
+            return UIFont(name: "Trenda-Regular", size: 14) ?? UIFont.systemFont(ofSize: 14, weight: .regular)
         case .collactablesHeader:
-            return UIFont.systemFont(ofSize: 21, weight: UIFont.Weight.regular)
+            return UIFont(name: "Trenda-Regular", size: 21) ?? UIFont.systemFont(ofSize: 21, weight: UIFont.Weight.regular)
         }
     }
 

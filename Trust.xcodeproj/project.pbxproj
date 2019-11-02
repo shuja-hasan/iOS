@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18062C302365C8FC00AA1315 /* TokenViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18062C2F2365C8FC00AA1315 /* TokenViewCell.xib */; };
+		18062C3A2365D26200AA1315 /* Trenda Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18062C322365D26000AA1315 /* Trenda Thin.otf */; };
+		18062C3B2365D26200AA1315 /* Trenda Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18062C332365D26000AA1315 /* Trenda Semibold.otf */; };
+		18062C3C2365D26200AA1315 /* Trenda Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18062C342365D26100AA1315 /* Trenda Bold.otf */; };
+		18062C3D2365D26200AA1315 /* Trenda Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18062C352365D26100AA1315 /* Trenda Regular.otf */; };
+		18062C3E2365D26200AA1315 /* Trenda Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18062C362365D26100AA1315 /* Trenda Light.otf */; };
+		18062C3F2365D26200AA1315 /* Trenda ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18062C372365D26200AA1315 /* Trenda ExtraLight.otf */; };
+		18062C402365D26200AA1315 /* Trenda Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18062C382365D26200AA1315 /* Trenda Black.otf */; };
+		18062C412365D26200AA1315 /* Trenda Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 18062C392365D26200AA1315 /* Trenda Heavy.otf */; };
+		188CC31A236B550300B049AA /* TokenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 188CC319236B550300B049AA /* TokenViewController.xib */; };
+		18DC1DFD2369F8FA007ED173 /* SendViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18DC1DFC2369F8FA007ED173 /* SendViewController.xib */; };
 		1D2831CD94641E5166E3A798 /* Pods_TrustUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */; };
 		290B2B541F8F50030053C83E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 290B2B561F8F50030053C83E /* Localizable.strings */; };
 		290B2B5F1F9177860053C83E /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B2B5E1F9177860053C83E /* UIImage.swift */; };
@@ -490,6 +501,17 @@
 
 /* Begin PBXFileReference section */
 		0AEE09E815DB68F6634F89AA /* Pods_TrustUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrustUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18062C2F2365C8FC00AA1315 /* TokenViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenViewCell.xib; sourceTree = "<group>"; };
+		18062C322365D26000AA1315 /* Trenda Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trenda Thin.otf"; sourceTree = "<group>"; };
+		18062C332365D26000AA1315 /* Trenda Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trenda Semibold.otf"; sourceTree = "<group>"; };
+		18062C342365D26100AA1315 /* Trenda Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trenda Bold.otf"; sourceTree = "<group>"; };
+		18062C352365D26100AA1315 /* Trenda Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trenda Regular.otf"; sourceTree = "<group>"; };
+		18062C362365D26100AA1315 /* Trenda Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trenda Light.otf"; sourceTree = "<group>"; };
+		18062C372365D26200AA1315 /* Trenda ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trenda ExtraLight.otf"; sourceTree = "<group>"; };
+		18062C382365D26200AA1315 /* Trenda Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trenda Black.otf"; sourceTree = "<group>"; };
+		18062C392365D26200AA1315 /* Trenda Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Trenda Heavy.otf"; sourceTree = "<group>"; };
+		188CC319236B550300B049AA /* TokenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenViewController.xib; sourceTree = "<group>"; };
+		18DC1DFC2369F8FA007ED173 /* SendViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendViewController.xib; sourceTree = "<group>"; };
 		290B2B551F8F50030053C83E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		290B2B5E1F9177860053C83E /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		290B2B641F91A4880053C83E /* ButtonsFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsFooterView.swift; sourceTree = "<group>"; };
@@ -992,6 +1014,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18062C312365D25400AA1315 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				18062C382365D26200AA1315 /* Trenda Black.otf */,
+				18062C342365D26100AA1315 /* Trenda Bold.otf */,
+				18062C372365D26200AA1315 /* Trenda ExtraLight.otf */,
+				18062C392365D26200AA1315 /* Trenda Heavy.otf */,
+				18062C362365D26100AA1315 /* Trenda Light.otf */,
+				18062C352365D26100AA1315 /* Trenda Regular.otf */,
+				18062C332365D26000AA1315 /* Trenda Semibold.otf */,
+				18062C322365D26000AA1315 /* Trenda Thin.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		290B2B511F8F4F840053C83E /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -1035,6 +1072,7 @@
 		2912CCF71F6A830700C6CBE3 /* Trust */ = {
 			isa = PBXGroup;
 			children = (
+				18062C312365D25400AA1315 /* Fonts */,
 				73ACEEF620163B4E003DD71D /* Lock */,
 				29E6E0681FE897BB0079265A /* Browser */,
 				29AD8A0A1F93FBB7008E10E7 /* Foundation */,
@@ -1424,6 +1462,7 @@
 			children = (
 				295B61D01FE7B20400642E60 /* TokensHeaderView.swift */,
 				296106C11F76403A0006164B /* TokenViewCell.swift */,
+				18062C2F2365C8FC00AA1315 /* TokenViewCell.xib */,
 				29F1C8451FEB6664003780D8 /* EditTokenTableViewCell.swift */,
 				29F1C8461FEB6664003780D8 /* EditTokenTableViewCell.xib */,
 				29F1C84B1FEC4F6F003780D8 /* TokensFooterView.swift */,
@@ -1433,6 +1472,7 @@
 				73DE7B3020987D8F00AE04E6 /* NonFungibleCollectionViewCell.swift */,
 				73DE7B3120987D8F00AE04E6 /* NonFungibleCollectionViewCell.xib */,
 				734AFD1420F1558800864E8E /* NotificationBadge.swift */,
+				188CC319236B550300B049AA /* TokenViewController.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2208,6 +2248,7 @@
 			isa = PBXGroup;
 			children = (
 				771ACE0D20A15AC000FB03EE /* SendNFTRow.swift */,
+				18DC1DFC2369F8FA007ED173 /* SendViewController.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2645,15 +2686,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18062C3D2365D26200AA1315 /* Trenda Regular.otf in Resources */,
 				902CAB592051818B00F96FFE /* BookmarkViewCell.xib in Resources */,
+				18062C302365C8FC00AA1315 /* TokenViewCell.xib in Resources */,
 				771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */,
+				18062C402365D26200AA1315 /* Trenda Black.otf in Resources */,
+				18062C3A2365D26200AA1315 /* Trenda Thin.otf in Resources */,
 				775DF43F203E38D3009CD082 /* NonFungibleTokenViewCell.xib in Resources */,
 				73DE7B3320987D8F00AE04E6 /* NonFungibleCollectionViewCell.xib in Resources */,
+				188CC31A236B550300B049AA /* TokenViewController.xib in Resources */,
+				18062C412365D26200AA1315 /* Trenda Heavy.otf in Resources */,
 				7704836C20FE99B600837735 /* CoinViewCell.xib in Resources */,
 				296106CE1F777E410006164B /* LaunchScreen.storyboard in Resources */,
 				290B2B541F8F50030053C83E /* Localizable.strings in Resources */,
+				18062C3B2365D26200AA1315 /* Trenda Semibold.otf in Resources */,
 				2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */,
+				18062C3C2365D26200AA1315 /* Trenda Bold.otf in Resources */,
+				18062C3E2365D26200AA1315 /* Trenda Light.otf in Resources */,
+				18DC1DFD2369F8FA007ED173 /* SendViewController.xib in Resources */,
 				73CBC75F2020CBF800374666 /* WalletViewCell.xib in Resources */,
+				18062C3F2365D26200AA1315 /* Trenda ExtraLight.otf in Resources */,
 				29F1C8481FEB6664003780D8 /* EditTokenTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3473,7 +3525,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = JV8HWDKE9M;
 				ENABLE_BITCODE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
@@ -3502,7 +3554,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = JV8HWDKE9M;
 				ENABLE_BITCODE = YES;
 				GCC_WARN_UNUSED_LABEL = YES;

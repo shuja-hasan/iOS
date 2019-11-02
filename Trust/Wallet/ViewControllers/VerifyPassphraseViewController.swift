@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Foundation
 import TrustKeystore
@@ -99,7 +97,7 @@ class VerifyPassphraseViewController: UIViewController {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = R.string.localizable.verifyBackupPhrase()
-        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        titleLabel.font = UIFont(name: "Trenda-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .regular)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.textAlignment = .center
         return titleLabel

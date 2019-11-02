@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
@@ -19,7 +17,7 @@ final class BrowserErrorView: UIView {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = Colors.gray
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont(name: "Trenda-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

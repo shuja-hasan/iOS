@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import BigInt
 import Foundation
@@ -15,7 +13,7 @@ struct TransactionCellViewModel {
     private let token: TokenObject
     private let shortFormatter = EtherNumberFormatter.short
 
-    private let transactionViewModel: TransactionViewModel
+    let transactionViewModel: TransactionViewModel
 
     init(
         transaction: Transaction,
@@ -112,7 +110,7 @@ struct TransactionCellViewModel {
     }
 
     var subTitleFont: UIFont {
-        return UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.thin)
+        return UIFont(name: "Trenda-Thin", size: 12) ?? UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.thin)
     }
 
     var backgroundColor: UIColor {
@@ -129,7 +127,7 @@ struct TransactionCellViewModel {
     }
 
     var amountFont: UIFont {
-        return UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+        return UIFont(name: "Trenda-Semibold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
     }
 
     var amountTextColor: UIColor {

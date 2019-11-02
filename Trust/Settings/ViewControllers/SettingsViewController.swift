@@ -1,6 +1,4 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import Eureka
 import StoreKit
@@ -13,6 +11,7 @@ protocol SettingsViewControllerDelegate: class {
 
 final class SettingsViewController: FormViewController, Coordinator {
     var coordinators: [Coordinator] = []
+
     struct Values {
         static let currencyPopularKey = "0"
         static let currencyAllKey = "1"
@@ -22,7 +21,9 @@ final class SettingsViewController: FormViewController, Coordinator {
     private var config = Config()
     private var lock = Lock()
     private let helpUsCoordinator = HelpUsCoordinator()
+
     weak var delegate: SettingsViewControllerDelegate?
+
     var isPasscodeEnabled: Bool {
         return lock.isPasscodeSet()
     }
@@ -59,6 +60,7 @@ final class SettingsViewController: FormViewController, Coordinator {
 
     let session: WalletSession
     let keystore: Keystore
+
     init(
         session: WalletSession,
         keystore: Keystore
@@ -72,8 +74,11 @@ final class SettingsViewController: FormViewController, Coordinator {
         super.viewDidLoad()
         title = R.string.localizable.settingsNavigationTitle()
         form = Section()
+
             <<< walletsRow(for: session.account)
+
             +++ Section(R.string.localizable.settingsSecurityLabelTitle())
+
             <<< SwitchRow(Values.passcodeRow) { [weak self] in
                 $0.title = self?.viewModel.passcodeTitle
                 $0.value = self?.isPasscodeEnabled
@@ -90,7 +95,9 @@ final class SettingsViewController: FormViewController, Coordinator {
             }.cellSetup { cell, _ in
                 cell.imageView?.image = R.image.settings_colorful_security()
             }
+
             <<< autoLockRow
+
             <<< AppFormAppearance.button { [weak self] row in
                 row.cellStyle = .value1
                 row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
@@ -106,7 +113,9 @@ final class SettingsViewController: FormViewController, Coordinator {
                 cell.textLabel?.text = R.string.localizable.settingsPushNotificationsTitle()
                 cell.accessoryType = .disclosureIndicator
             }
+
             +++ Section()
+
             <<< currencyRow()
             <<< browserRow()
             // <<< privacyRow()

@@ -1,10 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
-// Copyright Ether-1 Developers. All rights reserved.
-// Copyright Xerom Developers. All rights reserved.
 
 import UIKit
 
 struct Colors {
+    static let disabledGreyTabBar = UIColor(hex: "A0ACC0")
+    static let newDesignNavBarBlue = UIColor(hex: "3574fa")
     static let darkBlu = UIColor(hex: "3375BB")
     static let darkRed = UIColor(hex: "981944")
     static let blue = UIColor(hex: "2e91db")
