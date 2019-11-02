@@ -11,6 +11,8 @@ class RPCServerTests: XCTestCase {
         XCTAssertEqual(RPCServer.classic.coin, Coin.ethereumClassic)
         XCTAssertEqual(RPCServer.callisto.coin, Coin.callisto)
         XCTAssertEqual(RPCServer.gochain.coin, Coin.gochain)
+        XCTAssertEqual(RPCServer.ether1.coin, Coin.ether1)
+        XCTAssertEqual(RPCServer.xerom.coin, Coin.xerom)
     }
 
     func testisDisabledByDefault() {
@@ -19,5 +21,7 @@ class RPCServerTests: XCTestCase {
         XCTAssertEqual(RPCServer.classic.isDisabledByDefault, true)
         XCTAssertEqual(RPCServer.callisto.isDisabledByDefault, true)
         XCTAssertEqual(RPCServer.gochain.isDisabledByDefault, true)
+        XCTAssertEqual(RPCServer.ether1.isDisabledByDefault, true)
+        XCTAssertEqual(RPCServer.xerom.isDisabledByDefault, true)
     }
 }

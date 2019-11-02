@@ -42,7 +42,7 @@ struct Config {
     var servers: [Coin] {
         return [
             Coin.ether1,
-            //            Coin.xerom,
+            Coin.Xerom,
             Coin.ethereum,
             Coin.ethereumClassic,
             Coin.poa,
