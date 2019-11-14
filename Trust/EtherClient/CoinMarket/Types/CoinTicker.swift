@@ -25,7 +25,7 @@ extension CoinTicker {
                     price: Double(price) ?? 0,
                     contract: contract
                 ),
-                ]
+            ]
         )
     }
 }

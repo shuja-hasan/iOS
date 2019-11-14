@@ -1,8 +1,8 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
 import TrustCore
+import UIKit
 
 protocol TokensCoordinatorDelegate: class {
     func didPressSend(for token: TokenObject, in coordinator: TokensCoordinator)
@@ -12,7 +12,6 @@ protocol TokensCoordinatorDelegate: class {
 }
 
 final class TokensCoordinator: Coordinator {
-
     let navigationController: NavigationController
     let session: WalletSession
     let keystore: Keystore
@@ -26,6 +25,7 @@ final class TokensCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
+
     lazy var nonFungibleTokensViewController: NonFungibleTokensViewController = {
         let nonFungibleTokenViewModel = NonFungibleTokenViewModel(address: session.account.address, storage: store, tokensNetwork: network)
         let controller = NonFungibleTokensViewController(viewModel: nonFungibleTokenViewModel)
@@ -45,11 +45,11 @@ final class TokensCoordinator: Coordinator {
     weak var delegate: TokensCoordinatorDelegate?
 
     lazy var rootViewController: WalletViewController = {
-        return masterViewController
+        masterViewController
     }()
 
     lazy var network: NetworkProtocol = {
-        return TrustNetwork(
+        TrustNetwork(
             provider: TrustProviderFactory.makeProvider(),
             wallet: session.account
         )
@@ -66,7 +66,7 @@ final class TokensCoordinator: Coordinator {
         self.navigationController.modalPresentationStyle = .formSheet
         self.session = session
         self.keystore = keystore
-        self.store = tokensStorage
+        store = tokensStorage
         self.transactionsStore = transactionsStore
     }
 
@@ -136,7 +136,7 @@ final class TokensCoordinator: Coordinator {
     }
 
     func addTokenContract(for contract: Address) {
-        let _ = network.search(query: contract.description).done { [weak self] tokens in
+        _ = network.search(query: contract.description).done { [weak self] tokens in
             guard let token = tokens.first else { return }
             self?.store.add(tokens: [token])
         }
@@ -147,8 +147,8 @@ final class TokensCoordinator: Coordinator {
     }
 
     @objc private func transactions() {
-        //let coordinator = TransactionsCoordinator(session: session, storage: transactionsStore, network: network)
-        //navigationController.pushCoordinator(coordinator: coordinator, animated: true)
+        // let coordinator = TransactionsCoordinator(session: session, storage: transactionsStore, network: network)
+        // navigationController.pushCoordinator(coordinator: coordinator, animated: true)
     }
 
     private func didSelectToken(_ token: CollectibleTokenObject, with backgroundColor: UIColor) {
@@ -164,11 +164,11 @@ final class TokensCoordinator: Coordinator {
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {
-    func didRequest(token: TokenObject, in viewController: UIViewController) {
+    func didRequest(token: TokenObject, in _: UIViewController) {
         delegate?.didPressRequest(for: token, in: self)
     }
 
-    func didSelect(token: TokenObject, in viewController: UIViewController) {
+    func didSelect(token: TokenObject, in _: UIViewController) {
         let controller = TokenViewController(
             viewModel: TokenViewModel(token: token, store: store, transactionsStore: transactionsStore, tokensNetwork: network, session: session)
         )
@@ -177,13 +177,17 @@ extension TokensCoordinator: TokensViewControllerDelegate {
         navigationController.pushViewController(controller, animated: true)
     }
 
-    func didPressAddToken(in viewController: UIViewController) {
+    func didPressAddToken(in _: UIViewController) {
         addToken()
+    }
+
+    func didTapCreateWallet(in _: UIViewController) {
+        edit()
     }
 }
 
 extension TokensCoordinator: NewTokenViewControllerDelegate {
-    func didAddToken(token: ERC20Token, in viewController: NewTokenViewController) {
+    func didAddToken(token: ERC20Token, in _: NewTokenViewController) {
         store.addCustom(token: token)
         tokensViewController.fetch()
         dismiss()
@@ -214,21 +218,22 @@ extension TokensCoordinator: TokenViewControllerDelegate {
             barItem: UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismiss))
         )
     }
-    func didPressSend(for token: TokenObject, in controller: UIViewController) {
+
+    func didPressSend(for token: TokenObject, in _: UIViewController) {
         delegate?.didPressSend(for: token, in: self)
     }
 
-    func didPressRequest(for token: TokenObject, in controller: UIViewController) {
+    func didPressRequest(for token: TokenObject, in _: UIViewController) {
         delegate?.didPressRequest(for: token, in: self)
     }
 
-    func didPressInfo(for token: TokenObject, in controller: UIViewController) {
+    func didPressInfo(for token: TokenObject, in _: UIViewController) {
         tokenInfo(token)
     }
 }
 
 extension TokensCoordinator: NFTokenViewControllerDelegate {
-    func didPressLink(url: URL, in viewController: NFTokenViewController) {
+    func didPressLink(url: URL, in _: NFTokenViewController) {
         openURL(url)
     }
 }
@@ -246,11 +251,11 @@ extension TokensCoordinator: EditTokensViewControllerDelegate {
         controller.fetch()
     }
 
-    func didDisable(token: TokenObject, in controller: EditTokensViewController) {
+    func didDisable(token: TokenObject, in _: EditTokensViewController) {
         store.update(tokens: [token], action: .disable(true))
     }
 
-    func didEdit(token: TokenObject, in controller: EditTokensViewController) {
+    func didEdit(token: TokenObject, in _: EditTokensViewController) {
         editToken(token)
     }
 }

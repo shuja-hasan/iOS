@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import TrustCore
 import BigInt
+import TrustCore
 
 final class TokenBalanceOperation: TrustOperation {
     private var balanceProvider: BalanceNetworkProvider
@@ -30,7 +30,7 @@ final class TokenBalanceOperation: TrustOperation {
     }
 
     private func updateModel(with balance: BigInt) {
-        self.store.update(balance: balance, for: balanceProvider.addressUpdate)
-        self.finish()
+        store.update(balance: balance, for: balanceProvider.addressUpdate)
+        finish()
     }
 }

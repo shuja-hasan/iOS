@@ -4,7 +4,6 @@ import Foundation
 import UIKit
 
 struct InCoordinatorViewModel {
-
     let config: Config
     let preferences: PreferencesController
 

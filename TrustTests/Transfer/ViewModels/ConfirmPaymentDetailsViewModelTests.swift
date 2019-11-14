@@ -1,14 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
+import BigInt
 import Realm
 import RealmSwift
-import BigInt
 @testable import Trust
 import TrustCore
+import XCTest
 
 class ConfirmPaymentDetailsViewModelTests: XCTestCase {
-
     func testActionButtonTitleOnSignAndSend() {
         let transactionAddress = EthereumAddress(string: "0x000000000000000000000000000000000000003c")!
         let transaction: PreviewTransaction = .make(account: .make(address: transactionAddress))

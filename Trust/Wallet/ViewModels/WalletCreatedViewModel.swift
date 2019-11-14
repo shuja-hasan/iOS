@@ -15,7 +15,6 @@ enum WalletDoneType {
 }
 
 struct WalletCreatedViewModel {
-
     let wallet: WalletInfo
     let type: WalletDoneType
 

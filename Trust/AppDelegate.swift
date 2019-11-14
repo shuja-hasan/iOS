@@ -1,24 +1,25 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import UIKit
 import Branch
 import RealmSwift
+import UIKit
 import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
     var window: UIWindow?
     var coordinator: AppCoordinator!
-    //This is separate coordinator for the protection of the sensitive information.
+    // This is separate coordinator for the protection of the sensitive information.
     lazy var protectionCoordinator: ProtectionCoordinator = {
-        return ProtectionCoordinator()
+        ProtectionCoordinator()
     }()
+
     let urlNavigatorCoordinator = URLNavigatorCoordinator()
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        //setenv("CFNETWORK_DIAGNOSTICS", "3", 1);
+    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // setenv("CFNETWORK_DIAGNOSTICS", "3", 1);
         window = UIWindow(frame: UIScreen.main.bounds)
-        
-        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _  in }
+
+        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { _, _ in }
         UIApplication.shared.registerForRemoteNotifications()
 
         let sharedMigration = SharedMigrationInitializer()
@@ -35,35 +36,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
 
         protectionCoordinator.didFinishLaunchingWithOptions()
-        //urlNavigatorCoordinator.branch.didFinishLaunchingWithOptions(launchOptions: launchOptions)
+        // urlNavigatorCoordinator.branch.didFinishLaunchingWithOptions(launchOptions: launchOptions)
         return true
     }
 
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    func application(_: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         coordinator.didRegisterForRemoteNotificationsWithDeviceToken(deviceToken: deviceToken)
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
+    func applicationWillResignActive(_: UIApplication) {
         protectionCoordinator.applicationWillResignActive()
         Lock().setAutoLockTime()
         CookiesStore.save()
     }
 
-    func applicationDidBecomeActive(_ application: UIApplication) {
+    func applicationDidBecomeActive(_: UIApplication) {
         protectionCoordinator.applicationDidBecomeActive()
         CookiesStore.load()
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    func applicationDidEnterBackground(_: UIApplication) {
         protectionCoordinator.applicationDidEnterBackground()
     }
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
+    func applicationWillEnterForeground(_: UIApplication) {
         protectionCoordinator.applicationWillEnterForeground()
     }
 
-    func application(_ application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplicationExtensionPointIdentifier) -> Bool {
-        if extensionPointIdentifier == UIApplicationExtensionPointIdentifier.keyboard {
+    func application(_: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplication.ExtensionPointIdentifier) -> Bool {
+        if extensionPointIdentifier == UIApplication.ExtensionPointIdentifier.keyboard {
             return false
         }
         return true
@@ -77,13 +78,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 //    }
 
     // Respond to URI scheme links
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         return urlNavigatorCoordinator.application(app, open: url, options: options)
     }
 
     // Respond to Universal Links
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        //Branch.getInstance().continue(userActivity)
+    func application(_: UIApplication, continue _: NSUserActivity, restorationHandler _: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        // Branch.getInstance().continue(userActivity)
         return true
     }
 }

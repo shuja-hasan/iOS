@@ -13,6 +13,7 @@ final class StringFormatter {
         formatter.isLenient = true
         return formatter
     }()
+
     /// decimalFormatter of a `StringFormatter` to represent curent locale.
     private lazy var decimalFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -21,6 +22,7 @@ final class StringFormatter {
         formatter.isLenient = true
         return formatter
     }()
+
     /// tenthFormatter of a `StringFormatter` to represent Int numbers with grouping.
     private lazy var tenthFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -28,6 +30,7 @@ final class StringFormatter {
         formatter.numberStyle = .decimal
         return formatter
     }()
+
     /// Converts a Decimal to a `currency String`.
     ///
     /// - Parameters:
@@ -39,6 +42,7 @@ final class StringFormatter {
         formatter.currencyCode = currencyCode
         return formatter.string(for: value) ?? "\(value)"
     }
+
     /// Converts a Decimal to a `token String`.
     ///
     /// - Parameters:
@@ -50,6 +54,7 @@ final class StringFormatter {
         formatter.maximumFractionDigits = decimals
         return formatter.string(for: value) ?? "\(value)"
     }
+
     /// Converts a String to a `Decimal`.
     ///
     /// - Parameters:
@@ -61,6 +66,7 @@ final class StringFormatter {
         formatter.decimalSeparator = Locale.current.decimalSeparator
         return formatter.number(from: value) as? Decimal
     }
+
     /// Converts a Double to a `String`.
     ///
     /// - Parameters:
@@ -70,6 +76,7 @@ final class StringFormatter {
     func formatter(for double: Double, with precision: Int) -> String {
         return String(format: "%.\(precision)f", double)
     }
+
     /// Converts a Double to a `String`.
     ///
     /// - Parameters:
@@ -78,6 +85,7 @@ final class StringFormatter {
     func formatter(for double: Double) -> String {
         return String(format: "%f", double)
     }
+
     /// Converts a Int to a `String` that respect tenth.
     ///
     /// - Parameters:

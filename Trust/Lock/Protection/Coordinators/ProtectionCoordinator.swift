@@ -5,20 +5,22 @@ import UIKit
 final class ProtectionCoordinator: Coordinator {
     var coordinators: [Coordinator] = []
     lazy var splashCoordinator: SplashCoordinator = {
-        return SplashCoordinator(window: self.protectionWindow)
+        SplashCoordinator(window: self.protectionWindow)
     }()
+
     lazy var lockEnterPasscodeCoordinator: LockEnterPasscodeCoordinator = {
-        return LockEnterPasscodeCoordinator(model: LockEnterPasscodeViewModel())
+        LockEnterPasscodeCoordinator(model: LockEnterPasscodeViewModel())
     }()
+
     let protectionWindow = UIWindow()
     init() {
-        protectionWindow.windowLevel = UIWindowLevelStatusBar + 2.0
+        protectionWindow.windowLevel = UIWindow.Level.statusBar + 2.0
     }
 
     func didFinishLaunchingWithOptions() {
         splashCoordinator.start()
         lockEnterPasscodeCoordinator.start()
-        //lockEnterPasscodeCoordinator.showAuthentication()
+        // lockEnterPasscodeCoordinator.showAuthentication()
     }
 
     func applicationDidBecomeActive() {

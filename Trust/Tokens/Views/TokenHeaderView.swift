@@ -3,7 +3,6 @@
 import UIKit
 
 final class TokenHeaderView: UIView {
-
     private struct Layout {
         static let imageSize: CGFloat = 70
     }
@@ -52,12 +51,42 @@ final class TokenHeaderView: UIView {
         return footerView
     }()
 
+    lazy var allButton: Button = {
+        let sendButton = Button(size: .large, style: .squared)
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.layer.cornerRadius = 6
+        sendButton.setTitle("All", for: .normal)
+//        sendButton.accessibilityIdentifier = "send-button"
+        sendButton.titleLabel?.font = UIFont(name: "Trenda-Regular", size: 17) ?? UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
+        return sendButton
+    }()
+
+    lazy var sendButton: Button = {
+        let sendButton = Button(size: .large, style: .squared)
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.layer.cornerRadius = 6
+        sendButton.setTitle(R.string.localizable.send(), for: .normal)
+        sendButton.accessibilityIdentifier = "send-button"
+        sendButton.titleLabel?.font = UIFont(name: "Trenda-Regular", size: 17) ?? UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
+        return sendButton
+    }()
+
+    lazy var recieveButton: Button = {
+        let sendButton = Button(size: .large, style: .squared)
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.layer.cornerRadius = 6
+        sendButton.setTitle(NSLocalizedString("transactions.receive.button.title", value: "Receive", comment: ""), for: .normal)
+        sendButton.accessibilityIdentifier = "recieve-button"
+        sendButton.titleLabel?.font = UIFont(name: "Trenda-Regular", size: 17) ?? UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
+        return sendButton
+    }()
+
     lazy var container: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 0
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fill // .equalSpacing
         stackView.alignment = .center
         return stackView
     }()
@@ -70,6 +99,7 @@ final class TokenHeaderView: UIView {
         let amountStack = UIStackView(arrangedSubviews: [amountLabel, fiatAmountLabel])
         amountStack.translatesAutoresizingMaskIntoConstraints = false
         amountStack.axis = .horizontal
+        amountStack.distribution = .fillEqually
 
         let marketPriceStack = UIStackView(arrangedSubviews: [
             marketPriceLabel,
@@ -80,6 +110,11 @@ final class TokenHeaderView: UIView {
         marketPriceStack.axis = .horizontal
         marketPriceStack.distribution = .equalSpacing
         marketPriceStack.spacing = 0
+
+        let bottomButtonStack = UIStackView(arrangedSubviews: [allButton, sendButton, recieveButton])
+        bottomButtonStack.translatesAutoresizingMaskIntoConstraints = false
+        bottomButtonStack.axis = .horizontal
+        bottomButtonStack.spacing = 0
 
         let buttonsContainer = UIView()
         buttonsContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -93,6 +128,9 @@ final class TokenHeaderView: UIView {
         container.addArrangedSubview(marketPriceStack)
         container.addArrangedSubview(.spacer(height: 12))
         addSubview(buttonsContainer)
+//        container.addArrangedSubview(buttonsContainer)
+        container.addArrangedSubview(.spacer(height: 60))
+        container.addArrangedSubview(bottomButtonStack)
         addSubview(container)
 
         let buttonsViewLeading = buttonsView.leadingAnchor.constraint(equalTo: buttonsContainer.leadingAnchor)
@@ -122,7 +160,15 @@ final class TokenHeaderView: UIView {
         buttonsView.backgroundColor = Colors.veryVeryLightGray
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class RoundedButtons: UIButton {
+    @IBInspectable var cornerRadius: CGFloat = 0 {
+        didSet {
+            layer.cornerRadius = cornerRadius
+        }
     }
 }

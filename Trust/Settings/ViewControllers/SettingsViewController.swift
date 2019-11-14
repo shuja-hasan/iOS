@@ -1,9 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import UIKit
 import Eureka
 import StoreKit
 import TrustCore
+import UIKit
 
 protocol SettingsViewControllerDelegate: class {
     func didAction(action: SettingsAction, in viewController: SettingsViewController)
@@ -11,29 +11,29 @@ protocol SettingsViewControllerDelegate: class {
 
 final class SettingsViewController: FormViewController, Coordinator {
     var coordinators: [Coordinator] = []
-    
+
     struct Values {
         static let currencyPopularKey = "0"
         static let currencyAllKey = "1"
         static let passcodeRow = "PasscodeRow"
     }
-    
+
     private var config = Config()
     private var lock = Lock()
     private let helpUsCoordinator = HelpUsCoordinator()
-    
+
     weak var delegate: SettingsViewControllerDelegate?
-    
+
     var isPasscodeEnabled: Bool {
         return lock.isPasscodeSet()
     }
-    
+
     lazy var viewModel: SettingsViewModel = {
-        return SettingsViewModel(isDebug: isDebug)
+        SettingsViewModel(isDebug: isDebug)
     }()
-    
+
     lazy var autoLockRow: PushRow<AutoLock> = {
-        return PushRow<AutoLock> { [weak self] in
+        PushRow<AutoLock> { [weak self] in
             guard let strongSelf = self else {
                 return
             }
@@ -42,62 +42,62 @@ final class SettingsViewController: FormViewController, Coordinator {
             $0.value = strongSelf.lock.getAutoLockType()
             $0.selectorTitle = strongSelf.viewModel.autoLockTitle
             $0.displayValueFor = { value in
-                return value?.displayName
+                value?.displayName
             }
-            $0.hidden = Condition.function([Values.passcodeRow], { form in
-                return !((form.rowBy(tag: Values.passcodeRow) as? SwitchRow)?.value ?? false)
-            })
-            }.onChange { [weak self] row in
-                let autoLockType = row.value ?? AutoLock.immediate
-                self?.lock.setAutoLockType(type: autoLockType)
-                self?.lock.removeAutoLockTime()
-            }.onPresent { _, selectorController in
-                selectorController.enableDeselection = false
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_colorful_auto()
+            $0.hidden = Condition.function([Values.passcodeRow]) { form in
+                !((form.rowBy(tag: Values.passcodeRow) as? SwitchRow)?.value ?? false)
+            }
+        }.onChange { [weak self] row in
+            let autoLockType = row.value ?? AutoLock.immediate
+            self?.lock.setAutoLockType(type: autoLockType)
+            self?.lock.removeAutoLockTime()
+        }.onPresent { _, selectorController in
+            selectorController.enableDeselection = false
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = R.image.settings_colorful_auto()
         }
     }()
-    
+
     let session: WalletSession
     let keystore: Keystore
-    
+
     init(
         session: WalletSession,
         keystore: Keystore
-        ) {
+    ) {
         self.session = session
         self.keystore = keystore
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = R.string.localizable.settingsNavigationTitle()
         form = Section()
-            
+
             <<< walletsRow(for: session.account)
-            
+
             +++ Section(R.string.localizable.settingsSecurityLabelTitle())
-            
+
             <<< SwitchRow(Values.passcodeRow) { [weak self] in
                 $0.title = self?.viewModel.passcodeTitle
                 $0.value = self?.isPasscodeEnabled
-                }.onChange { [unowned self] row in
-                    if row.value == true {
-                        self.setPasscode { result in
-                            row.value = result
-                            row.updateCell()
-                        }
-                    } else {
-                        self.lock.deletePasscode()
-                        self.updateAutoLockRow(with: AutoLock.immediate)
+            }.onChange { [unowned self] row in
+                if row.value == true {
+                    self.setPasscode { result in
+                        row.value = result
+                        row.updateCell()
                     }
-                }.cellSetup { cell, _ in
-                    cell.imageView?.image = R.image.settings_colorful_security()
+                } else {
+                    self.lock.deletePasscode()
+                    self.updateAutoLockRow(with: AutoLock.immediate)
+                }
+            }.cellSetup { cell, _ in
+                cell.imageView?.image = R.image.settings_colorful_security()
             }
-            
+
             <<< autoLockRow
-            
+
             <<< AppFormAppearance.button { [weak self] row in
                 row.cellStyle = .value1
                 row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
@@ -106,19 +106,19 @@ final class SettingsViewController: FormViewController, Coordinator {
                         self?.run(action: .pushNotifications(change))
                     }
                     return controller
-                    }, onDismiss: { _ in
+                }, onDismiss: { _ in
                 })
-                }.cellUpdate { cell, _ in
-                    cell.imageView?.image = R.image.settings_colorful_notifications()
-                    cell.textLabel?.text = R.string.localizable.settingsPushNotificationsTitle()
-                    cell.accessoryType = .disclosureIndicator
+            }.cellUpdate { cell, _ in
+                cell.imageView?.image = R.image.settings_colorful_notifications()
+                cell.textLabel?.text = R.string.localizable.settingsPushNotificationsTitle()
+                cell.accessoryType = .disclosureIndicator
             }
-            
+
             +++ Section()
-            
+
             <<< currencyRow()
             <<< browserRow()
-            //<<< privacyRow()
+            // <<< privacyRow()
             +++ Section(R.string.localizable.settingsJoinCommunityLabelTitle())
             <<< linkProvider(type: .twitter)
             <<< linkProvider(type: .telegram)
@@ -130,34 +130,35 @@ final class SettingsViewController: FormViewController, Coordinator {
             <<< shareWithFriendsRow()
             +++ Section()
             <<< aboutRow()
-            //+++ Section()
-            //<<< developersRow()
+        // +++ Section()
+        // <<< developersRow()
     }
+
     private func shareWithFriendsRow() -> ButtonRow {
         return AppFormAppearance.button { button in
             button.title = R.string.localizable.shareWithFriends()
             button.cell.imageView?.image = R.image.settings_colorful_share()
-            }.onCellSelection { [unowned self] cell, _  in
-                self.helpUsCoordinator.presentSharing(in: self, from: cell.contentView)
+        }.onCellSelection { [unowned self] cell, _ in
+            self.helpUsCoordinator.presentSharing(in: self, from: cell.contentView)
         }
     }
-    
+
     private func walletsRow(for wallet: WalletInfo) -> ButtonRow {
         let viewModel = WalletInfoViewModel(wallet: wallet)
         return AppFormAppearance.button { row in
             row.cellStyle = .value1
-            }.cellUpdate { cell, _ in
-                cell.textLabel?.textColor = .black
-                cell.imageView?.image = R.image.settings_colorful_wallets()
-                cell.textLabel?.text = R.string.localizable.wallets()
-                cell.detailTextLabel?.text = String(viewModel.name.prefix(14))
-                cell.accessoryType = .disclosureIndicator
-            }.onCellSelection { [weak self] (_, _) in
-                guard let strongSelf = self else { return }
-                strongSelf.delegate?.didAction(action: .wallets, in: strongSelf)
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textColor = .black
+            cell.imageView?.image = R.image.settings_colorful_wallets()
+            cell.textLabel?.text = R.string.localizable.wallets()
+            cell.detailTextLabel?.text = String(viewModel.name.prefix(14))
+            cell.accessoryType = .disclosureIndicator
+        }.onCellSelection { [weak self] _, _ in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.didAction(action: .wallets, in: strongSelf)
         }
     }
-    
+
     private func currencyRow() -> PushRow<Currency> {
         return PushRow<Currency> { [weak self] in
             $0.title = self?.viewModel.currencyTitle
@@ -166,39 +167,38 @@ final class SettingsViewController: FormViewController, Coordinator {
             $0.value = self?.config.currency
             $0.displayValueFor = { value in
                 let currencyCode = value?.rawValue ?? ""
-                if (currencyCode == "BTC") {
+                if currencyCode == "BTC" {
                     return currencyCode + " - " + R.string.localizable.bitcoin()
-                }
-                else {
+                } else {
                     return currencyCode + " - " + (NSLocale.current.localizedString(forCurrencyCode: currencyCode) ?? "")
                 }
             }
-            }.onChange { [weak self]  row in
-                guard let value = row.value else { return }
-                self?.config.currency = value
-                self?.run(action: .currency)
-            }.onPresent { _, selectorController in
-                selectorController.enableDeselection = false
-                selectorController.sectionKeyForValue = { option in
-                    switch option {
-                    case .USD, .EUR, .BTC, .RUB: return Values.currencyPopularKey
-                    default: return Values.currencyAllKey
-                    }
+        }.onChange { [weak self] row in
+            guard let value = row.value else { return }
+            self?.config.currency = value
+            self?.run(action: .currency)
+        }.onPresent { _, selectorController in
+            selectorController.enableDeselection = false
+            selectorController.sectionKeyForValue = { option in
+                switch option {
+                case .USD, .EUR, .BTC, .RUB: return Values.currencyPopularKey
+                default: return Values.currencyAllKey
                 }
-                selectorController.sectionHeaderTitleForKey = { option in
-                    switch option {
-                    case Values.currencyPopularKey:
-                        return R.string.localizable.settingsCurrencyPopularLabelTitle()
-                    case Values.currencyAllKey:
-                        return R.string.localizable.settingsCurrencyAllLabelTitle()
-                    default: return ""
-                    }
+            }
+            selectorController.sectionHeaderTitleForKey = { option in
+                switch option {
+                case Values.currencyPopularKey:
+                    return R.string.localizable.settingsCurrencyPopularLabelTitle()
+                case Values.currencyAllKey:
+                    return R.string.localizable.settingsCurrencyAllLabelTitle()
+                default: return ""
                 }
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = R.image.settings_colorful_currency()
+            }
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = R.image.settings_colorful_currency()
         }
     }
-    
+
     private func aboutRow() -> ButtonRow {
         return AppFormAppearance.button { row in
             row.cellStyle = .value1
@@ -207,58 +207,58 @@ final class SettingsViewController: FormViewController, Coordinator {
                 controller.delegate = self
                 return controller
             }, onDismiss: { _ in })
-            }.cellUpdate { cell, _ in
-                cell.textLabel?.textColor = .black
-                cell.imageView?.image = R.image.settings_colorful_about()
-                cell.textLabel?.text = R.string.localizable.settingsAboutTitle()
-                cell.accessoryType = .disclosureIndicator
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textColor = .black
+            cell.imageView?.image = R.image.settings_colorful_about()
+            cell.textLabel?.text = R.string.localizable.settingsAboutTitle()
+            cell.accessoryType = .disclosureIndicator
         }
     }
-    
+
     private func browserRow() -> ButtonRow {
         return AppFormAppearance.button { row in
             row.cellStyle = .value1
-            row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback { [weak self] in
+            row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback { [weak self] in
                 let controller = BrowserConfigurationViewController()
                 controller.delegate = self
                 return controller
             }, onDismiss: nil)
-            }.cellUpdate { cell, _ in
-                cell.textLabel?.textColor = .black
-                cell.imageView?.image = R.image.settings_colorful_dappbrowser()
-                cell.textLabel?.text = R.string.localizable.settingsBrowserTitle()
-                cell.accessoryType = .disclosureIndicator
+        }.cellUpdate { cell, _ in
+            cell.textLabel?.textColor = .black
+            cell.imageView?.image = R.image.settings_colorful_dappbrowser()
+            cell.textLabel?.text = R.string.localizable.settingsBrowserTitle()
+            cell.accessoryType = .disclosureIndicator
         }
     }
-    
+
     private func privacyRow() -> ButtonRow {
         return AppFormAppearance.button { row in
             row.cellStyle = .value1
-            row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback {
-                return PrivacyViewController()
+            row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback {
+                PrivacyViewController()
             }, onDismiss: nil)
-            }.cellUpdate { cell, _ in
-                cell.imageView?.image = R.image.settings_colorful_privacy()
-                cell.textLabel?.text = R.string.localizable.settingsPrivacyTitle()
-                cell.accessoryType = .disclosureIndicator
+        }.cellUpdate { cell, _ in
+            cell.imageView?.image = R.image.settings_colorful_privacy()
+            cell.textLabel?.text = R.string.localizable.settingsPrivacyTitle()
+            cell.accessoryType = .disclosureIndicator
         }
     }
-    
+
     private func developersRow() -> ButtonRow {
         return AppFormAppearance.button { row in
             row.cellStyle = .value1
-            row.presentationMode = .show(controllerProvider:ControllerProvider<UIViewController>.callback {[weak self] in
+            row.presentationMode = .show(controllerProvider: ControllerProvider<UIViewController>.callback { [weak self] in
                 let controller = DeveloperViewController()
                 controller.delegate = self
                 return controller
             }, onDismiss: nil)
-            }.cellUpdate { cell, _ in
-                cell.imageView?.image = R.image.settings_colorful_developer()
-                cell.textLabel?.text = R.string.localizable.developer()
-                cell.accessoryType = .disclosureIndicator
+        }.cellUpdate { cell, _ in
+            cell.imageView?.image = R.image.settings_colorful_developer()
+            cell.textLabel?.text = R.string.localizable.developer()
+            cell.accessoryType = .disclosureIndicator
         }
     }
-    
+
     func setPasscode(completion: ((Bool) -> Void)? = .none) {
         let coordinator = LockCreatePasscodeCoordinator(
             model: LockCreatePasscodeViewModel()
@@ -277,42 +277,42 @@ final class SettingsViewController: FormViewController, Coordinator {
         addCoordinator(coordinator)
         navigationController?.present(coordinator.navigationController, animated: true, completion: nil)
     }
-    
+
     private func linkProvider(
         type: URLServiceProvider
-        ) -> ButtonRow {
+    ) -> ButtonRow {
         return AppFormAppearance.button {
             $0.title = type.title
-            }.onCellSelection { [weak self] _, _ in
-                guard let `self` = self else { return }
-                if let localURL = type.localURL, UIApplication.shared.canOpenURL(localURL) {
-                    UIApplication.shared.open(localURL, options: [:], completionHandler: .none)
-                } else {
-                    self.openURLInBrowser(type.remoteURL)
-                }
-            }.cellSetup { cell, _ in
-                cell.imageView?.image = type.image
-            }.cellUpdate { cell, _ in
-                cell.accessoryType = .disclosureIndicator
-                cell.textLabel?.textAlignment = .left
-                cell.textLabel?.textColor = .black
+        }.onCellSelection { [weak self] _, _ in
+            guard let `self` = self else { return }
+            if let localURL = type.localURL, UIApplication.shared.canOpenURL(localURL) {
+                UIApplication.shared.open(localURL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: .none)
+            } else {
+                self.openURLInBrowser(type.remoteURL)
+            }
+        }.cellSetup { cell, _ in
+            cell.imageView?.image = type.image
+        }.cellUpdate { cell, _ in
+            cell.accessoryType = .disclosureIndicator
+            cell.textLabel?.textAlignment = .left
+            cell.textLabel?.textColor = .black
         }
     }
-    
+
     private func updateAutoLockRow(with type: AutoLock) {
-        self.autoLockRow.value = type
-        self.autoLockRow.reload()
+        autoLockRow.value = type
+        autoLockRow.reload()
     }
-    
+
     func run(action: SettingsAction) {
         delegate?.didAction(action: action, in: self)
     }
-    
+
     func openURLInBrowser(_ url: URL) {
-        self.delegate?.didAction(action: .openURL(url), in: self)
+        delegate?.didAction(action: .openURL(url), in: self)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -326,13 +326,13 @@ extension SettingsViewController: LockCreatePasscodeCoordinatorDelegate {
 }
 
 extension SettingsViewController: AboutViewControllerDelegate {
-    func didPressURL(_ url: URL, in controller: AboutViewController) {
+    func didPressURL(_ url: URL, in _: AboutViewController) {
         openURLInBrowser(url)
     }
 }
 
 extension SettingsViewController: BrowserConfigurationViewControllerDelegate {
-    func didPressDeleteCache(in controller: BrowserConfigurationViewController) {
+    func didPressDeleteCache(in _: BrowserConfigurationViewController) {
         delegate?.didAction(action: .clearBrowserCache, in: self)
     }
 }
@@ -345,11 +345,16 @@ extension SettingsViewController: Scrollable {
 }
 
 extension SettingsViewController: DeveloperViewControllerDelegate {
-    func didClearTransactions(in controller: DeveloperViewController) {
+    func didClearTransactions(in _: DeveloperViewController) {
         delegate?.didAction(action: .clearTransactions, in: self)
     }
-    
-    func didClearTokens(in controller: DeveloperViewController) {
+
+    func didClearTokens(in _: DeveloperViewController) {
         delegate?.didAction(action: .clearTokens, in: self)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+private func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value) })
 }

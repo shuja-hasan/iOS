@@ -1,12 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import RealmSwift
 import Realm
+import RealmSwift
 import TrustCore
 
 final class WalletObject: Object {
-
     @objc dynamic var id: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var createdAt: Date = Date()

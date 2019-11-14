@@ -3,7 +3,7 @@
 import Foundation
 import UIKit
 //
-//class TransactionsCoordinator: RootCoordinator {
+// class TransactionsCoordinator: RootCoordinator {
 //
 //    let session: WalletSession
 //    let storage: TransactionsStorage
@@ -39,4 +39,4 @@ import UIKit
 //        self.storage = storage
 //        self.network = network
 //    }
-//}
+// }

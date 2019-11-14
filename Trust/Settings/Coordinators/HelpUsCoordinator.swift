@@ -1,10 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
 import Foundation
-import UIKit
 import StoreKit
+import UIKit
 
 final class HelpUsCoordinator: Coordinator {
-
     let navigationController: NavigationController
     let appTracker: AppTracker
     var coordinators: [Coordinator] = []
@@ -40,7 +39,7 @@ final class HelpUsCoordinator: Coordinator {
     func rateUs() {
         if #available(iOS 10.3, *) { SKStoreReviewController.requestReview() } else {
             let url = URL(string: "itms-apps://itunes.apple.com/app/id1288339409")!
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
         }
         appTracker.completedRating = true
     }
@@ -67,4 +66,9 @@ extension HelpUsCoordinator: WellDoneViewControllerDelegate {
 
         appTracker.completedSharing = true
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+private func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+    return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value) })
 }

@@ -49,9 +49,9 @@ extension Transaction {
     ) -> Transaction? {
         guard
             let from = EthereumAddress(string: transaction.from) else {
-                return .none
+            return .none
         }
-        //TODO; Probably make sense to update values on initialTransaction and not create a new one.
+        // TODO; Probably make sense to update values on initialTransaction and not create a new one.
         let to = EthereumAddress(string: transaction.to)?.description ?? transaction.to
         return Transaction(
             id: transaction.hash,

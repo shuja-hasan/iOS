@@ -13,7 +13,7 @@ enum ButtonSize: Int {
         switch self {
         case .small: return Size.scale(size: 32)
         case .normal: return Size.scale(size: 44)
-        case .large: return  Size.scale(size: 50)
+        case .large: return Size.scale(size: 50)
         case .extraLarge: return Size.scale(size: 64)
         }
     }
@@ -30,7 +30,7 @@ enum ButtonStyle: Int {
         switch self {
         case .solid, .squared: return Colors.darkRed
         case .border, .borderless: return .white
-        case .clear : return .clear
+        case .clear: return .clear
         }
     }
 
@@ -61,7 +61,7 @@ enum ButtonStyle: Int {
              .border,
              .borderless,
              .clear:
-            return UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
+            return UIFont(name: "Trenda-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.medium)
         }
     }
 
@@ -96,13 +96,12 @@ enum ButtonStyle: Int {
 }
 
 class Button: UIButton {
-
     init(size: ButtonSize, style: ButtonStyle) {
         super.init(frame: .zero)
         apply(size: size, style: style)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -126,5 +125,4 @@ class Button: UIButton {
 
         contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
     }
-
 }

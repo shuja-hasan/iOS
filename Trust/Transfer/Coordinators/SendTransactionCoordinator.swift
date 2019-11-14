@@ -1,13 +1,12 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
+import APIKit
 import BigInt
 import Foundation
-import APIKit
 import JSONRPCKit
 import Result
 
 final class SendTransactionCoordinator {
-
     private let keystore: Keystore
     let session: WalletSession
     let formatter = EtherNumberFormatter.full
@@ -40,10 +39,10 @@ final class SendTransactionCoordinator {
             Session.send(request) { [weak self] result in
                 guard let `self` = self else { return }
                 switch result {
-                case .success(let count):
+                case let .success(count):
                     let transaction = self.appendNonce(to: transaction, currentNonce: count)
                     self.signAndSend(transaction: transaction, completion: completion)
-                case .failure(let error):
+                case let .failure(error):
                     completion(.failure(AnyError(error)))
                 }
             }
@@ -71,9 +70,9 @@ final class SendTransactionCoordinator {
         let signedTransaction = keystore.signTransaction(transaction)
 
         switch signedTransaction {
-        case .success(let data):
+        case let .success(data):
             approve(confirmType: confirmType, transaction: transaction, data: data, completion: completion)
-        case .failure(let error):
+        case let .failure(error):
             completion(.failure(AnyError(error)))
         }
     }
@@ -95,7 +94,7 @@ final class SendTransactionCoordinator {
                 switch result {
                 case .success:
                     completion(.success(.sentTransaction(sentTransaction)))
-                case .failure(let error):
+                case let .failure(error):
                     completion(.failure(AnyError(error)))
                 }
             }

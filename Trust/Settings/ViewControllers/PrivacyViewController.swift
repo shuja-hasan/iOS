@@ -1,11 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import UIKit
-import Eureka
 import Branch
+import Eureka
+import UIKit
 
 final class PrivacyViewController: FormViewController {
-
     private let viewModel = AnaliticsViewModel()
 
     private var amountRow: SwitchRow? {
@@ -19,21 +18,21 @@ final class PrivacyViewController: FormViewController {
 
         form +++ Section(footer: viewModel.answer.description)
 
-        <<< SwitchRow(viewModel.answer.rawValue) {
-            $0.title = viewModel.answer.title
-            $0.value = viewModel.answer.isEnabled
-        }.onChange { [weak self] row in
-            guard let enabled = row.value else { return }
-            self?.viewModel.answer.update(with: enabled)
-        }
+            <<< SwitchRow(viewModel.answer.rawValue) {
+                $0.title = viewModel.answer.title
+                $0.value = viewModel.answer.isEnabled
+            }.onChange { [weak self] row in
+                guard let enabled = row.value else { return }
+                self?.viewModel.answer.update(with: enabled)
+            }
         form +++ Section(footer: viewModel.branch.description)
-        <<< SwitchRow {
-            $0.title = viewModel.branch.title
-            $0.value = viewModel.branch.isEnabled
-        }.onChange { [weak self] row in
-             guard let enabled = row.value else { return }
-             self?.viewModel.branch.update(with: enabled)
-             Branch.setTrackingDisabled(!enabled)
-        }
+            <<< SwitchRow {
+                $0.title = viewModel.branch.title
+                $0.value = viewModel.branch.isEnabled
+            }.onChange { [weak self] row in
+                guard let enabled = row.value else { return }
+                self?.viewModel.branch.update(with: enabled)
+                Branch.setTrackingDisabled(!enabled)
+            }
     }
 }

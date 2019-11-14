@@ -2,12 +2,11 @@
 
 import BigInt
 import Foundation
-import UIKit
 import TrustCore
 import TrustKeystore
+import UIKit
 
 struct TransactionDetailsViewModel {
-
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -33,6 +32,7 @@ struct TransactionDetailsViewModel {
             session: session
         )
     }
+
     init(
         transaction: Transaction,
         config: Config,
@@ -46,7 +46,7 @@ struct TransactionDetailsViewModel {
         self.config = config
         self.chainState = chainState
         self.session = session
-        self.transactionViewModel = TransactionViewModel(
+        transactionViewModel = TransactionViewModel(
             transaction: transaction,
             config: config,
             currentAccount: currentAccount,

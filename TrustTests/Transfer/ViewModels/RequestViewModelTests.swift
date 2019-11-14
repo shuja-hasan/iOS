@@ -1,11 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
 @testable import Trust
 import TrustCore
+import XCTest
 
 class RequestViewModelTests: XCTestCase {
-    
     func testMyAddressTextOfCoin() {
         let account: WalletInfo = .make()
         let viewModel = RequestViewModel(coinTypeViewModel: CoinTypeViewModel(type: .coin(account.currentAccount, .make())))

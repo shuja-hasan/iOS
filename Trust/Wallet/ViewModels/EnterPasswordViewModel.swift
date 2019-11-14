@@ -3,7 +3,6 @@
 import Foundation
 
 struct EnterPasswordViewModel {
-
     var title: String {
         return NSLocalizedString("enterPassword.navigation.title", value: "Backup Password", comment: "")
     }

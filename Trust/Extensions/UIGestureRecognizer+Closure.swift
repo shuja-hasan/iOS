@@ -17,7 +17,7 @@ extension UIGestureRecognizer {
 private class GestureTarget: UIView {
     class ClosureContainer {
         weak var gesture: UIGestureRecognizer?
-        let closure: (() -> Void)
+        let closure: () -> Void
 
         init(closure: @escaping () -> Void) {
             self.closure = closure
@@ -61,7 +61,7 @@ private class GestureTarget: UIView {
     }
 
     func cleanUpContainers() {
-        containers = containers.filter({ $0.gesture != nil })
+        containers = containers.filter { $0.gesture != nil }
     }
 
     @objc func target(gesture: UIGestureRecognizer) {

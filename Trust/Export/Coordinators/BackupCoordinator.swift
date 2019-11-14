@@ -1,10 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
 import Result
 import TrustCore
 import TrustKeystore
+import UIKit
 
 protocol BackupCoordinatorDelegate: class {
     func didCancel(coordinator: BackupCoordinator)
@@ -12,7 +12,6 @@ protocol BackupCoordinatorDelegate: class {
 }
 
 final class BackupCoordinator: Coordinator {
-
     let navigationController: NavigationController
     weak var delegate: BackupCoordinatorDelegate?
     let keystore: Keystore
@@ -37,7 +36,7 @@ final class BackupCoordinator: Coordinator {
     func finish(result: Result<Bool, AnyError>) {
         switch result {
         case .success:
-           delegate?.didFinish(wallet: account.wallet!, in: self)
+            delegate?.didFinish(wallet: account.wallet!, in: self)
         case .failure:
             delegate?.didCancel(coordinator: self)
         }
@@ -53,9 +52,9 @@ final class BackupCoordinator: Coordinator {
         }
     }
 
-    private func handleExport(result: (Result<String, KeystoreError>), completion: @escaping (Result<Bool, AnyError>) -> Void) {
+    private func handleExport(result: Result<String, KeystoreError>, completion: @escaping (Result<Bool, AnyError>) -> Void) {
         switch result {
-        case .success(let value):
+        case let .success(value):
             let url = URL(fileURLWithPath: NSTemporaryDirectory().appending("ethash_backup_\(account.address.description).json"))
             do {
                 try value.data(using: .utf8)!.write(to: url)
@@ -67,7 +66,7 @@ final class BackupCoordinator: Coordinator {
             activityViewController.completionWithItemsHandler = { _, result, _, error in
                 do {
                     try FileManager.default.removeItem(at: url)
-                } catch { }
+                } catch {}
                 guard let error = error else {
                     return completion(.success(result))
                 }
@@ -80,14 +79,14 @@ final class BackupCoordinator: Coordinator {
             presenterViewController?.present(activityViewController, animated: true) { [weak presenterViewController] in
                 presenterViewController?.hideLoading()
             }
-        case .failure(let error):
+        case let .failure(error):
             navigationController.topViewController?.hideLoading()
             navigationController.topViewController?.displayError(error: error)
         }
     }
 
     func presentShareActivity(for account: Account, password: String, newPassword: String) {
-        self.presentActivityViewController(for: account, password: password, newPassword: newPassword) { result in
+        presentActivityViewController(for: account, password: password, newPassword: newPassword) { result in
             self.finish(result: result)
         }
     }

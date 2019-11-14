@@ -4,7 +4,6 @@ import Foundation
 import TrustCore
 
 struct ImportWalletViewModel {
-
     private let coin: CoinViewModel
 
     init(

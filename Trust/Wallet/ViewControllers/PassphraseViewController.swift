@@ -1,8 +1,8 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
 import TrustKeystore
+import UIKit
 
 protocol PassphraseViewControllerDelegate: class {
     func didPressVerify(in controller: PassphraseViewController, with account: Wallet, words: [String])
@@ -13,12 +13,9 @@ enum PassphraseMode {
     case showAndVerify
 }
 
-final class DarkPassphraseViewController: PassphraseViewController {
-
-}
+final class DarkPassphraseViewController: PassphraseViewController {}
 
 class PassphraseViewController: UIViewController {
-
     let viewModel = PassphraseViewModel()
     let account: Wallet
     let words: [String]
@@ -28,6 +25,7 @@ class PassphraseViewController: UIViewController {
         button.setTitle(R.string.localizable.next(), for: .normal)
         return button
     }()
+
     let subTitleLabel: SubtitleBackupLabel = {
         let label = SubtitleBackupLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +36,7 @@ class PassphraseViewController: UIViewController {
         )
         return label
     }()
+
     let copyButton = Button(size: .extraLarge, style: .clear)
     weak var delegate: PassphraseViewControllerDelegate?
 
@@ -65,7 +64,7 @@ class PassphraseViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = viewModel.title
         titleLabel.adjustsFontSizeToFitWidth = true
-        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        titleLabel.font = UIFont(name: "Trenda-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .regular)
         titleLabel.textAlignment = .center
 
         copyButton.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +76,7 @@ class PassphraseViewController: UIViewController {
         wordsLabel.numberOfLines = 0
         wordsLabel.text = words.joined(separator: "  ")
         wordsLabel.backgroundColor = .clear
-        wordsLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        wordsLabel.font = UIFont(name: "Trenda-Regular", size: 17) ?? UIFont.systemFont(ofSize: 17, weight: .regular)
         wordsLabel.textColor = Colors.black
         wordsLabel.textAlignment = .center
         wordsLabel.numberOfLines = 3
@@ -156,11 +155,11 @@ class PassphraseViewController: UIViewController {
         presentShare(in: sender.view!)
     }
 
-    @objc private func nextAction(_ sender: UIButton) {
+    @objc private func nextAction(_: UIButton) {
         delegate?.didPressVerify(in: self, with: account, words: words)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

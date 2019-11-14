@@ -4,7 +4,6 @@ import Foundation
 import UIKit
 
 struct WelcomeViewModel {
-
     var title: String {
         return "Welcome"
     }

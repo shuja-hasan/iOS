@@ -8,7 +8,6 @@ enum BalanceStatus {
 }
 
 extension BalanceStatus {
-
     enum Key {
         case insufficientEther
         case insufficientGas
@@ -31,23 +30,23 @@ extension BalanceStatus {
 
     var sufficient: Bool {
         switch self {
-        case .ether(let etherSufficient, let gasSufficient):
+        case let .ether(etherSufficient, gasSufficient):
             return etherSufficient && gasSufficient
-        case .token(let tokenSufficient, let gasSufficient):
+        case let .token(tokenSufficient, gasSufficient):
             return tokenSufficient && gasSufficient
         }
     }
 
     var insufficientTextKey: Key {
         switch self {
-        case .ether(let etherSufficient, let gasSufficient):
+        case let .ether(etherSufficient, gasSufficient):
             if !etherSufficient {
                 return .insufficientEther
             }
             if !gasSufficient {
                 return .insufficientGas
             }
-        case .token(let tokenSufficient, let gasSufficient):
+        case let .token(tokenSufficient, gasSufficient):
             if !tokenSufficient {
                 return .insufficientToken
             }

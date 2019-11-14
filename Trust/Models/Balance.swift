@@ -4,7 +4,6 @@ import BigInt
 import Foundation
 
 struct Balance: BalanceProtocol {
-
     let value: BigInt
 
     init(value: BigInt) {

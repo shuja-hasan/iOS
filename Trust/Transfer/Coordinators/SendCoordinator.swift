@@ -1,11 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
-import UIKit
 import BigInt
+import Foundation
+import Result
 import TrustCore
 import TrustKeystore
-import Result
+import UIKit
 
 protocol SendCoordinatorDelegate: class {
     func didFinish(_ result: Result<ConfirmResult, AnyError>, in coordinator: SendCoordinator)
@@ -34,9 +34,10 @@ final class SendCoordinator: RootCoordinator {
         controller.navigationItem.backBarButtonItem = nil
         controller.hidesBottomBarWhenPushed = true
         switch transfer.type {
-        case .ether(_, let destination):
-            controller.addressRow?.value = destination?.description
-            controller.addressRow?.cell.row.updateCell()
+        case let .ether(_, destination):
+            controller.recipientAddressTextField.text = destination?.description
+//            controller.addressRow?.value = destination?.description
+//            controller.addressRow?.cell.row.updateCell()
         case .token, .dapp: break
         }
         controller.delegate = self
@@ -66,7 +67,7 @@ final class SendCoordinator: RootCoordinator {
 }
 
 extension SendCoordinator: SendViewControllerDelegate {
-    func didPressConfirm(transaction: UnconfirmedTransaction, transfer: Transfer, in viewController: SendViewController) {
+    func didPressConfirm(transaction: UnconfirmedTransaction, transfer: Transfer, in _: SendViewController) {
         let configurator = TransactionConfigurator(
             session: session,
             account: account,

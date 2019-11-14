@@ -1,10 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
-import TrustCore
-import BigInt
-import JSONRPCKit
 import APIKit
+import BigInt
+import Foundation
+import JSONRPCKit
+import TrustCore
 
 enum SendViewType {
     case address
@@ -14,21 +14,24 @@ enum SendViewType {
 struct SendViewModel {
     /// stringFormatter of a `SendViewModel` to represent string values with respect of the curent locale.
     lazy var stringFormatter: StringFormatter = {
-        return StringFormatter()
+        StringFormatter()
     }()
+
     /// Pair of a `SendViewModel` to represent pair of trade ETH-USD or USD-ETH.
     lazy var currentPair: Pair = {
-        return Pair(left: symbol, right: config.currency.rawValue)
+        Pair(left: symbol, right: config.currency.rawValue)
     }()
+
     /// decimals of a `SendViewModel` to represent amount of digits after coma.
     lazy var decimals: Int = {
         switch self.transfer.type {
         case .ether, .dapp:
             return transfer.server.decimals
-        case .token(let token):
+        case let .token(token):
             return token.decimals
         }
     }()
+
     /// pairRate of a `SendViewModel` to represent rate of the fiat value to cryptocurrency and vise versa.
     var pairRate: Decimal = 0.0
     /// rate of a `SendViewModel` to represent rate of the fiat value to cryptocurrency and vise versa in string foramt.
@@ -39,6 +42,7 @@ struct SendViewModel {
     var gasPrice: BigInt? {
         return chainState.gasPrice
     }
+
     /// transferType of a `SendViewModel` to know if it is token or ETH.
     let transfer: Transfer
     /// config of a `SendViewModel` to know configuration of the current account.
@@ -60,12 +64,15 @@ struct SendViewModel {
         self.storage = storage
         self.balance = balance
     }
+
     var title: String {
         return "Send \(symbol)"
     }
+
     var symbol: String {
         return transfer.type.token.symbol
     }
+
     var backgroundColor: UIColor {
         return .white
     }
@@ -88,14 +95,16 @@ struct SendViewModel {
             formattedString = stringFormatter.token(with: pairRate, and: decimals)
         }
         rate = formattedString
-        return  "~ \(formattedString) " + "\(currentPair.right)"
+        return "~ \(formattedString) " + "\(currentPair.right)"
     }
+
     /// Amount to send.
     ///
     /// - Returns: `String` that represent amount to send.
     mutating func sendAmount() -> String {
         return amount
     }
+
     /// Maximum amount to send.
     ///
     /// - Returns: `String` that represent amount to send.
@@ -103,7 +112,7 @@ struct SendViewModel {
         var max: Decimal? = 0
         switch transfer.type {
         case .ether, .dapp: max = EtherNumberFormatter.full.decimal(from: balance?.value ?? 0, decimals: decimals)
-        case .token(let token): max = EtherNumberFormatter.full.decimal(from: token.valueBigInt, decimals: decimals)
+        case let .token(token): max = EtherNumberFormatter.full.decimal(from: token.valueBigInt, decimals: decimals)
         }
         guard let maxAmount = max else {
             return ""
@@ -112,6 +121,7 @@ struct SendViewModel {
         updatePairPrice(with: maxAmount)
         return amount
     }
+
     /// Update of the current pair rate.
     ///
     /// - Parameters:
@@ -124,18 +134,20 @@ struct SendViewModel {
             pairRate = amount / price
         }
     }
+
     /// Update of the amount to send.
     ///
     /// - Parameters:
     ///   - stringAmount: String fiat string amount.
     mutating func updateAmount(with stringAmount: String) {
         if currentPair.left == symbol {
-            amount  = stringAmount.isEmpty ? "0" : stringAmount
+            amount = stringAmount.isEmpty ? "0" : stringAmount
         } else {
-            //In case of the fiat value we should take pair rate.
-            amount  = rate
+            // In case of the fiat value we should take pair rate.
+            amount = rate
         }
     }
+
     /// Update of the pair price with ticker.
     ///
     /// - Parameters:
@@ -146,6 +158,7 @@ struct SendViewModel {
         }
         updatePairRate(with: price, and: amount)
     }
+
     /// Get pair price with ticker
     func currentPairPrice() -> Decimal? {
         guard let currentTokenInfo = storage.coinTicker(by: transfer.type.address), let price = Decimal(string: currentTokenInfo.price) else {
@@ -153,6 +166,7 @@ struct SendViewModel {
         }
         return price
     }
+
     /// If ther is ticker for this pair show fiat view.
     func isFiatViewHidden() -> Bool {
         guard let currentTokenInfo = storage.coinTicker(by: transfer.type.address), let price = Decimal(string: currentTokenInfo.price), price > 0 else {
@@ -160,6 +174,7 @@ struct SendViewModel {
         }
         return false
     }
+
     /// Convert of the String to Decimal.
     ///
     /// - Parameters:
@@ -168,6 +183,7 @@ struct SendViewModel {
     mutating func decimalAmount(with stringAmount: String) -> Decimal {
         return stringFormatter.decimal(with: stringAmount) ?? 0
     }
+
     /// If ther is need to show max button.
     mutating func isMaxButtonHidden() -> Bool {
         return currentPair.left != symbol

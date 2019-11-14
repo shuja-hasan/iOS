@@ -11,11 +11,12 @@ class UITextFieldAdditions: NSObject {
 extension UITextField {
     var isCopyPasteDisabled: Bool {
         get {
-            return self.getAdditions().isCopyPasteDisabled
+            return getAdditions().isCopyPasteDisabled
         } set {
-            self.getAdditions().isCopyPasteDisabled = newValue
+            getAdditions().isCopyPasteDisabled = newValue
         }
     }
+
     private func getAdditions() -> UITextFieldAdditions {
         var additions = objc_getAssociatedObject(self, &key) as? UITextFieldAdditions
         if additions == nil {
@@ -24,8 +25,9 @@ extension UITextField {
         }
         return additions!
     }
+
     open override func target(forAction action: Selector, withSender sender: Any?) -> Any? {
-        if (action == #selector(UIResponderStandardEditActions.paste(_:)) || (action == #selector(UIResponderStandardEditActions.cut(_:)))) && self.isCopyPasteDisabled {
+        if action == #selector(UIResponderStandardEditActions.paste(_:)) || (action == #selector(UIResponderStandardEditActions.cut(_:))), isCopyPasteDisabled {
             return nil
         }
         return super.target(forAction: action, withSender: sender)

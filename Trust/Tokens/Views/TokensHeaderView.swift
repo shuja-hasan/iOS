@@ -4,7 +4,6 @@ import Foundation
 import UIKit
 
 final class TokensHeaderView: UIView {
-
     lazy var amountLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textColor = Colors.black
@@ -36,7 +35,7 @@ final class TokensHeaderView: UIView {
         ])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

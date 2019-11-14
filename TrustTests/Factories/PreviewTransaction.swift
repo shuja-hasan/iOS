@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
 import BigInt
+import Foundation
 @testable import Trust
 import TrustCore
 import TrustKeystore
@@ -9,7 +9,7 @@ import TrustKeystore
 extension PreviewTransaction {
     static func make(
         account: Account = .make(),
-        address: Address = EthereumAddress.zero
+        address _: Address = EthereumAddress.zero
     ) -> PreviewTransaction {
         return PreviewTransaction(
             value: BigInt(),
@@ -20,7 +20,7 @@ extension PreviewTransaction {
             data: Data(),
             gasPrice: BigInt(),
             gasLimit: BigInt(),
-            transfer: Transfer.init(server: .make(), type: .token(.make()))
+            transfer: Transfer(server: .make(), type: .token(.make()))
         )
     }
 }

@@ -1,8 +1,6 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
 @testable import Trust
+import XCTest
 
-class TrustTests: XCTestCase {
-    
-}
+class TrustTests: XCTestCase {}

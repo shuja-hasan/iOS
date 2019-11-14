@@ -10,7 +10,6 @@ protocol InitialWalletCreationCoordinatorDelegate: class {
 }
 
 final class InitialWalletCreationCoordinator: Coordinator {
-
     let navigationController: NavigationController
     let keystore: Keystore
     var coordinators: [Coordinator] = []

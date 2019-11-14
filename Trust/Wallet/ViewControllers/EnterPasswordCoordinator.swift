@@ -19,6 +19,7 @@ final class EnterPasswordCoordinator: Coordinator {
         controller.delegate = self
         return controller
     }()
+
     let navigationController: NavigationController
     private let account: Account
 
@@ -41,7 +42,7 @@ final class EnterPasswordCoordinator: Coordinator {
 }
 
 extension EnterPasswordCoordinator: EnterPasswordViewControllerDelegate {
-    func didEnterPassword(password: String, for account: Account, in viewController: EnterPasswordViewController) {
+    func didEnterPassword(password: String, for account: Account, in _: EnterPasswordViewController) {
         delegate?.didEnterPassword(password: password, account: account, in: self)
     }
 }

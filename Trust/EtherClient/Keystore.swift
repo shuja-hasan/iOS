@@ -2,8 +2,8 @@
 
 import Foundation
 import Result
-import TrustKeystore
 import TrustCore
+import TrustKeystore
 
 protocol Keystore {
     var hasWallets: Bool { get }

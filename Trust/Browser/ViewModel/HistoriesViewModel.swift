@@ -3,7 +3,6 @@
 import Foundation
 
 struct HistoriesViewModel {
-
     let store: HistoryStore
 
     init(

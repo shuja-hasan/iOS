@@ -1,10 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
 @testable import Trust
+import XCTest
 
 class ConfirmPaymentViewModelTests: XCTestCase {
-    
     func testActionButtonTitleOnSign() {
         let viewModel = ConfirmPaymentViewModel(type: .sign)
 

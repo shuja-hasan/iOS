@@ -1,11 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
 @testable import Trust
 import TrustCore
+import XCTest
 
 class WalletCoordinatorTests: XCTestCase {
-    
     func testWelcome() {
         let coordinator = WalletCoordinator(
             navigationController: FakeNavigationController(),
@@ -28,10 +27,9 @@ class WalletCoordinatorTests: XCTestCase {
         XCTAssertTrue(coordinator.navigationController.viewControllers[0] is ImportMainWalletViewController)
     }
 
-    //TODO: Add test to import wallet once main. Should open ImportWalletViewController
+    // TODO: Add test to import wallet once main. Should open ImportWalletViewController
 
     func testCreateInstantWallet() {
-
         let delegate = FakeWalletCoordinatorDelegate()
         let coordinator = WalletCoordinator(
             navigationController: FakeNavigationController(),
@@ -61,7 +59,7 @@ class WalletCoordinatorTests: XCTestCase {
         XCTAssertTrue(coordinator.navigationController.viewControllers[1] is SelectCoinViewController)
     }
 
-    //TODO: Test use case
+    // TODO: Test use case
 }
 
 class FakeWalletCoordinatorDelegate: WalletCoordinatorDelegate {
@@ -69,15 +67,15 @@ class FakeWalletCoordinatorDelegate: WalletCoordinatorDelegate {
     var didFinishAccount: Trust.WalletInfo? = .none
     var didCancel: Bool = false
 
-    func didCancel(in coordinator: WalletCoordinator) {
+    func didCancel(in _: WalletCoordinator) {
         didCancel = true
     }
 
-    func didFinish(with account: Trust.WalletInfo, in coordinator: WalletCoordinator) {
+    func didFinish(with account: Trust.WalletInfo, in _: WalletCoordinator) {
         didFinishAccount = account
     }
 
-    func didFail(with error: Error, in coordinator: WalletCoordinator) {
+    func didFail(with error: Error, in _: WalletCoordinator) {
         didFail = error
     }
 }

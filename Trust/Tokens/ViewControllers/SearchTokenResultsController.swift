@@ -42,16 +42,16 @@ final class SearchTokenResultsController: UITableViewController {
         configureTableView()
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in _: UITableView) -> Int {
         return results.count
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         return results[section].count
     }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return TokensLayout.tableView.height
+    override func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension // TokensLayout.tableView.height
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,6 +77,8 @@ final class SearchTokenResultsController: UITableViewController {
     private func configureTableView() {
         tableView.register(R.nib.editTokenTableViewCell(), forCellReuseIdentifier: R.nib.editTokenTableViewCell.name)
         tableView.keyboardDismissMode = .onDrag
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = Colors.veryLightGray
     }
 
     private func token(for indexPath: IndexPath) -> (token: TokenObject, local: Bool) {

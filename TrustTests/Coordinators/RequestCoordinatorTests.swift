@@ -1,10 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
 @testable import Trust
+import XCTest
 
 class RequestCoordinatorTests: XCTestCase {
-
 //    func testRootViewController() {
 //        let coordinator = RequestCoordinator(
 //            session: .make(),
@@ -14,4 +13,3 @@ class RequestCoordinatorTests: XCTestCase {
 //        XCTAssertTrue(coordinator.rootViewController is RequestViewController)
 //    }
 }
-

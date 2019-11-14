@@ -8,10 +8,12 @@ final class SplashCoordinator: Coordinator {
     init(window: UIWindow) {
         self.window = window
     }
+
     func start() {
         window.rootViewController = SplashViewController()
         window.isHidden = false
     }
+
     func stop() {
         window.isHidden = true
     }

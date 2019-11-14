@@ -1,10 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
-import RealmSwift
 import BigInt
-import TrustCore
+import Foundation
 import Realm
+import RealmSwift
+import TrustCore
 
 struct TokenObjectList: Decodable {
     let contract: TokenObject
@@ -17,14 +17,14 @@ enum TokenObjectType: String {
 
 final class TokenObject: Object, Decodable {
     static let DEFAULT_BALANCE = 0.00
-    static let DEFAULT_ORDER = 100000
+    static let DEFAULT_ORDER = 100_000
 
     @objc dynamic var contract: String = ""
     @objc dynamic var name: String = ""
 
     @objc private dynamic var rawCoin = -1
     public var coin: Coin {
-        get { return Coin(rawValue: rawCoin)! }
+        get { return Coin(rawValue: rawCoin) ?? Coin.ethereum }
         set { rawCoin = newValue.rawValue }
     }
 
@@ -59,9 +59,9 @@ final class TokenObject: Object, Decodable {
         self.contract = contract
         self.name = name
         self.coin = coin
-        self.rawCoin = coin.rawValue
+        rawCoin = coin.rawValue
         self.type = type
-        self.rawType = type.rawValue
+        rawType = type.rawValue
         self.symbol = symbol
         self.decimals = decimals
         self.value = value
@@ -79,7 +79,7 @@ final class TokenObject: Object, Decodable {
         case coin
     }
 
-    convenience required init(from decoder: Decoder) throws {
+    required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: TokenObjectCodingKeys.self)
         var contract = try container.decode(String.self, forKey: .address)
         let name = try container.decode(String.self, forKey: .name)
@@ -127,7 +127,7 @@ final class TokenObject: Object, Decodable {
 
     override func isEqual(_ object: Any?) -> Bool {
         guard let object = object as? TokenObject else { return false }
-        return object.contract == self.contract
+        return object.contract == contract
     }
 
     var contractAddress: EthereumAddress {
@@ -147,6 +147,6 @@ extension TokenObjectType: Codable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        try container.encode(self.rawValue)
+        try container.encode(rawValue)
     }
 }

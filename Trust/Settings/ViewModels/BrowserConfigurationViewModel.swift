@@ -3,7 +3,6 @@
 import Foundation
 
 struct BrowserConfigurationViewModel {
-
     var title: String {
         return NSLocalizedString("settings.browser.title", value: "DApp Browser", comment: "")
     }

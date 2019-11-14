@@ -1,12 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
-import Result
 import APIKit
+import Foundation
 import JSONRPCKit
+import Result
 
 class EthereumTransactionsProvider: TransactionsNetworkProvider {
-
     let server: RPCServer
 
     init(
@@ -20,16 +19,16 @@ class EthereumTransactionsProvider: TransactionsNetworkProvider {
         Session.send(EtherServiceRequest(for: server, batch: BatchFactory().create(request))) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .success(let tx):
+            case let .success(tx):
                 guard let newTransaction = Transaction.from(initialTransaction: transaction, transaction: tx, coin: self.server.coin) else {
                     return completion(.success((transaction, .pending)))
                 }
                 if newTransaction.blockNumber > 0 {
                     self.getReceipt(for: newTransaction, completion: completion)
                 }
-            case .failure(let error):
+            case let .failure(error):
                 switch error {
-                case .responseError(let error):
+                case let .responseError(error):
                     guard let error = error as? JSONRPCError else { return }
                     switch error {
                     case .responseError:
@@ -52,12 +51,12 @@ class EthereumTransactionsProvider: TransactionsNetworkProvider {
         let request = GetTransactionReceiptRequest(hash: transaction.id)
         Session.send(EtherServiceRequest(for: server, batch: BatchFactory().create(request))) { result in
             switch result {
-            case .success(let receipt):
+            case let .success(receipt):
                 let newTransaction = transaction
                 newTransaction.gasUsed = receipt.gasUsed
                 let state: TransactionState = receipt.status ? .completed : .failed
                 completion(.success((newTransaction, state)))
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(AnyError(error)))
             }
         }

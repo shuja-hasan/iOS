@@ -1,10 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
 @testable import Trust
+import XCTest
 
 class SettingsCoordinatorTests: XCTestCase {
-
 //    func testOnDeleteCleanStorage() {
 //        let storage = FakeTransactionsStorage()
 //        let coordinator = SettingsCoordinator(
@@ -17,19 +16,19 @@ class SettingsCoordinatorTests: XCTestCase {
 //        )
 //        storage.add([.make()])
 //        storage.updateTransactionSection()
-//        
+//
 //        XCTAssertEqual(1, storage.transactionSections.count)
-//        
+//
 //        let accountCoordinator = AccountsCoordinator(
 //            navigationController: FakeNavigationController(),
 //            keystore: FakeEtherKeystore(),
 //            session: .make(),
 //            balanceCoordinator: FakeGetBalanceCoordinator()
 //        )
-//        
+//
 //        coordinator.didDeleteAccount(account: .make(), in: accountCoordinator)
 //        storage.updateTransactionSection()
-//        
+//
 //        XCTAssertEqual(0, storage.transactionSections.count)
 //    }
 }

@@ -3,7 +3,6 @@
 import Foundation
 
 struct ConfigureTransactionViewModel {
-
     let config: Config
     let transfer: Transfer
 

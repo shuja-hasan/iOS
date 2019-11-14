@@ -4,7 +4,6 @@ import Foundation
 import TrustCore
 
 struct Config {
-
     private struct Keys {
         static let currencyID = "currencyID"
     }
@@ -23,18 +22,18 @@ struct Config {
 
     var currency: Currency {
         get {
-            //If it is saved currency
+            // If it is saved currency
             if let currency = defaults.string(forKey: Keys.currencyID) {
                 return Currency(rawValue: currency)!
             }
-            //If ther is not saved currency try to use user local currency if it is supported.
+            // If ther is not saved currency try to use user local currency if it is supported.
             let avaliableCurrency = Currency.allValues.first { currency in
-                return currency.rawValue == Locale.current.currencySymbol
+                currency.rawValue == Locale.current.currencySymbol
             }
             if let isAvaliableCurrency = avaliableCurrency {
                 return isAvaliableCurrency
             }
-            //If non of the previous is not working return USD.
+            // If non of the previous is not working return USD.
             return Currency.USD
         }
         set { defaults.set(newValue.rawValue, forKey: Keys.currencyID) }
@@ -43,7 +42,7 @@ struct Config {
     var servers: [Coin] {
         return [
             Coin.ether1,
-            Coin.xerom,
+            Coin.Xerom,
             Coin.ethereum,
             Coin.ethereumClassic,
             Coin.poa,

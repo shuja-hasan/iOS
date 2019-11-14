@@ -3,7 +3,6 @@
 import UIKit
 
 final class NonFungibleTokenCellViewModel {
-
     private let tokens: [CollectibleTokenObject]
 
     init(tokens: [CollectibleTokenObject]) {
@@ -11,11 +10,11 @@ final class NonFungibleTokenCellViewModel {
     }
 
     lazy var collectionViewBacgroundColor: UIColor = {
-        return UIColor.white
+        UIColor.white
     }()
 
     lazy var numberOfItemsInSection: Int = {
-        return tokens.count
+        tokens.count
     }()
 
     func collectionViewModel(for index: IndexPath) -> NonFungibleCollectionViewCellModel {

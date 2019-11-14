@@ -1,8 +1,8 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
 import BigInt
 @testable import Trust
+import XCTest
 
 class SendMaxAmountTest: XCTestCase {
 //    let formatter = EtherNumberFormatter()

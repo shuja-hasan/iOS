@@ -4,7 +4,6 @@ import Foundation
 import UIKit
 
 struct HistoryViewModel: URLViewModel {
-
     let history: History
 
     init(

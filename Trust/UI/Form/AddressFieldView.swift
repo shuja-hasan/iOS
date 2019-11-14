@@ -22,7 +22,7 @@ class AddressFieldView: UIView {
             qrButton,
         ])
         recipientRightView.translatesAutoresizingMaskIntoConstraints = false
-        recipientRightView.distribution = .equalSpacing
+        recipientRightView.distribution = .fill
         recipientRightView.spacing = 2
         recipientRightView.axis = .horizontal
 
@@ -36,7 +36,7 @@ class AddressFieldView: UIView {
         ])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

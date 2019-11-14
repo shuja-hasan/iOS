@@ -1,10 +1,10 @@
 //// Copyright DApps Platform Inc. All rights reserved.
 //
-//import XCTest
-//@testable import Trust
-//import BigInt
+// import XCTest
+// @testable import Trust
+// import BigInt
 //
-//class TransactionConfiguratorTests: XCTestCase {
+// class TransactionConfiguratorTests: XCTestCase {
 //
 //    func testDefault() {
 //        let configurator = TransactionConfigurator(session: .make(), account: .make(), transaction: .make(gasLimit: BigInt(90000), gasPrice: .none))
@@ -129,4 +129,4 @@
 //        let value = configurator.valueToSend()
 //        XCTAssertEqual(.plus, value.sign)
 //    }
-//}
+// }

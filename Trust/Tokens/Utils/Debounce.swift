@@ -2,7 +2,7 @@
 
 import Foundation
 
-//https://gist.github.com/simme/b78d10f0b29325743a18c905c5512788
+// https://gist.github.com/simme/b78d10f0b29325743a18c905c5512788
 /**
  Wraps a function in a new function that will only execute the wrapped function if `delay` has passed without this function being called.
 

@@ -1,19 +1,19 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import UIKit
 import Eureka
 import TrustKeystore
+import UIKit
 
 protocol EnterPasswordViewControllerDelegate: class {
     func didEnterPassword(password: String, for account: Account, in viewController: EnterPasswordViewController)
 }
 
 final class EnterPasswordViewController: FormViewController, UITextFieldDelegate {
-
     struct Values {
         static var password = "password"
         static var confirmPassword = "confirmPassword"
     }
+
     weak var delegate: EnterPasswordViewControllerDelegate?
     private let viewModel = EnterPasswordViewModel()
 
@@ -37,7 +37,7 @@ final class EnterPasswordViewController: FormViewController, UITextFieldDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         title = viewModel.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
 
@@ -76,7 +76,7 @@ final class EnterPasswordViewController: FormViewController, UITextFieldDelegate
 
         passwordRow?.cell.textField.becomeFirstResponder()
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         done()
@@ -92,7 +92,7 @@ final class EnterPasswordViewController: FormViewController, UITextFieldDelegate
         delegate?.didEnterPassword(password: password, for: account, in: self)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

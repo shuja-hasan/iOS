@@ -3,19 +3,18 @@
 import UIKit
 
 final class NonFungibleCollectionViewCell: UICollectionViewCell {
-
-    @IBOutlet private weak var title: UILabel!
-    @IBOutlet private weak var subTitle: UILabel!
-    @IBOutlet weak var imageViewBackground: UIView!
-    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private var title: UILabel!
+    @IBOutlet private var subTitle: UILabel!
+    @IBOutlet var imageViewBackground: UIView!
+    @IBOutlet private var imageView: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        self.layer.shadowRadius = 2
-        self.layer.shadowOpacity = 0.4
-        self.layer.masksToBounds = false
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        layer.shadowRadius = 2
+        layer.shadowOpacity = 0.4
+        layer.masksToBounds = false
         imageViewBackground.backgroundColor = .randomPastelColor()
     }
 

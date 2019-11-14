@@ -1,10 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
-@testable import Trust
 import BigInt
+@testable import Trust
+import XCTest
 //
-//class TokensViewModelTest: XCTestCase {
+// class TokensViewModelTest: XCTestCase {
 //    let model = TokensViewModel(
 //        wallet: .make(),
 //        store: FakeTokensDataStore(),
@@ -53,4 +53,4 @@ import BigInt
 //            XCTAssertEqual(BigInt(100), token.valueBigInt)
 //        })
 //    }
-//}
+// }

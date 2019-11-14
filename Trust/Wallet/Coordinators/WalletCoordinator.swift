@@ -11,7 +11,6 @@ protocol WalletCoordinatorDelegate: class {
 }
 
 final class WalletCoordinator: Coordinator {
-
     let navigationController: NavigationController
     weak var delegate: WalletCoordinatorDelegate?
     var entryPoint: WalletEntryPoint?
@@ -74,18 +73,18 @@ final class WalletCoordinator: Coordinator {
         let password = PasswordGenerator.generateRandom()
         keystore.createAccount(with: password) { result in
             switch result {
-            case .success(let account):
+            case let .success(account):
                 self.markAsMainWallet(for: account)
                 self.keystore.exportMnemonic(wallet: account) { mnemonicResult in
                     self.navigationController.topViewController?.hideLoading(animated: false)
                     switch mnemonicResult {
-                    case .success(let words):
+                    case let .success(words):
                         self.pushBackup(for: account, words: words)
-                    case .failure(let error):
+                    case let .failure(error):
                         self.navigationController.displayError(error: error)
                     }
                 }
-            case .failure(let error):
+            case let .failure(error):
                 self.navigationController.topViewController?.hideLoading(animated: false)
                 self.navigationController.topViewController?.displayError(error: error)
             }
@@ -200,31 +199,31 @@ final class WalletCoordinator: Coordinator {
 }
 
 extension WalletCoordinator: WelcomeViewControllerDelegate {
-    func didPressImportWallet(in viewController: WelcomeViewController) {
+    func didPressImportWallet(in _: WelcomeViewController) {
         pushImportWallet()
     }
 
-    func didPressCreateWallet(in viewController: WelcomeViewController) {
+    func didPressCreateWallet(in _: WelcomeViewController) {
         createInstantWallet()
     }
 }
 
 extension WalletCoordinator: ImportWalletViewControllerDelegate {
-    func didImportAccount(account: WalletInfo, fields: [WalletInfoField], in viewController: ImportWalletViewController) {
+    func didImportAccount(account: WalletInfo, fields: [WalletInfoField], in _: ImportWalletViewController) {
         keystore.store(object: account.info, fields: fields)
         walletCreated(wallet: account, type: .imported)
     }
 }
 
 extension WalletCoordinator: PassphraseViewControllerDelegate {
-    func didPressVerify(in controller: PassphraseViewController, with account: Wallet, words: [String]) {
+    func didPressVerify(in _: PassphraseViewController, with account: Wallet, words: [String]) {
         // show verify
         verify(account: account, words: words)
     }
 }
 
 extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
-    func didFinish(in controller: VerifyPassphraseViewController, with account: Wallet) {
+    func didFinish(in _: VerifyPassphraseViewController, with account: Wallet) {
         showConfirm(for: account, completedBackup: true)
     }
 
@@ -245,23 +244,24 @@ extension WalletCoordinator: VerifyPassphraseViewControllerDelegate {
 }
 
 extension WalletCoordinator: WalletCreatedControllerDelegate {
-    func didPressDone(wallet: WalletInfo, in controller: WalletCreatedController) {
+    func didPressDone(wallet: WalletInfo, in _: WalletCreatedController) {
         done(for: wallet)
     }
 }
+
 extension WalletCoordinator: ImportMainWalletViewControllerDelegate {
-    func didImportWallet(wallet: WalletInfo, in controller: ImportMainWalletViewController) {
+    func didImportWallet(wallet: WalletInfo, in _: ImportMainWalletViewController) {
         markAsMainWallet(for: wallet)
         showConfirm(for: wallet, type: .imported, completedBackup: true)
     }
 
-    func didSkipImport(in controller: ImportMainWalletViewController) {
+    func didSkipImport(in _: ImportMainWalletViewController) {
         pushSelectCoin()
     }
 }
 
 extension WalletCoordinator: SelectCoinViewControllerDelegate {
-    func didSelect(coin: Coin, in controller: SelectCoinViewController) {
+    func didSelect(coin: Coin, in _: SelectCoinViewController) {
         pushImportWalletView(for: coin)
     }
 }

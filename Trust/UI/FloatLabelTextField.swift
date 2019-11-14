@@ -1,15 +1,16 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
+import Eureka
 import Foundation
 import UIKit
-import Eureka
 
 @IBDesignable public class FloatLabelTextField: UITextField {
     let animationDuration = 0.3
     var title = UILabel()
 
     // MARK: - Properties
-    override public var accessibilityLabel: String! {
+
+    public override var accessibilityLabel: String! {
         get {
             if text?.isEmpty ?? true {
                 return title.text
@@ -22,14 +23,14 @@ import Eureka
         }
     }
 
-    override public var placeholder: String? {
+    public override var placeholder: String? {
         didSet {
             title.text = placeholder
             title.sizeToFit()
         }
     }
 
-    override public var attributedPlaceholder: NSAttributedString? {
+    public override var attributedPlaceholder: NSAttributedString? {
         didSet {
             title.text = attributedPlaceholder?.string
             title.sizeToFit()
@@ -70,7 +71,8 @@ import Eureka
     }
 
     // MARK: - Init
-    required public init?(coder aDecoder: NSCoder) {
+
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
@@ -81,11 +83,12 @@ import Eureka
     }
 
     // MARK: - Overrides
-    override public func layoutSubviews() {
+
+    public override func layoutSubviews() {
         super.layoutSubviews()
         setTitlePositionForTextAlignment()
         let isResp = isFirstResponder
-        if isResp && !(text?.isEmpty ?? true) {
+        if isResp, !(text?.isEmpty ?? true) {
             title.textColor = titleActiveTextColour
         } else {
             title.textColor = titleTextColour
@@ -100,27 +103,27 @@ import Eureka
         }
     }
 
-    override public func textRect(forBounds bounds: CGRect) -> CGRect {
+    public override func textRect(forBounds bounds: CGRect) -> CGRect {
         var r = super.textRect(forBounds: bounds)
         if !(text?.isEmpty ?? true) {
             var top = ceil(title.font.lineHeight + hintYPadding)
             top = min(top, maxTopInset())
-            r = UIEdgeInsetsInsetRect(r, UIEdgeInsets(top: top, left: 0.0, bottom: 0.0, right: 0.0))
+            r = r.inset(by: UIEdgeInsets(top: top, left: 0.0, bottom: 0.0, right: 0.0))
         }
         return r.integral
     }
 
-    override public func editingRect(forBounds bounds: CGRect) -> CGRect {
+    public override func editingRect(forBounds bounds: CGRect) -> CGRect {
         var r = super.editingRect(forBounds: bounds)
         if !(text?.isEmpty ?? true) {
             var top = ceil(title.font.lineHeight + hintYPadding)
             top = min(top, maxTopInset())
-            r = UIEdgeInsetsInsetRect(r, UIEdgeInsets(top: top, left: 0.0, bottom: 0.0, right: 0.0))
+            r = r.inset(by: UIEdgeInsets(top: top, left: 0.0, bottom: 0.0, right: 0.0))
         }
         return r.integral
     }
 
-    override public func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
+    public override func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
         var r = super.clearButtonRect(forBounds: bounds)
         if !(text?.isEmpty ?? true) {
             var top = ceil(title.font.lineHeight + hintYPadding)
@@ -133,8 +136,9 @@ import Eureka
     // MARK: - Public Methods
 
     // MARK: - Private Methods
+
     private func setup() {
-        borderStyle = UITextBorderStyle.none
+        borderStyle = UITextField.BorderStyle.none
         titleActiveTextColour = tintColor
         // Set up title label
         title.alpha = 0.0
@@ -144,7 +148,7 @@ import Eureka
             title.text = str
             title.sizeToFit()
         }
-        self.addSubview(title)
+        addSubview(title)
     }
 
     private func maxTopInset() -> CGFloat {
@@ -164,7 +168,7 @@ import Eureka
 
     private func showTitle(_ animated: Bool) {
         let dur = animated ? animationDuration : 0
-        UIView.animate(withDuration: dur, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState.union(.curveEaseOut), animations: {
+        UIView.animate(withDuration: dur, delay: 0, options: UIView.AnimationOptions.beginFromCurrentState.union(.curveEaseOut), animations: {
             // Animation
             self.title.alpha = 1.0
             var r = self.title.frame
@@ -175,7 +179,7 @@ import Eureka
 
     private func hideTitle(_ animated: Bool) {
         let dur = animated ? animationDuration : 0
-        UIView.animate(withDuration: dur, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState.union(.curveEaseIn), animations: {
+        UIView.animate(withDuration: dur, delay: 0, options: UIView.AnimationOptions.beginFromCurrentState.union(.curveEaseIn), animations: {
             // Animation
             self.title.alpha = 0.0
             var r = self.title.frame

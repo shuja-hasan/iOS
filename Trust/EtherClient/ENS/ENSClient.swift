@@ -1,29 +1,29 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
+import APIKit
 import Foundation
-import TrustCore
 import JSONRPCKit
 import PromiseKit
-import APIKit
+import TrustCore
 
-//enum ENSError: LocalizedError {
+// enum ENSError: LocalizedError {
 //    case contractNotFound
 //    case decodeError
-//}
+// }
 //
 //// move to TrustCore later
-//final class PublicResolverEncoder {
+// final class PublicResolverEncoder {
 //    public static func encodeAddr(node: Data) -> Data {
 //        let function = Function(name: "addr", parameters: [.bytes(32)])
 //        let encoder = ABIEncoder()
 //        try! encoder.encode(function: function, arguments: [node])
 //        return encoder.data
 //    }
-//}
+// }
 //
 //typealias ENSResolveResult = (resolver: EthereumAddress, address: Address)
 //
-//struct ENSClient {
+// struct ENSClient {
 //
 //    static let reverseSuffix = "addr.reverse"
 //
@@ -122,4 +122,4 @@ import APIKit
 //            }
 //        }
 //    }
-//}
+// }

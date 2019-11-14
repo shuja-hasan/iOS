@@ -14,7 +14,7 @@ enum BranchEvent {
 
     var params: [String: String] {
         switch self {
-        case .openURL(let url):
+        case let .openURL(url):
             let urlString = url.absoluteString
             return [
                 "url": urlString,
@@ -23,7 +23,7 @@ enum BranchEvent {
                 "~channel": "trust-ios-browser-sharing",
                 "event": BranchEventName.openURL.rawValue,
             ]
-        case .newToken(let address):
+        case let .newToken(address):
             return [
                 "contract": address.description,
                 "event": BranchEventName.newToken.rawValue,
@@ -35,9 +35,9 @@ enum BranchEvent {
 extension BranchEvent: Equatable {
     static func == (lhs: BranchEvent, rhs: BranchEvent) -> Bool {
         switch (lhs, rhs) {
-        case (let .openURL(lhs), let .openURL(rhs)):
+        case let (.openURL(lhs), .openURL(rhs)):
             return lhs == rhs
-        case (let .newToken(lhs), let .newToken(rhs)):
+        case let (.newToken(lhs), .newToken(rhs)):
             return lhs.description == rhs.description
         case (_, .openURL),
              (_, .newToken):

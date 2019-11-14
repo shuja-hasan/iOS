@@ -19,41 +19,41 @@ extension TransferType {
         switch self {
         case .ether, .dapp:
             return server.symbol
-        case .token(let token):
+        case let .token(token):
             return token.symbol
         }
     }
 
-    //used for pricing
+    // used for pricing
     var contract: String {
         switch self {
-        case .ether(let token, _):
+        case let .ether(token, _):
             return token.contract
-        case .dapp(let token, _):
+        case let .dapp(token, _):
             return token.contract
-        case .token(let token):
+        case let .token(token):
             return token.contract
         }
     }
 
     var token: TokenObject {
         switch self {
-        case .ether(let token, _):
+        case let .ether(token, _):
             return token
-        case .dapp(let token, _):
+        case let .dapp(token, _):
             return token
-        case .token(let token):
+        case let .token(token):
             return token
         }
     }
 
     var address: EthereumAddress {
         switch self {
-        case .ether(let token, _):
+        case let .ether(token, _):
             return token.address
-        case .dapp(let token, _):
+        case let .dapp(token, _):
             return token.address
-        case .token(let token):
+        case let .token(token):
             return token.address
         }
     }

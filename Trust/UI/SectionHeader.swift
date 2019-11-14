@@ -3,7 +3,6 @@
 import UIKit
 
 final class SectionHeader: UIView {
-
     private var fillColor: UIColor
     private var borderColor: UIColor
     private var title: String?
@@ -15,7 +14,7 @@ final class SectionHeader: UIView {
         borderColor: UIColor = UIColor(hex: "e1e1e1"),
         title: String?,
         textColor: UIColor = UIColor(hex: "555357"),
-        textFont: UIFont = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
+        textFont: UIFont = UIFont(name: "Trenda-Reglar", size: 14) ?? UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
     ) {
         self.fillColor = fillColor
         self.borderColor = borderColor
@@ -26,12 +25,12 @@ final class SectionHeader: UIView {
         addLayout()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     private func addLayout() {
-        self.backgroundColor = fillColor
+        backgroundColor = fillColor
 
         let topBorder = UIView()
         topBorder.backgroundColor = borderColor
@@ -45,9 +44,9 @@ final class SectionHeader: UIView {
         titleLabel.font = textFont
         titleLabel.sizeToFit()
 
-        self.addSubview(titleLabel)
-        self.addSubview(topBorder)
-        self.addSubview(bottomBorder)
+        addSubview(titleLabel)
+        addSubview(topBorder)
+        addSubview(bottomBorder)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         topBorder.translatesAutoresizingMaskIntoConstraints = false

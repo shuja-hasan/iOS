@@ -25,7 +25,7 @@ enum Tabs {
 extension Tabs: Equatable {
     static func == (lhs: Tabs, rhs: Tabs) -> Bool {
         switch (lhs, rhs) {
-        case (let .browser(lhs), let .browser(rhs)):
+        case let (.browser(lhs), .browser(rhs)):
             return lhs == rhs
         case (.wallet, .wallet),
              (.settings, .settings):

@@ -1,10 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
+import Result
 import TrustCore
 import TrustKeystore
-import Result
+import UIKit
 
 enum SignMesageType {
     case message(Data)
@@ -17,7 +17,6 @@ protocol SignMessageCoordinatorDelegate: class {
 }
 
 final class SignMessageCoordinator: Coordinator {
-
     var coordinators: [Coordinator] = []
 
     let navigationController: NavigationController
@@ -67,17 +66,17 @@ final class SignMessageCoordinator: Coordinator {
 
     func message(for type: SignMesageType) -> String {
         switch type {
-        case .message(let data),
-             .personalMessage(let data):
-                guard let message = String(data: data, encoding: .utf8) else {
-                    return data.hexEncoded
-                }
-                return message
-        case .typedMessage(let (typedData)):
-                let string = typedData.map {
-                    return "\($0.name) : \($0.value.string)"
-                }.joined(separator: "\n")
-                return string
+        case let .message(data),
+             let .personalMessage(data):
+            guard let message = String(data: data, encoding: .utf8) else {
+                return data.hexEncoded
+            }
+            return message
+        case let .typedMessage(typedData):
+            let string = typedData.map {
+                "\($0.name) : \($0.value.string)"
+            }.joined(separator: "\n")
+            return string
         }
     }
 
@@ -89,16 +88,16 @@ final class SignMessageCoordinator: Coordinator {
     private func handleSignedMessage(with type: SignMesageType) {
         let result: Result<Data, KeystoreError>
         switch type {
-        case .message(let data):
+        case let .message(data):
             // FIXME. If hash just sign it, otherwise call sign message
             if isMessage(data: data) {
                 result = keystore.signMessage(data, for: account)
             } else {
                 result = keystore.signHash(data, for: account)
             }
-        case .personalMessage(let data):
+        case let .personalMessage(data):
             result = keystore.signPersonalMessage(data, for: account)
-        case .typedMessage(let typedData):
+        case let .typedMessage(typedData):
             if typedData.isEmpty {
                 result = .failure(KeystoreError.failedToSignMessage)
             } else {
@@ -106,9 +105,9 @@ final class SignMessageCoordinator: Coordinator {
             }
         }
         switch result {
-        case .success(let data):
+        case let .success(data):
             didComplete?(.success(data))
-        case .failure(let error):
+        case let .failure(error):
             didComplete?(.failure(AnyError(error)))
         }
     }

@@ -74,16 +74,15 @@ enum Currency: String {
     ]
 
     init(value: String) {
-        self =  Currency(rawValue: value) ?? .USD
+        self = Currency(rawValue: value) ?? .USD
     }
 }
 
-class CurrencyManager {
-}
+class CurrencyManager {}
 
 extension CurrencyManager {
     static func getSymbolForCurrencyCode(code: String) -> String? {
-        if (code == "BTC") {
+        if code == "BTC" {
             return R.string.localizable.bitcoin()
         } else {
             let locale = NSLocale(localeIdentifier: code)

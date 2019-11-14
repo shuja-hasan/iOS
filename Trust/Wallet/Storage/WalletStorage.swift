@@ -4,7 +4,6 @@ import Foundation
 import RealmSwift
 
 class WalletStorage {
-
     let realm: Realm
 
     var addresses: [WalletAddress] {

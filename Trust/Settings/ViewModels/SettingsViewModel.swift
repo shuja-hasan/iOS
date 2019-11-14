@@ -3,7 +3,6 @@
 import Foundation
 
 struct SettingsViewModel {
-
     private let isDebug: Bool
 
     init(
@@ -15,7 +14,7 @@ struct SettingsViewModel {
     var servers: [RPCServer] {
         return [
             RPCServer.ether1,
-            RPCServer.xerom,
+            RPCServer.Xerom,
             RPCServer.main,
             RPCServer.classic,
             RPCServer.poa,

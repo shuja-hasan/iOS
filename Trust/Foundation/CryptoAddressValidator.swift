@@ -13,7 +13,7 @@ enum AddressValidatorType {
 }
 
 struct CryptoAddressValidator {
-    static func isValidAddress(_ value: String?, type: AddressValidatorType = .ethereum) -> Bool {
+    static func isValidAddress(_ value: String?, type _: AddressValidatorType = .ethereum) -> Bool {
         return value?.range(of: "^0x[a-fA-F0-9]{40}$", options: .regularExpression) != nil
     }
 }

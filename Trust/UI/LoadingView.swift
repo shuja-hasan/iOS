@@ -1,14 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
 import StatefulViewController
+import UIKit
 
 final class LoadingView: UIView {
-
     let label = UILabel()
     let imageView = UIImageView()
-    let loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let loadingIndicator = UIActivityIndicatorView(style: .gray)
     let insets: UIEdgeInsets
     private let viewModel = StateViewModel()
 
@@ -54,7 +53,7 @@ final class LoadingView: UIView {
         ])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

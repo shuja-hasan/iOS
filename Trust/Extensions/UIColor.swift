@@ -13,7 +13,7 @@ extension UIColor {
     }
 
     convenience init(netHex: Int) {
-        self.init(red: (netHex >> 16) & 0xff, green: (netHex >> 8) & 0xff, blue: netHex & 0xff)
+        self.init(red: (netHex >> 16) & 0xFF, green: (netHex >> 8) & 0xFF, blue: netHex & 0xFF)
     }
 
     convenience init(hex: String) {
@@ -24,14 +24,14 @@ extension UIColor {
 
         scanner.scanHexInt64(&rgbValue)
 
-        let r = (rgbValue & 0xff0000) >> 16
-        let g = (rgbValue & 0xff00) >> 8
-        let b = rgbValue & 0xff
+        let r = (rgbValue & 0xFF0000) >> 16
+        let g = (rgbValue & 0xFF00) >> 8
+        let b = rgbValue & 0xFF
 
         self.init(
-            red: CGFloat(r) / 0xff,
-            green: CGFloat(g) / 0xff,
-            blue: CGFloat(b) / 0xff, alpha: 1
+            red: CGFloat(r) / 0xFF,
+            green: CGFloat(g) / 0xFF,
+            blue: CGFloat(b) / 0xFF, alpha: 1
         )
     }
 
@@ -40,7 +40,6 @@ extension UIColor {
     }
 
     static func randomPastelColor(withMixedColor mixColor: UIColor? = UIColor.white) -> UIColor {
-
         var red: CGFloat = .randomColor()
         var green: CGFloat = .randomColor()
         var blue: CGFloat = .randomColor()

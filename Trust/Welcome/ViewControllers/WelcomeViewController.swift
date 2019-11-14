@@ -8,7 +8,6 @@ protocol WelcomeViewControllerDelegate: class {
 }
 
 final class WelcomeViewController: UIViewController {
-
     var viewModel = WelcomeViewModel()
     weak var delegate: WelcomeViewControllerDelegate?
 
@@ -26,27 +25,31 @@ final class WelcomeViewController: UIViewController {
         collectionViewController.collectionView?.backgroundColor = viewModel.backgroundColor
         return collectionViewController
     }()
+
     let pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         return pageControl
     }()
+
     let createWalletButton: UIButton = {
         let button = Button(size: .large, style: .solid)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(NSLocalizedString("welcome.createWallet.button.title", value: "CREATE WALLET", comment: ""), for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+        button.titleLabel?.font = UIFont(name: "Trenda-Semibold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         button.backgroundColor = Colors.darkRed
         return button
     }()
+
     let importWalletButton: UIButton = {
         let importWalletButton = Button(size: .large, style: .border)
         importWalletButton.translatesAutoresizingMaskIntoConstraints = false
         importWalletButton.setTitle(NSLocalizedString("welcome.importWallet.button.title", value: "IMPORT WALLET", comment: ""), for: .normal)
-        importWalletButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
+        importWalletButton.titleLabel?.font = UIFont(name: "Trenda-Semibold", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         importWalletButton.accessibilityIdentifier = "import-wallet"
         return importWalletButton
     }()
+
     let pages: [OnboardingPageViewModel] = [
         OnboardingPageViewModel(
             title: NSLocalizedString("welcome.privateAndSecure.label.title", value: "Private & Secure", comment: ""),

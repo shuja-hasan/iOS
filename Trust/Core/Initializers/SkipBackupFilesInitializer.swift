@@ -3,11 +3,10 @@
 import Foundation
 
 struct SkipBackupFilesInitializer: Initializer {
-
     let urls: [URL]
 
     init(paths: [URL]) {
-        self.urls = paths
+        urls = paths
     }
 
     func perform() {

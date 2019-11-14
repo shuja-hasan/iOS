@@ -1,12 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
+import KeychainSwift
 import TrustCore
 import TrustKeystore
-import KeychainSwift
 
 class MultiCoinMigration {
-
     struct Keys {
         static let watchAddresses = "watchAddresses"
     }
@@ -36,14 +35,14 @@ class MultiCoinMigration {
     }
 
     func start(completion: @escaping (Bool) -> Void) {
-        if !keystore.wallets.isEmpty && appTracker.completeMultiCoinMigration == false {
+        if !keystore.wallets.isEmpty, appTracker.completeMultiCoinMigration == false {
             appTracker.completeMultiCoinMigration = true
-            self.runMigrate(completion: completion)
+            runMigrate(completion: completion)
         }
         appTracker.completeMultiCoinMigration = true
     }
 
-    //TODO: Just run this once
+    // TODO: Just run this once
     @discardableResult func runMigrate(completion: @escaping (Bool) -> Void) -> Bool {
         func keychainOldKey(for account: Account) -> String {
             guard let wallet = account.wallet else {
@@ -63,10 +62,10 @@ class MultiCoinMigration {
                 if let account = wallet.accounts.first, let password = keychain.get(keychainOldKey(for: account)), let walletI = account.wallet {
                     keystore.export(account: account, password: password, newPassword: password) { [self] exportResult in
                         switch exportResult {
-                        case .success(let data):
+                        case let .success(data):
                             let importType: ImportType = .keystore(string: data, password: password)
                             self.keystore.importWallet(type: importType, coin: .ether1) { [self] importResult in
-                                let _ = self.keystore.setPassword(password, for: walletI)
+                                _ = self.keystore.setPassword(password, for: walletI)
                                 switch importResult {
                                 case .success:
                                     self.keystore.delete(wallet: wallet) { deleteResult in

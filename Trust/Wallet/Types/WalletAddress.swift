@@ -18,7 +18,7 @@ final class WalletAddress: Object {
         address: Address
     ) {
         self.init()
-        self.addressString = address.description
+        addressString = address.description
         self.coin = coin
     }
 

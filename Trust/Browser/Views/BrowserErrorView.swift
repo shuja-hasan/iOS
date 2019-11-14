@@ -7,7 +7,6 @@ protocol BrowserErrorViewDelegate: class {
 }
 
 final class BrowserErrorView: UIView {
-
     weak var delegate: BrowserErrorViewDelegate?
 
     private let topMargin: CGFloat = 120
@@ -18,7 +17,7 @@ final class BrowserErrorView: UIView {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = Colors.gray
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont(name: "Trenda-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -42,12 +41,12 @@ final class BrowserErrorView: UIView {
         finishInit()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func show(error: Error) {
-        self.isHidden = false
+        isHidden = false
         textLabel.text = error.localizedDescription
         textLabel.textAlignment = .center
         textLabel.setNeedsLayout()
@@ -58,7 +57,7 @@ final class BrowserErrorView: UIView {
     }
 
     private func finishInit() {
-        self.backgroundColor = .white
+        backgroundColor = .white
         addSubview(textLabel)
         addSubview(reloadButton)
         NSLayoutConstraint.activate([

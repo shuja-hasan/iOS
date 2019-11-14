@@ -5,10 +5,9 @@ import RealmSwift
 import TrustCore
 
 final class MigrationInitializer: Initializer {
-
     let account: WalletInfo
     lazy var config: Realm.Configuration = {
-        return RealmConfiguration.configuration(for: account)
+        RealmConfiguration.configuration(for: account)
     }()
 
     init(
@@ -21,7 +20,7 @@ final class MigrationInitializer: Initializer {
         config.schemaVersion = Config.dbMigrationSchemaVersion
         config.migrationBlock = { migration, oldSchemaVersion in
             switch oldSchemaVersion {
-            case 0...32:
+            case 0 ... 32:
                 migration.enumerateObjects(ofType: TokenObject.className()) { oldObject, newObject in
 
                     guard let oldObject = oldObject else { return }
@@ -32,10 +31,10 @@ final class MigrationInitializer: Initializer {
                     newObject["contract"] = address.description
                 }
                 fallthrough
-            case 33...49:
+            case 33 ... 49:
                 migration.deleteData(forType: Transaction.className)
                 fallthrough
-            case 50...52:
+            case 50 ... 52:
                 migration.deleteData(forType: CoinTicker.className)
             default:
                 break

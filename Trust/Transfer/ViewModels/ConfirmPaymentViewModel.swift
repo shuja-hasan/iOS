@@ -4,7 +4,6 @@ import Foundation
 import UIKit
 
 struct ConfirmPaymentViewModel {
-
     let type: ConfirmType
 
     init(
@@ -30,7 +29,7 @@ struct ConfirmPaymentViewModel {
         return .white
     }
 
-    func getActionButtonText(_ status: BalanceStatus, config: Config, transfer: Transfer) -> String {
+    func getActionButtonText(_ status: BalanceStatus, config _: Config, transfer: Transfer) -> String {
         if status.sufficient {
             return actionButtonText
         }
@@ -41,9 +40,9 @@ struct ConfirmPaymentViewModel {
         switch transfer.type {
         case .ether, .dapp:
             return String(format: format, networkSymbol)
-        case .token(let token):
+        case let .token(token):
             switch status {
-            case .token(let tokenSufficient, let gasSufficient):
+            case let .token(tokenSufficient, gasSufficient):
                 if !tokenSufficient {
                     return String(format: format, token.symbol)
                 }

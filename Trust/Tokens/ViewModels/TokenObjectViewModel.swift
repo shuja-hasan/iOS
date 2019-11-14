@@ -1,11 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
 import TrustCore
+import UIKit
 
 struct TokenObjectViewModel {
-
     let token: TokenObject
 
     var imageURL: URL? {

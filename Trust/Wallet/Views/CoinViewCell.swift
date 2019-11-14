@@ -3,9 +3,8 @@
 import UIKit
 
 class CoinViewCell: UITableViewCell {
-
-    @IBOutlet weak var coinImageView: TokenImageView!
-    @IBOutlet weak var coinLabel: UILabel!
+    @IBOutlet var coinImageView: TokenImageView!
+    @IBOutlet var coinLabel: UILabel!
 
     override func layoutSubviews() {
         super.layoutSubviews()

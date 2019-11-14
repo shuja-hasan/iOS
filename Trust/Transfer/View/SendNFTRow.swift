@@ -1,11 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Eureka
-import UIKit
-import TrustCore
 import BigInt
+import Eureka
+import TrustCore
+import UIKit
 
-//TODO: Replace with TrustCode once implemented
+// TODO: Replace with TrustCode once implemented
 public final class ERC721Encoder {
     public static func encodeTransferFrom(from: EthereumAddress, to: EthereumAddress, tokenId: BigUInt) -> Data {
         let function = Function(name: "transferFrom", parameters: [.address, .address, .uint(bits: 256)])
@@ -16,7 +16,6 @@ public final class ERC721Encoder {
 }
 
 public class SendNFTCell: Cell<Bool>, CellType {
-
     public lazy var tokenImage: UIImageView = {
         let tokenImage = UIImageView()
         tokenImage.translatesAutoresizingMaskIntoConstraints = false
@@ -64,7 +63,7 @@ public class SendNFTCell: Cell<Bool>, CellType {
 
 // The custom Row also has the cell: CustomCell and its correspond value
 public final class SendNFTRow: Row<SendNFTCell>, RowType {
-    required public init(tag: String?) {
+    public required init(tag: String?) {
         super.init(tag: tag)
         cellProvider = CellProvider<SendNFTCell>()
     }

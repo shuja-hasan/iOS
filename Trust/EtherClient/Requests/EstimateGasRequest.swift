@@ -1,9 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
+import BigInt
 import Foundation
 import JSONRPCKit
 import TrustCore
-import BigInt
 
 struct EstimateGasRequest: JSONRPCKit.Request {
     typealias Response = String
@@ -19,9 +19,9 @@ struct EstimateGasRequest: JSONRPCKit.Request {
             [
                 "from": transaction.account.address.description.lowercased(),
                 "to": transaction.to?.description.lowercased() ?? "",
-                //TODO: Update gas limit when changed by the user.
+                // TODO: Update gas limit when changed by the user.
                 // Hardcoded for simplicify to fetch estimated gas
-                //"gas": BigInt(7_000_000).hexEncoded,
+                // "gas": BigInt(7_000_000).hexEncoded,
                 "gasPrice": transaction.gasPrice.hexEncoded,
                 "value": transaction.value.hexEncoded,
                 "data": transaction.data.hexEncoded,

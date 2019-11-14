@@ -3,7 +3,6 @@
 import Foundation
 
 final class PreferencesController {
-
     let userDefaults: UserDefaults
 
     init(

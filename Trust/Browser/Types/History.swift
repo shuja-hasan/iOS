@@ -13,7 +13,7 @@ final class History: Object {
         self.init()
         self.url = url
         self.title = title
-        self.id = "\(url)|\(createdAt.timeIntervalSince1970)"
+        id = "\(url)|\(createdAt.timeIntervalSince1970)"
     }
 
     var URL: URL? {

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Trenda Regular.otf">
+            <string>Trenda-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TokenViewController" customModule="Trust" customModuleProvider="target">
+            <connections>
+                <outlet property="allButton" destination="yEt-ts-NEh" id="XPQ-ap-5PX"/>
+                <outlet property="allView" destination="y0y-8W-Zrf" id="CA6-pT-dJM"/>
+                <outlet property="amountLabel" destination="a83-As-4M3" id="33x-Ks-zaJ"/>
+                <outlet property="fiatAmountLabel" destination="xPF-Vp-Yyb" id="ft9-b7-pgK"/>
+                <outlet property="imageView" destination="EIl-Kc-TMP" id="T8n-Zx-OcR"/>
+                <outlet property="marketPriceLabel" destination="yqK-b0-b8R" id="oEh-Gm-nir"/>
+                <outlet property="percentChange" destination="z0V-f4-2yj" id="bns-hk-1cc"/>
+                <outlet property="recieveButton" destination="mMy-q2-r5H" id="ebi-QQ-HVI"/>
+                <outlet property="recieveView" destination="7gW-s5-GKo" id="7Fy-Kz-bm7"/>
+                <outlet property="sendButton" destination="P3Q-Jf-IzK" id="Ce4-8E-plA"/>
+                <outlet property="sendView" destination="s0H-W2-ByW" id="ROd-fD-QNv"/>
+                <outlet property="tableView" destination="qh9-Ia-lZn" id="bc4-Gb-Pji"/>
+                <outlet property="view" destination="iN0-l3-epB" id="neo-ye-kGz"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="T8S-AS-Twg">
+                    <rect key="frame" x="10" y="44" width="394" height="248.5"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EIl-Kc-TMP">
+                            <rect key="frame" x="162" y="0.0" width="70" height="120"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="70" id="Q5Y-Fy-wga"/>
+                                <constraint firstAttribute="height" constant="120" id="rOn-oj-0Rf"/>
+                            </constraints>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="SOr-rg-9nr">
+                            <rect key="frame" x="105.5" y="132" width="183" height="20.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a83-As-4M3">
+                                    <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0V-f4-2yj">
+                                    <rect key="frame" x="47" y="0.0" width="42" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xPF-Vp-Yyb">
+                                    <rect key="frame" x="94" y="0.0" width="42" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yqK-b0-b8R">
+                                    <rect key="frame" x="141" y="0.0" width="42" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Dbe-Ky-Iyg">
+                            <rect key="frame" x="9.5" y="164.5" width="375" height="40"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ISe-vT-vaD" customClass="RoundedButtons" customModule="Trust" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="180" height="40"/>
+                                    <color key="backgroundColor" red="0.59607843140000005" green="0.098039215690000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="180" id="1th-KB-TBU"/>
+                                        <constraint firstAttribute="height" constant="40" id="xai-sN-2Am"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Trenda-Regular" family="Trenda" pointSize="16"/>
+                                    <state key="normal" title="Send">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="10"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="didTapSend" destination="-1" eventType="touchUpInside" id="E8S-GP-cC5"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C41-fX-fr8" customClass="RoundedButtons" customModule="Trust" customModuleProvider="target">
+                                    <rect key="frame" x="195" y="0.0" width="180" height="40"/>
+                                    <color key="backgroundColor" red="0.59607843140000005" green="0.098039215690000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="xEb-YU-cCU"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Trenda-Regular" family="Trenda" pointSize="16"/>
+                                    <state key="normal" title="Recieve">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="10"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="didTapRecieve" destination="-1" eventType="touchUpInside" id="apC-k7-42d"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Bgl-7O-I06">
+                            <rect key="frame" x="7" y="216.5" width="380" height="32"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yEt-ts-NEh">
+                                    <rect key="frame" x="0.0" y="0.0" width="120" height="32"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="120" id="1eu-li-uCk"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                    <state key="normal" title="All">
+                                        <color key="titleColor" red="0.59607843140000005" green="0.098039215690000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="didTapAll" destination="-1" eventType="touchUpInside" id="lEH-yh-Zc8"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3Q-Jf-IzK">
+                                    <rect key="frame" x="130" y="0.0" width="120" height="32"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                    <state key="normal" title="Send">
+                                        <color key="titleColor" red="0.59607843140000005" green="0.098039215690000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="didTapSendItems" destination="-1" eventType="touchUpInside" id="taB-AG-WjV"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mMy-q2-r5H">
+                                    <rect key="frame" x="260" y="0.0" width="120" height="32"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                    <state key="normal" title="Recieve">
+                                        <color key="titleColor" red="0.59607843140000005" green="0.098039215690000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="didTapRecieveItems" destination="-1" eventType="touchUpInside" id="4BW-Bf-Cg7"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y0y-8W-Zrf">
+                    <rect key="frame" x="17" y="291.5" width="120" height="1"/>
+                    <color key="backgroundColor" red="0.59607843140000005" green="0.098039215690000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="GCN-HR-fGU"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s0H-W2-ByW">
+                    <rect key="frame" x="147" y="291.5" width="120" height="1"/>
+                    <color key="backgroundColor" red="0.59607843140000005" green="0.098039215690000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="bVf-Rm-dun"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7gW-s5-GKo">
+                    <rect key="frame" x="277" y="291.5" width="120" height="1"/>
+                    <color key="backgroundColor" red="0.59607843140000005" green="0.098039215690000001" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="dic-i9-Uik"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qh9-Ia-lZn">
+                    <rect key="frame" x="0.0" y="307.5" width="414" height="554.5"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="0NX-6X-mOU"/>
+                        <outlet property="delegate" destination="-1" id="clX-v7-QEL"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="7gW-s5-GKo" firstAttribute="leading" secondItem="mMy-q2-r5H" secondAttribute="leading" id="1l1-5U-VsH"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="T8S-AS-Twg" secondAttribute="trailing" constant="10" id="1rU-7a-TFe"/>
+                <constraint firstItem="y0y-8W-Zrf" firstAttribute="leading" secondItem="yEt-ts-NEh" secondAttribute="leading" id="5iO-wh-f4B"/>
+                <constraint firstItem="y0y-8W-Zrf" firstAttribute="width" secondItem="yEt-ts-NEh" secondAttribute="width" id="Eet-nd-wYk"/>
+                <constraint firstItem="7gW-s5-GKo" firstAttribute="bottom" secondItem="mMy-q2-r5H" secondAttribute="bottom" id="GAy-5A-cdk"/>
+                <constraint firstItem="7gW-s5-GKo" firstAttribute="width" secondItem="mMy-q2-r5H" secondAttribute="width" id="Kwo-E3-QMD"/>
+                <constraint firstItem="T8S-AS-Twg" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="bCw-WW-G5e"/>
+                <constraint firstItem="qh9-Ia-lZn" firstAttribute="top" secondItem="T8S-AS-Twg" secondAttribute="bottom" constant="15" id="dtl-7D-f6q"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="qh9-Ia-lZn" secondAttribute="trailing" id="eiE-om-Ell"/>
+                <constraint firstItem="s0H-W2-ByW" firstAttribute="width" secondItem="P3Q-Jf-IzK" secondAttribute="width" id="hDi-9k-DuE"/>
+                <constraint firstItem="y0y-8W-Zrf" firstAttribute="bottom" secondItem="yEt-ts-NEh" secondAttribute="bottom" id="i1I-pI-8bF"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="qh9-Ia-lZn" secondAttribute="bottom" id="kwg-Dk-UTz"/>
+                <constraint firstItem="qh9-Ia-lZn" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="m4G-na-5U3"/>
+                <constraint firstItem="s0H-W2-ByW" firstAttribute="bottom" secondItem="P3Q-Jf-IzK" secondAttribute="bottom" id="mcl-zJ-m9W"/>
+                <constraint firstItem="s0H-W2-ByW" firstAttribute="leading" secondItem="P3Q-Jf-IzK" secondAttribute="leading" id="nfH-pM-QVj"/>
+                <constraint firstItem="T8S-AS-Twg" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="xl7-nX-mLM"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="139" y="84"/>
+        </view>
+    </objects>
+</document>

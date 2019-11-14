@@ -1,10 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
+import BigInt
 import Foundation
+import RealmSwift
 @testable import Trust
 import TrustCore
-import BigInt
-import RealmSwift
 
 extension WalletSession {
     static func make(
@@ -20,6 +20,7 @@ extension WalletSession {
             config: config
         )
     }
+
 //    static func makeWithEthBalance(
 //        account: Trust.WalletInfo = .make(),
 //        config: Config = .make(),

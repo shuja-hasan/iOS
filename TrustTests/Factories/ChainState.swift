@@ -5,7 +5,7 @@ import Foundation
 
 extension ChainState {
     static func make(
-        server: RPCServer = .make()
+        server _: RPCServer = .make()
     ) -> ChainState {
         return ChainState(
             server: .make()

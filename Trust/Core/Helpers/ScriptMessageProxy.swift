@@ -4,7 +4,6 @@ import Foundation
 import WebKit
 
 final class ScriptMessageProxy: NSObject, WKScriptMessageHandler {
-
     weak var delegate: WKScriptMessageHandler?
 
     init(delegate: WKScriptMessageHandler) {
@@ -14,7 +13,8 @@ final class ScriptMessageProxy: NSObject, WKScriptMessageHandler {
 
     func userContentController(_ userContentController: WKUserContentController,
                                didReceive message: WKScriptMessage) {
-        self.delegate?.userContentController(
-            userContentController, didReceive: message)
+        delegate?.userContentController(
+            userContentController, didReceive: message
+        )
     }
 }

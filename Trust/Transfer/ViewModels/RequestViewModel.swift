@@ -5,7 +5,6 @@ import TrustCore
 import UIKit
 
 struct RequestViewModel {
-
     let coinTypeViewModel: CoinTypeViewModel
 
     init(

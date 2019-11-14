@@ -3,7 +3,6 @@
 import UIKit
 
 struct NonFungibleCollectionViewCellModel {
-
     let token: CollectibleTokenObject
 
     init(token: CollectibleTokenObject) {

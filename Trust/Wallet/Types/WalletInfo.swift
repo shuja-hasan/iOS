@@ -1,9 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
-import TrustKeystore
-import TrustCore
 import BigInt
+import Foundation
+import TrustCore
+import TrustKeystore
 
 struct WalletInfo {
     let type: WalletType
@@ -13,7 +13,7 @@ struct WalletInfo {
         switch type {
         case .privateKey, .hd:
             return currentAccount.address
-        case .address(_, let address):
+        case let .address(_, address):
             return address
         }
     }
@@ -23,10 +23,10 @@ struct WalletInfo {
         case .privateKey, .hd:
             guard let account = currentAccount,
                 let coin = Coin(rawValue: account.derivationPath.coinType) else {
-                    return .none
+                return .none
             }
             return coin
-        case .address(let coin, _):
+        case let .address(coin, _):
             return coin
         }
     }
@@ -41,9 +41,9 @@ struct WalletInfo {
 
     var accounts: [Account] {
         switch type {
-        case .privateKey(let account), .hd(let account):
+        case let .privateKey(account), let .hd(account):
             return account.accounts
-        case .address(let coin, let address):
+        case let .address(coin, address):
             return [
                 Account(wallet: .none, address: address, derivationPath: coin.derivationPath(at: 0)),
             ]
@@ -53,15 +53,15 @@ struct WalletInfo {
     var currentAccount: Account! {
         switch type {
         case .privateKey, .hd:
-            return accounts.first //.filter { $0.description == info.selectedAccount }.first ?? accounts.first!
-        case .address(let coin, let address):
+            return accounts.first // .filter { $0.description == info.selectedAccount }.first ?? accounts.first!
+        case let .address(coin, address):
             return Account(wallet: .none, address: address, derivationPath: coin.derivationPath(at: 0))
         }
     }
 
     var currentWallet: Wallet? {
         switch type {
-        case .privateKey(let wallet), .hd(let wallet):
+        case let .privateKey(wallet), let .hd(wallet):
             return wallet
         case .address:
             return .none

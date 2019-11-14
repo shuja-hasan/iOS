@@ -1,11 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
+import PromiseKit
 import RealmSwift
 import TrustCore
-import PromiseKit
 
 final class NonFungibleTokenViewModel {
-
     let config: Config
     let storage: TokensDataStore
     var tokensNetwork: NetworkProtocol
@@ -55,7 +54,7 @@ final class NonFungibleTokenViewModel {
         self.config = config
         self.storage = storage
         self.tokensNetwork = tokensNetwork
-        self.tokens = storage.nonFungibleTokens
+        tokens = storage.nonFungibleTokens
     }
 
     func fetchAssets() -> Promise<[CollectibleTokenCategory]> {
@@ -87,7 +86,7 @@ final class NonFungibleTokenViewModel {
         return NonFungibleTokenCellViewModel(tokens: tokens(for: path))
     }
 
-    func numberOfItems(in section: Int) -> Int {
+    func numberOfItems(in _: Int) -> Int {
         return 1
     }
 

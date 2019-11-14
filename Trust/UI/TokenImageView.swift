@@ -3,7 +3,6 @@
 import UIKit
 
 final class TokenImageView: UIImageView {
-
     override func layoutSubviews() {
         super.layoutSubviews()
 //        layer.cornerRadius = bounds.size.width / 2.0

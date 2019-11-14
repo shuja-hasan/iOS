@@ -2,5 +2,4 @@
 
 import Foundation
 
-struct Preferences: Codable {
-}
+struct Preferences: Codable {}

@@ -1,10 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
 import BigInt
+import Foundation
 
 struct ConfirmPaymentDetailsViewModel {
-
     let transaction: PreviewTransaction
     let session: WalletSession
     let config: Config
@@ -18,6 +17,7 @@ struct ConfirmPaymentDetailsViewModel {
             session: session
         )
     }
+
     init(
         transaction: PreviewTransaction,
         config: Config = Config(),
@@ -35,10 +35,9 @@ struct ConfirmPaymentDetailsViewModel {
     }
 
     private var totalViewModel: GasViewModel {
-
         var value: BigInt = totalFee
 
-        if case TransferType.ether(_) = transaction.transfer.type {
+        if case TransferType.ether = transaction.transfer.type {
             value += transaction.value
         }
 
@@ -56,7 +55,7 @@ struct ConfirmPaymentDetailsViewModel {
     var currentWalletDescriptionString: String {
         let viewModel = WalletInfoViewModel(wallet: session.account)
         let address = transaction.account.address.description
-        return viewModel.name + " " + ("(\(address.prefix(10))...\(address.suffix(8)))")
+        return viewModel.name + " " + "(\(address.prefix(10))...\(address.suffix(8)))"
     }
 
     var paymentFromTitle: String {
@@ -74,7 +73,7 @@ struct ConfirmPaymentDetailsViewModel {
 
     var requesterText: String {
         switch transaction.transfer.type {
-        case .dapp(_, let request):
+        case let .dapp(_, request):
             return request.url?.absoluteString ?? ""
         case .ether, .token:
             return transaction.address?.description ?? ""
@@ -100,7 +99,7 @@ struct ConfirmPaymentDetailsViewModel {
     var estimatedFeeText: String {
         let unit = UnitConfiguration.gasPriceUnit
         let amount = fullFormatter.string(from: transaction.gasPrice, units: UnitConfiguration.gasPriceUnit)
-        return  String(
+        return String(
             format: "%@ %@ (%@)",
             amount,
             unit.name,
@@ -128,9 +127,9 @@ struct ConfirmPaymentDetailsViewModel {
 
     var amount: String {
         switch transaction.transfer.type {
-        case .token(let token):
+        case let .token(token):
             return balanceFormatter.string(from: transaction.value, decimals: token.decimals)
-        case .ether(let token, _), .dapp(let token, _):
+        case let .ether(token, _), let .dapp(token, _):
             return balanceFormatter.string(from: transaction.value, decimals: token.decimals)
         }
     }

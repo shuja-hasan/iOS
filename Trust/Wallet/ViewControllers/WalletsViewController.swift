@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import UIKit
 import TrustKeystore
+import UIKit
 
 protocol WalletsViewControllerDelegate: class {
     func didSelect(wallet: WalletInfo, account: Account, in controller: WalletsViewController)
@@ -10,13 +10,13 @@ protocol WalletsViewControllerDelegate: class {
 }
 
 class WalletsViewController: UITableViewController {
-
     let keystore: Keystore
     lazy var viewModel: WalletsViewModel = {
         let model = WalletsViewModel(keystore: keystore)
         model.delegate = self
         return model
     }()
+
     weak var delegate: WalletsViewControllerDelegate?
 
     init(keystore: Keystore) {
@@ -26,8 +26,11 @@ class WalletsViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.separatorColor = StyleLayout.TableView.separatorColor
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.backgroundColor = Colors.veryLightGray
+        tableView.separatorColor = .clear // StyleLayout.TableView.separatorColor
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.register(R.nib.walletViewCell(), forCellReuseIdentifier: R.nib.walletViewCell.name)
         navigationItem.title = viewModel.title
         tableView.tableFooterView = UIView()
@@ -51,20 +54,20 @@ class WalletsViewController: UITableViewController {
         return cell
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in _: UITableView) -> Int {
         return viewModel.numberOfSection
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRows(in: section)
     }
 
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    override func tableView(_: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return viewModel.canEditRowAt(for: indexPath)
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete {
+    override func tableView(_: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
             confirmDelete(wallet: viewModel.cellViewModel(for: indexPath).wallet)
         }
     }
@@ -73,6 +76,10 @@ class WalletsViewController: UITableViewController {
         let viewModel = self.viewModel.cellViewModel(for: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.didSelect(wallet: viewModel.wallet, account: viewModel.account, in: self)
+    }
+
+    override func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 
     func confirmDelete(wallet: WalletInfo) {
@@ -98,19 +105,19 @@ class WalletsViewController: UITableViewController {
             switch result {
             case .success:
                 self.delegate?.didDeleteAccount(account: wallet, in: self)
-            case .failure(let error):
+            case let .failure(error):
                 self.displayError(error: error)
             }
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension WalletsViewController: WalletViewCellDelegate {
-    func didPress(viewModel: WalletAccountViewModel, in cell: WalletViewCell) {
+    func didPress(viewModel: WalletAccountViewModel, in _: WalletViewCell) {
         delegate?.didSelectForInfo(wallet: viewModel.wallet, account: viewModel.account, in: self)
     }
 }

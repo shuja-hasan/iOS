@@ -1,8 +1,8 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-@testable import Trust
 import RealmSwift
+@testable import Trust
 
 class FakeTransactionsStorage: TransactionsStorage {
     convenience init() {

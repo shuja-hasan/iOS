@@ -3,6 +3,4 @@
 import Foundation
 @testable import Trust
 
-class FakeGetBalanceCoordinator: TokensBalanceService {
-
-}
+class FakeGetBalanceCoordinator: TokensBalanceService {}

@@ -4,7 +4,6 @@ import Foundation
 import TrustKeystore
 
 struct ExportPrivateKeyViewModel {
-
     let privateKey: Data
 
     init(

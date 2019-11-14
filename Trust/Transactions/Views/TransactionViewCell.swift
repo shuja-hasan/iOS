@@ -3,7 +3,6 @@
 import UIKit
 
 final class TransactionViewCell: UITableViewCell {
-
     static let identifier = "TransactionTableViewCell"
 
     let statusImageView = UIImageView()
@@ -11,7 +10,7 @@ final class TransactionViewCell: UITableViewCell {
     let amountLabel = UILabel()
     let subTitleLabel = UILabel()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         statusImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -61,12 +60,11 @@ final class TransactionViewCell: UITableViewCell {
         updateSeparatorInset()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func configure(viewModel: TransactionCellViewModel) {
-
         statusImageView.image = viewModel.statusImage
 
         titleLabel.text = viewModel.title

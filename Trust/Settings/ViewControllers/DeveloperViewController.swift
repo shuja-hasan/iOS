@@ -1,10 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import UIKit
-import Eureka
 import Branch
-import TrustCore
+import Eureka
 import KeychainSwift
+import TrustCore
+import UIKit
 
 struct Node {
     let name: String
@@ -13,7 +13,6 @@ struct Node {
 }
 
 struct DeveloperViewModel {
-
 //    private struct Values {
 //        static let defaultConfig = "default-config-node-"
 //    }
@@ -55,7 +54,6 @@ protocol DeveloperViewControllerDelegate: class {
 }
 
 final class DeveloperViewController: FormViewController {
-
     private let viewModel = DeveloperViewModel()
     let preferencesController = PreferencesController()
 
@@ -89,25 +87,25 @@ final class DeveloperViewController: FormViewController {
 //            self?.preferencesController.set(value: enabled, for: .testNetworks)
 //        }
 
-        <<< AppFormAppearance.button {
-            $0.title = "Clear Transactions"
-        }.onCellSelection { [weak self] _, _ in
-            guard let `self` = self else { return }
-            self.delegate?.didClearTransactions(in: self)
-        }.cellUpdate { cell, _ in
-            cell.textLabel?.textAlignment = .left
-            cell.textLabel?.textColor = .black
-        }
+            <<< AppFormAppearance.button {
+                $0.title = "Clear Transactions"
+            }.onCellSelection { [weak self] _, _ in
+                guard let `self` = self else { return }
+                self.delegate?.didClearTransactions(in: self)
+            }.cellUpdate { cell, _ in
+                cell.textLabel?.textAlignment = .left
+                cell.textLabel?.textColor = .black
+            }
 
-        <<< AppFormAppearance.button {
-            $0.title = "Clear Tokens"
-        }.onCellSelection { [weak self] _, _ in
-            guard let `self` = self else { return }
-            self.delegate?.didClearTokens(in: self)
-        }.cellUpdate { cell, _ in
-            cell.textLabel?.textAlignment = .left
-            cell.textLabel?.textColor = .black
-        }
+            <<< AppFormAppearance.button {
+                $0.title = "Clear Tokens"
+            }.onCellSelection { [weak self] _, _ in
+                guard let `self` = self else { return }
+                self.delegate?.didClearTokens(in: self)
+            }.cellUpdate { cell, _ in
+                cell.textLabel?.textAlignment = .left
+                cell.textLabel?.textColor = .black
+            }
     }
 
 //    private func nodeRow(for node: Node) -> PushRow<RPCServer> {

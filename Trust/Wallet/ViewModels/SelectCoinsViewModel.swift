@@ -3,7 +3,6 @@
 import Foundation
 
 struct SelectCoinsViewModel {
-
     let elements: [CoinViewModel]
 
     init(elements: [CoinViewModel]) {
@@ -18,9 +17,10 @@ struct SelectCoinsViewModel {
         return 1
     }
 
-    func numberOfRows(in section: Int) -> Int {
+    func numberOfRows(in _: Int) -> Int {
         return elements.count
     }
+
     func cellViewModel(for indexPath: IndexPath) -> CoinViewModel {
         return elements[indexPath.row]
     }

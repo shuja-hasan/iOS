@@ -4,7 +4,6 @@ import Foundation
 import RealmSwift
 
 final class ENSRecord: Object {
-
     @objc dynamic var name: String = ""
     @objc dynamic var owner: String = ""
     @objc dynamic var resolver: String = ""

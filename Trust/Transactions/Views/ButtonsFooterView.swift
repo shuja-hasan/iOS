@@ -4,14 +4,13 @@ import Foundation
 import UIKit
 
 final class ButtonsFooterView: UIView {
-
     lazy var sendButton: Button = {
         let sendButton = Button(size: .large, style: .squared)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.layer.cornerRadius = 6
         sendButton.setTitle(R.string.localizable.send(), for: .normal)
         sendButton.accessibilityIdentifier = "send-button"
-        sendButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
+        sendButton.titleLabel?.font = UIFont(name: "Trenda-Regular", size: 17) ?? UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
         return sendButton
     }()
 
@@ -19,7 +18,7 @@ final class ButtonsFooterView: UIView {
         let requestButton = Button(size: .large, style: .squared)
         requestButton.translatesAutoresizingMaskIntoConstraints = false
         requestButton.layer.cornerRadius = 6
-        requestButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
+        requestButton.titleLabel?.font = UIFont(name: "Trenda-Regular", size: 17) ?? UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
         requestButton.setTitle(NSLocalizedString("transactions.receive.button.title", value: "Receive", comment: ""), for: .normal)
         return requestButton
     }()
@@ -63,7 +62,7 @@ final class ButtonsFooterView: UIView {
         layer.shadowOffset = CGSize(width: 0.0, height: 1)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

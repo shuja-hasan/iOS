@@ -8,7 +8,7 @@ protocol ScanQRCodeCoordinatorDelegate: class {
     func didScan(result: String, in coordinator: ScanQRCodeCoordinator)
 }
 
-final class  ScanQRCodeCoordinator: NSObject, Coordinator {
+final class ScanQRCodeCoordinator: NSObject, Coordinator {
     var coordinators: [Coordinator] = []
     weak var delegate: ScanQRCodeCoordinatorDelegate?
 
@@ -23,7 +23,7 @@ final class  ScanQRCodeCoordinator: NSObject, Coordinator {
 
     init(
         navigationController: NavigationController = NavigationController()
-        ) {
+    ) {
         self.navigationController = navigationController
     }
 

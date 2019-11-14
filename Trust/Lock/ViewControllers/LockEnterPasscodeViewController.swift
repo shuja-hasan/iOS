@@ -1,21 +1,23 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import UIKit
 import LocalAuthentication
+import UIKit
 
 final class LockEnterPasscodeViewController: LockPasscodeViewController {
     private lazy var lockEnterPasscodeViewModel: LockEnterPasscodeViewModel = {
-        return self.model as! LockEnterPasscodeViewModel
+        self.model as! LockEnterPasscodeViewModel
     }()
+
     var unlockWithResult: ((_ success: Bool, _ bioUnlock: Bool) -> Void)?
     private var context: LAContext!
     override func viewDidLoad() {
         super.viewDidLoad()
         lockView.lockTitle.text = lockEnterPasscodeViewModel.initialLabelText
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //If max attempt limit is reached we should valdiate if one minute gone.
+        // If max attempt limit is reached we should valdiate if one minute gone.
         if lock.incorrectMaxAttemptTimeIsSet() {
             lockView.lockTitle.text = lockEnterPasscodeViewModel.tryAfterOneMinute
             maxAttemptTimerValidation()
@@ -23,25 +25,29 @@ final class LockEnterPasscodeViewController: LockPasscodeViewController {
             showBiometricAuth()
         }
     }
+
     func resetBiometricAuth() {
-        self.context = LAContext()
+        context = LAContext()
     }
+
     private func showBiometricAuth() {
-        self.context = LAContext()
-        self.touchValidation()
+        context = LAContext()
+        touchValidation()
     }
+
     func cleanUserInput() {
-        self.clearPasscode()
+        clearPasscode()
     }
+
     override func enteredPasscode(_ passcode: String) {
         super.enteredPasscode(passcode)
         if lock.isPasscodeValid(passcode: passcode) {
             lock.resetPasscodeAttemptHistory()
             lock.removeIncorrectMaxAttemptTime()
-            self.lockView.lockTitle.text = lockEnterPasscodeViewModel.initialLabelText
+            lockView.lockTitle.text = lockEnterPasscodeViewModel.initialLabelText
             unlock(withResult: true, bioUnlock: false)
         } else {
-            let numberOfAttempts = self.lock.numberOfAttempts()
+            let numberOfAttempts = lock.numberOfAttempts()
             let passcodeAttemptLimit = model.passcodeAttemptLimit()
             let text = String(format: NSLocalizedString("lock.enter.passcode.view.model.incorrect.passcode", value: "Incorrect passcode. You have %d attempts left.", comment: ""), passcodeAttemptLimit - numberOfAttempts)
             lockView.lockTitle.text = text
@@ -50,32 +56,35 @@ final class LockEnterPasscodeViewController: LockPasscodeViewController {
                 exceededLimit()
                 return
             }
-            self.lock.recordIncorrectPasscodeAttempt()
+            lock.recordIncorrectPasscodeAttempt()
         }
     }
+
     private func exceededLimit() {
-        self.lockView.lockTitle.text = lockEnterPasscodeViewModel.tryAfterOneMinute
+        lockView.lockTitle.text = lockEnterPasscodeViewModel.tryAfterOneMinute
         lock.recordIncorrectMaxAttemptTime()
-        self.hideKeyboard()
+        hideKeyboard()
     }
+
     private func maxAttemptTimerValidation() {
         // if there is no recordedMaxAttemptTime user has logged successfuly previous time
         guard let maxAttemptTimer = lock.recordedMaxAttemptTime() else {
-            self.lockView.lockTitle.text = lockEnterPasscodeViewModel.initialLabelText
-            self.showKeyboard()
+            lockView.lockTitle.text = lockEnterPasscodeViewModel.initialLabelText
+            showKeyboard()
             return
         }
         let now = Date()
         let interval = now.timeIntervalSince(maxAttemptTimer)
-        //if interval is greater or equal 60 seconds we give 1 attempt.
+        // if interval is greater or equal 60 seconds we give 1 attempt.
         if interval >= 60 {
-            self.lockView.lockTitle.text = lockEnterPasscodeViewModel.initialLabelText
-            self.showKeyboard()
+            lockView.lockTitle.text = lockEnterPasscodeViewModel.initialLabelText
+            showKeyboard()
         }
     }
+
     private func unlock(withResult success: Bool, bioUnlock: Bool) {
-        self.hideKeyboard()
-        self.view.endEditing(true)
+        hideKeyboard()
+        view.endEditing(true)
         if success {
             lock.removeAutoLockTime()
         }
@@ -83,9 +92,11 @@ final class LockEnterPasscodeViewController: LockPasscodeViewController {
             unlock(success, bioUnlock)
         }
     }
+
     private func canEvaluatePolicy() -> Bool {
         return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
+
     func touchValidation() {
         guard canEvaluatePolicy() else {
             return
@@ -98,7 +109,7 @@ final class LockEnterPasscodeViewController: LockPasscodeViewController {
                     self.lock.removeIncorrectMaxAttemptTime()
                     self.lockView.lockTitle.text = self.lockEnterPasscodeViewModel.initialLabelText
                     self.unlock(withResult: true, bioUnlock: true)
-                 } else {
+                } else {
                     self.maxAttemptTimerValidation()
                 }
             }

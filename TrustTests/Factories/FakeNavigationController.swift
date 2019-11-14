@@ -1,22 +1,21 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
 @testable import Trust
+import UIKit
 
 class FakeNavigationController: NavigationController {
-
     private var _presentedViewController: UIViewController?
 
     override var presentedViewController: UIViewController? {
         return _presentedViewController
     }
 
-    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+    override func pushViewController(_ viewController: UIViewController, animated _: Bool) {
         super.pushViewController(viewController, animated: false)
     }
-    
-    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+
+    override func present(_ viewControllerToPresent: UIViewController, animated _: Bool, completion _: (() -> Void)? = nil) {
         _presentedViewController = viewControllerToPresent
     }
 }

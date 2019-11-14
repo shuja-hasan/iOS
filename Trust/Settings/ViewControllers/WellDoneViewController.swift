@@ -10,7 +10,6 @@ protocol WellDoneViewControllerDelegate: class {
 }
 
 final class WellDoneViewController: UIViewController {
-
     weak var delegate: WellDoneViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -22,7 +21,7 @@ final class WellDoneViewController: UIViewController {
         let descriptionLabel = UILabel()
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.text = NSLocalizedString("welldone.description.label.text", value: "Help us grow by sharing this app with your friends!", comment: "")
-        descriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        descriptionLabel.font = UIFont(name: "Trenda-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .regular)
         descriptionLabel.textColor = Colors.darkRed
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center

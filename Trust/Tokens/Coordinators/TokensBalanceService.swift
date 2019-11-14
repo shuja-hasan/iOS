@@ -1,14 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
-import BigInt
-import JSONRPCKit
 import APIKit
+import BigInt
+import Foundation
+import JSONRPCKit
 import Result
 import TrustCore
 
 public class TokensBalanceService {
-
     let server: RPCServer
 
     init(
@@ -33,10 +32,10 @@ public class TokensBalanceService {
         )
         Session.send(request) { result in
             switch result {
-            case .success(let balance):
+            case let .success(balance):
                 let biguint = BigUInt(Data(hex: balance))
                 completion(.success(BigInt(sign: .plus, magnitude: biguint)))
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(AnyError(error)))
             }
         }
@@ -49,9 +48,9 @@ public class TokensBalanceService {
         let request = EtherServiceRequest(for: server, batch: BatchFactory().create(BalanceRequest(address: address.description)))
         Session.send(request) { result in
             switch result {
-            case .success(let balance):
+            case let .success(balance):
                 completion(.success(balance))
-            case .failure(let error):
+            case let .failure(error):
                 completion(.failure(AnyError(error)))
             }
         }

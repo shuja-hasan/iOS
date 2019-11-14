@@ -1,11 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import TrustKeystore
 import TrustCore
+import TrustKeystore
 
 final class ExportPhraseCoordinator: RootCoordinator {
-
     let keystore: Keystore
     let account: Wallet
     let words: [String]
@@ -13,6 +12,7 @@ final class ExportPhraseCoordinator: RootCoordinator {
     var rootViewController: UIViewController {
         return passphraseViewController
     }
+
     var passphraseViewController: PassphraseViewController {
         let controller = PassphraseViewController(
             account: account,
@@ -22,8 +22,9 @@ final class ExportPhraseCoordinator: RootCoordinator {
         controller.title = viewModel.title
         return controller
     }
+
     private lazy var viewModel: ExportPhraseViewModel = {
-        return .init(keystore: keystore, account: account)
+        .init(keystore: keystore, account: account)
     }()
 
     init(
@@ -38,7 +39,7 @@ final class ExportPhraseCoordinator: RootCoordinator {
 }
 
 extension ExportPhraseCoordinator: PassphraseViewControllerDelegate {
-    func didPressVerify(in controller: PassphraseViewController, with account: Wallet, words: [String]) {
+    func didPressVerify(in _: PassphraseViewController, with _: Wallet, words _: [String]) {
         // Missing functionality
     }
 }

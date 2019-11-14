@@ -2,9 +2,8 @@
 
 import Foundation
 @testable import Trust
-import TrustKeystore
 import TrustCore
-
+import TrustKeystore
 
 extension Wallet {
     static func k() -> KeystoreKey {
@@ -23,13 +22,13 @@ extension Wallet {
             keyURL: url,
             key: key
         )
-        let _ = try! wallet.getAccount(password: "hello")
+        _ = try! wallet.getAccount(password: "hello")
         return wallet
     }
 }
 
 extension Account {
-    static func make(wallet: Wallet) -> Account {
+    static func make(wallet _: Wallet) -> Account {
         return Account(
             wallet: .make(),
             address: EthereumAddress.make(),

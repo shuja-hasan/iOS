@@ -1,19 +1,19 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
+import RealmSwift
 import Result
 import TrustCore
-import RealmSwift
+import UIKit
 
 protocol TokensViewControllerDelegate: class {
-    func didPressAddToken( in viewController: UIViewController)
+    func didPressAddToken(in viewController: UIViewController)
     func didSelect(token: TokenObject, in viewController: UIViewController)
     func didRequest(token: TokenObject, in viewController: UIViewController)
+    func didTapCreateWallet(in viewController: UIViewController)
 }
 
 final class TokensViewController: UIViewController {
-
     fileprivate var viewModel: TokensViewModel
 
     lazy var header: TokensHeaderView = {
@@ -22,32 +22,36 @@ final class TokensViewController: UIViewController {
         header.amountLabel.textColor = viewModel.headerBalanceTextColor
         header.backgroundColor = viewModel.headerBackgroundColor
         header.amountLabel.font = viewModel.headerBalanceFont
-        header.frame.size = header.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+        header.frame.size = header.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
         return header
     }()
 
     lazy var footer: TokensFooterView = {
         let footer = TokensFooterView(frame: .zero)
-        footer.textLabel.text = viewModel.footerTitle
+        footer.textLabel.text = "Empty Wallet!" // viewModel.footerTitle
         footer.textLabel.font = viewModel.footerTextFont
         footer.textLabel.textColor = viewModel.footerTextColor
-        footer.frame.size = footer.systemLayoutSizeFitting(UILayoutFittingExpandedSize)
+        footer.frame.size = footer.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
         footer.addGestureRecognizer(
             UITapGestureRecognizer(target: self, action: #selector(missingToken))
         )
+        footer.createButton.addTarget(self, action: #selector(createWallet), for: .touchUpInside)
         return footer
     }()
 
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = StyleLayout.TableView.separatorColor
-        tableView.backgroundColor = .white
-        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
+        tableView.separatorStyle = .none
+        tableView.separatorColor = UIColor.clear // StyleLayout.TableView.separatorColor
+        tableView.backgroundColor = Colors.veryLightGray // .white
+//        tableView.register(TokenViewCell.self, forCellReuseIdentifier: TokenViewCell.identifier)
         tableView.tableHeaderView = header
         tableView.tableFooterView = footer
         tableView.addSubview(refreshControl)
+        tableView.register(UINib(nibName: "TokenViewCell", bundle: nil), forCellReuseIdentifier: "TokenViewCell")
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 65
         return tableView
     }()
 
@@ -57,7 +61,7 @@ final class TokensViewController: UIViewController {
     let intervalToETHRefresh = 10.0
 
     lazy var fetchClosure: () -> Void = {
-        return debounce(delay: .seconds(7), action: { [weak self] () in
+        debounce(delay: .seconds(7), action: { [weak self] () in
             self?.viewModel.fetch()
         })
     }()
@@ -79,8 +83,8 @@ final class TokensViewController: UIViewController {
         ])
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         sheduleBalanceUpdate()
-        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: .UIApplicationWillResignActive, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: .UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.resignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(TokensViewController.didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     override func viewDidLoad() {
@@ -88,14 +92,25 @@ final class TokensViewController: UIViewController {
         startTokenObservation()
         title = viewModel.title
         view.backgroundColor = viewModel.backgroundColor
-        footer.textLabel.text = viewModel.footerTitle
+        footer.textLabel.text = "Empty Wallet!" // viewModel.footerTitle
 
         fetch(force: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.applyTintAdjustment()
+        navigationController?.applyTintAdjustment()
+
+        if viewModel.tokens.isEmpty {
+            footer.emptyWalletImageView.isHidden = false
+            footer.textLabel.isHidden = false
+            footer.createButton.isHidden = false
+        } else {
+            footer.emptyWalletImageView.isHidden = true
+            footer.textLabel.isHidden = true
+            footer.createButton.isHidden = true
+        }
+        tableView.tableFooterView = footer
     }
 
     @objc func pullToRefresh() {
@@ -111,7 +126,11 @@ final class TokensViewController: UIViewController {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @objc func createWallet() {
+        delegate?.didTapCreateWallet(in: self)
+    }
+
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -176,7 +195,7 @@ extension TokensViewController: UITableViewDelegate {
     }
 
     @available(iOS 11.0, *)
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let token = viewModel.item(for: indexPath)
         let deleteAction = UIContextualAction(style: .normal, title: R.string.localizable.transactionsReceiveButtonTitle()) { _, _, handler in
             self.delegate?.didRequest(token: token, in: self)
@@ -187,30 +206,35 @@ extension TokensViewController: UITableViewDelegate {
         return configuration
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return TokensLayout.tableView.height
+    func tableView(_: UITableView, heightForRowAt _: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension // TokensLayout.tableView.height
     }
 }
+
 extension TokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TokenViewCell.identifier, for: indexPath) as! TokenViewCell
         cell.isExclusiveTouch = true
         return cell
     }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return viewModel.tokens.count
     }
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-       guard let tokenViewCell = cell as? TokenViewCell else { return }
-       tokenViewCell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
+
+    func tableView(_: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let tokenViewCell = cell as? TokenViewCell else { return }
+        tokenViewCell.configure(viewModel: viewModel.cellViewModel(for: indexPath))
     }
 }
+
 extension TokensViewController: TokensViewModelDelegate {
     func refresh() {
-        self.tableView.reloadData()
-        self.refreshHeaderView()
+        tableView.reloadData()
+        refreshHeaderView()
     }
 }
+
 extension TokensViewController: Scrollable {
     func scrollOnTop() {
         tableView.scrollOnTop()

@@ -1,17 +1,16 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
 import Eureka
-import TrustCore
-import QRCodeReaderViewController
+import Foundation
 import PromiseKit
+import QRCodeReaderViewController
+import TrustCore
 
 protocol NewTokenViewControllerDelegate: class {
     func didAddToken(token: ERC20Token, in viewController: NewTokenViewController)
 }
 
 final class NewTokenViewController: FormViewController {
-
     private var viewModel: NewTokenViewModel
     private struct Values {
         static let network = "network"
@@ -30,12 +29,15 @@ final class NewTokenViewController: FormViewController {
     private var contractRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.contract) as? TextFloatLabelRow
     }
+
     private var nameRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.name) as? TextFloatLabelRow
     }
+
     private var symbolRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.symbol) as? TextFloatLabelRow
     }
+
     private var decimalsRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.decimals) as? TextFloatLabelRow
     }
@@ -64,41 +66,41 @@ final class NewTokenViewController: FormViewController {
         }
         form = section
 
-        +++ Section()
+            +++ Section()
 
-        <<< AppFormAppearance.textFieldFloat(tag: Values.contract) { [unowned self] in
-            $0.add(rule: EthereumAddressRule())
-            $0.validationOptions = .validatesOnDemand
-            $0.title = R.string.localizable.contractAddress()
-            $0.value = self.viewModel.contract
-        }.cellUpdate { cell, _ in
-            cell.textField.textAlignment = .left
-            cell.textField.rightView = recipientRightView
-            cell.textField.rightViewMode = .always
-        }
+            <<< AppFormAppearance.textFieldFloat(tag: Values.contract) { [unowned self] in
+                $0.add(rule: EthereumAddressRule())
+                $0.validationOptions = .validatesOnDemand
+                $0.title = R.string.localizable.contractAddress()
+                $0.value = self.viewModel.contract
+            }.cellUpdate { cell, _ in
+                cell.textField.textAlignment = .left
+                cell.textField.rightView = recipientRightView
+                cell.textField.rightViewMode = .always
+            }
 
-        <<< AppFormAppearance.textFieldFloat(tag: Values.name) { [unowned self] in
-            $0.add(rule: RuleRequired())
-            $0.validationOptions = .validatesOnDemand
-            $0.title = R.string.localizable.name()
-            $0.value = self.viewModel.name
-        }
+            <<< AppFormAppearance.textFieldFloat(tag: Values.name) { [unowned self] in
+                $0.add(rule: RuleRequired())
+                $0.validationOptions = .validatesOnDemand
+                $0.title = R.string.localizable.name()
+                $0.value = self.viewModel.name
+            }
 
-        <<< AppFormAppearance.textFieldFloat(tag: Values.symbol) { [unowned self] in
-            $0.add(rule: RuleRequired())
-            $0.validationOptions = .validatesOnDemand
-            $0.title = R.string.localizable.symbol()
-            $0.value = self.viewModel.symbol
-        }
+            <<< AppFormAppearance.textFieldFloat(tag: Values.symbol) { [unowned self] in
+                $0.add(rule: RuleRequired())
+                $0.validationOptions = .validatesOnDemand
+                $0.title = R.string.localizable.symbol()
+                $0.value = self.viewModel.symbol
+            }
 
-        <<< AppFormAppearance.textFieldFloat(tag: Values.decimals) { [unowned self] in
-            $0.add(rule: RuleRequired())
-            $0.add(rule: RuleMaxLength(maxLength: 32))
-            $0.validationOptions = .validatesOnDemand
-            $0.title = R.string.localizable.decimals()
-            $0.cell.textField.keyboardType = .decimalPad
-            $0.value = self.viewModel.decimals
-        }
+            <<< AppFormAppearance.textFieldFloat(tag: Values.decimals) { [unowned self] in
+                $0.add(rule: RuleRequired())
+                $0.add(rule: RuleMaxLength(maxLength: 32))
+                $0.validationOptions = .validatesOnDemand
+                $0.title = R.string.localizable.decimals()
+                $0.cell.textField.keyboardType = .decimalPad
+                $0.value = self.viewModel.decimals
+            }
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(finish))
     }
@@ -111,11 +113,12 @@ final class NewTokenViewController: FormViewController {
             $0.options = viewModel.networks
             $0.value = viewModel.network
             $0.displayValueFor = { value in
-                return value?.name
+                value?.name
             }
         }.onPresent { _, selectorController in
             selectorController.enableDeselection = false
-        }}
+        }
+    }
 
     @objc func finish() {
         guard form.validate().isEmpty else {
@@ -174,21 +177,21 @@ final class NewTokenViewController: FormViewController {
             self?.reloadFields(with: token)
         }.ensure { [weak self] in
             self?.hideLoading()
-        }.catch {_ in
-            //We could not find any info about this contract.This error is already logged in crashlytics.
+        }.catch { _ in
+            // We could not find any info about this contract.This error is already logged in crashlytics.
         }
     }
 
     private func reloadFields(with token: TokenObject) {
-        self.nameRow?.value = token.name
-        self.decimalsRow?.value = token.decimals.description
-        self.symbolRow?.value = token.symbol
-        self.nameRow?.reload()
-        self.decimalsRow?.reload()
-        self.symbolRow?.reload()
+        nameRow?.value = token.name
+        decimalsRow?.value = token.decimals.description
+        symbolRow?.value = token.symbol
+        nameRow?.reload()
+        decimalsRow?.reload()
+        symbolRow?.reload()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

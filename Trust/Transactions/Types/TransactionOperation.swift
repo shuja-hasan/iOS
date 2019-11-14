@@ -3,7 +3,6 @@
 import UIKit
 
 class TransactionOperation: TrustOperation {
-
     private let network: TrustNetwork
 
     private let session: WalletSession
@@ -13,13 +12,13 @@ class TransactionOperation: TrustOperation {
     var transactionsHistory = [Transaction]()
 
     private lazy var tracker: TransactionsTracker = {
-        return TransactionsTracker(sessionID: self.session.sessionID)
+        TransactionsTracker(sessionID: self.session.sessionID)
     }()
 
     init(
         network: TrustNetwork,
         session: WalletSession
-        ) {
+    ) {
         self.network = network
         self.session = session
     }
@@ -34,7 +33,7 @@ class TransactionOperation: TrustOperation {
     }
 
     private func fetchTransactions() {
-        transactions(for: page) { [weak self] (result, state) in
+        transactions(for: page) { [weak self] result, state in
             guard let transactions = result, state == .initial else {
                 if state == .failed {
                     self?.tracker.fetchingState = .failed
@@ -52,12 +51,12 @@ class TransactionOperation: TrustOperation {
     }
 
     private func transactions(for page: Int, completion: @escaping (([Transaction]?, TransactionFetchingState) -> Void)) {
-        self.network.transactions(for: self.session.account.address, startBlock: 1, page: page, contract: nil) { result in
+        network.transactions(for: session.account.address, startBlock: 1, page: page, contract: nil) { result in
             guard let transactions = result.0, result.1 else {
                 completion(nil, .failed)
                 return
             }
-            if !transactions.isEmpty && page <= 5 {
+            if !transactions.isEmpty, page <= 5 {
                 completion(transactions, .initial)
             } else {
                 completion(nil, .done)

@@ -1,16 +1,15 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
+import KeychainSwift
+import PromiseKit
 import UIKit
 import WebKit
-import PromiseKit
-import KeychainSwift
 
 enum CookiesStoreError: LocalizedError {
     case empty
 }
 
 final class CookiesStore {
-
     private static let webKitStorage = WKWebsiteDataStore.default()
     private static let httpCookieStorage = HTTPCookieStorage.shared
     private static let keychain = KeychainSwift(keyPrefix: Constants.keychainKeyPrefix)

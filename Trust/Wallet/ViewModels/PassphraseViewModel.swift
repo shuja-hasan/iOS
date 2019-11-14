@@ -4,7 +4,6 @@ import Foundation
 import UIKit
 
 struct PassphraseViewModel {
-
     var title: String {
         return R.string.localizable.backupPhrase()
     }
@@ -14,6 +13,6 @@ struct PassphraseViewModel {
     }
 
     var phraseFont: UIFont {
-        return UIFont.systemFont(ofSize: 16, weight: .medium)
+        return UIFont(name: "Trenda-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .medium)
     }
 }

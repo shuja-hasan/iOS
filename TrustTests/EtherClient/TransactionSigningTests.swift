@@ -53,7 +53,7 @@ class TransactionSigningTests: XCTestCase {
             to: EthereumAddress(string: "0x3535353535353535353535353535353535353535")!,
             nonce: 9,
             data: Data(),
-            gasPrice: BigInt(20000000000),
+            gasPrice: BigInt(20_000_000_000),
             gasLimit: BigInt(21000),
             chainID: 1,
             localizedObject: .none

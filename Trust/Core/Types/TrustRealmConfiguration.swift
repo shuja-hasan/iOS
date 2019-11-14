@@ -5,7 +5,6 @@ import RealmSwift
 import TrustCore
 
 struct RealmConfiguration {
-
     static func sharedConfiguration() -> Realm.Configuration {
         var config = Realm.Configuration()
         let directory = config.fileURL!.deletingLastPathComponent()

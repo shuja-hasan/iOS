@@ -1,11 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
 @testable import Trust
 import TrustCore
+import XCTest
 
 class InCoordinatorTests: XCTestCase {
-    
     func testShowTabBar() {
         let config: Config = .make()
         let coordinator = InCoordinator(
@@ -39,7 +38,7 @@ class InCoordinatorTests: XCTestCase {
         let keystore = FakeKeystore(
             wallets: [
                 account1,
-                account2
+                account2,
             ]
         )
         let coordinator = InCoordinator(
@@ -49,23 +48,23 @@ class InCoordinatorTests: XCTestCase {
             config: .make()
         )
 
-        coordinator.showTabBar(for: account1)
+        coordinator.showTabBar(for: account1, tab: Tabs.wallet(.none))
 
         XCTAssertEqual(coordinator.keystore.recentlyUsedWallet, account1)
 
-        coordinator.showTabBar(for: account2)
+        coordinator.showTabBar(for: account2, tab: Tabs.wallet(.none))
 
         XCTAssertEqual(coordinator.keystore.recentlyUsedWallet, account2)
     }
 
     func testShowSendFlow() {
-       let coordinator = InCoordinator(
+        let coordinator = InCoordinator(
             navigationController: FakeNavigationController(),
             wallet: .make(),
             keystore: FakeEtherKeystore(),
             config: .make()
         )
-        coordinator.showTabBar(for: .make())
+        coordinator.showTabBar(for: .make(), tab: Tabs.wallet(.none))
 
         coordinator.sendFlow(for: .make())
 
@@ -81,7 +80,7 @@ class InCoordinatorTests: XCTestCase {
             keystore: FakeEtherKeystore(),
             config: .make()
         )
-        coordinator.showTabBar(for: .make())
+        coordinator.showTabBar(for: .make(), tab: Tabs.wallet(.none))
 
         coordinator.requestFlow(for: .make())
 
@@ -97,7 +96,7 @@ class InCoordinatorTests: XCTestCase {
             keystore: FakeEtherKeystore(),
             config: .make()
         )
-        coordinator.showTabBar(for: .make())
+        coordinator.showTabBar(for: .make(), tab: Tabs.wallet(.none))
 
         coordinator.showTab(.wallet(.none))
 

@@ -14,22 +14,27 @@ class LockPasscodeViewController: UIViewController {
         self.lock = lock
         super.init(nibName: nil, bundle: nil)
     }
+
     override func viewDidLoad() {
-        self.navigationItem.hidesBackButton = true
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        self.view.backgroundColor = UIColor.white
-        self.configureInvisiblePasscodeField()
-        self.configureLockView()
-        if !invisiblePasscodeField.isFirstResponder && !lock.incorrectMaxAttemptTimeIsSet() {
-            invisiblePasscodeField.becomeFirstResponder()
+        navigationItem.hidesBackButton = true
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        view.backgroundColor = UIColor.white
+        configureInvisiblePasscodeField()
+        configureLockView()
+        if !invisiblePasscodeField.isFirstResponder, !lock.incorrectMaxAttemptTimeIsSet() {
+            if !lock.shouldShowProtection() {
+                invisiblePasscodeField.becomeFirstResponder()
+            }
         }
     }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if invisiblePasscodeField.isFirstResponder {
             invisiblePasscodeField.resignFirstResponder()
         }
     }
+
     public func configureInvisiblePasscodeField() {
         invisiblePasscodeField = UITextField()
         invisiblePasscodeField.keyboardType = .numberPad
@@ -43,48 +48,61 @@ class LockPasscodeViewController: UIViewController {
         lockView = LockView(model)
         lockView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(lockView)
-        lockView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        lockView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        lockView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        lockView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        lockView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        lockView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        lockView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        lockView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
     }
 
-    @objc func enteredPasscode(_ passcode: String) {
+    @objc func enteredPasscode(_: String) {
         shouldIgnoreTextFieldDelegateCalls = false
         clearPasscode()
     }
+
     func clearPasscode() {
         invisiblePasscodeField.text = ""
-        for characterView in lockView.characters {
-            characterView.setEmpty(true)
+        if lockView != nil {
+            for characterView in lockView.characters {
+                characterView.setEmpty(true)
+            }
         }
     }
+
     func hideKeyboard() {
-         invisiblePasscodeField.resignFirstResponder()
+        if invisiblePasscodeField.isFirstResponder {
+            invisiblePasscodeField.resignFirstResponder()
+        }
     }
+
     func showKeyboard() {
         invisiblePasscodeField.becomeFirstResponder()
     }
-    func finish(withResult success: Bool, animated: Bool) {
-        invisiblePasscodeField.resignFirstResponder()
+
+    func finish(withResult success: Bool, animated _: Bool) {
+        if invisiblePasscodeField.isFirstResponder {
+            invisiblePasscodeField.resignFirstResponder()
+        }
         if let finish = willFinishWithResult {
             finish(success)
         } else {
             dismiss(animated: true, completion: nil)
         }
     }
+
     @objc func keyboardWillShow(_ notification: Notification) {
         if let userInfo = notification.userInfo {
-            if let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if let keyboardSize = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
                 UIView.animate(withDuration: 0.1, animations: { () -> Void in
-                   self.lockView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -keyboardSize.height).isActive = true
+                    self.lockView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -keyboardSize.height).isActive = true
                 })
             }
         }
     }
-    required init?(coder aDecoder: NSCoder) {
+
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -103,12 +121,13 @@ extension LockPasscodeViewController: UITextFieldDelegate {
             return false
         } else {
             for characterView in lockView.characters {
-                let index: Int = lockView.characters.index(of: characterView)!
+                let index: Int = lockView.characters.firstIndex(of: characterView)!
                 characterView.setEmpty(index >= newLength)
             }
             return true
         }
     }
+
     @objc func textFieldDidChange(_ textField: UITextField) {
         if shouldIgnoreTextFieldDelegateCalls {
             return
@@ -118,7 +137,7 @@ extension LockPasscodeViewController: UITextFieldDelegate {
         if newLength == model.charCount() {
             shouldIgnoreTextFieldDelegateCalls = true
             textField.text = ""
-            perform(#selector(self.enteredPasscode), with: newString, afterDelay: 0.3)
+            perform(#selector(enteredPasscode), with: newString, afterDelay: 0.3)
         }
     }
 }

@@ -1,11 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
 import StatefulViewController
+import UIKit
 
 final class TransactionsEmptyView: UIView {
-
     let titleLabel = UILabel()
     let imageView = UIImageView()
     let button = Button(size: .normal, style: .solid)
@@ -65,7 +64,7 @@ final class TransactionsEmptyView: UIView {
         onRetry?()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

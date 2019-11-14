@@ -1,10 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-@testable import Trust
-import TrustKeystore
 import KeychainSwift
 import Result
+@testable import Trust
+import TrustKeystore
 
 class FakeEtherKeystore: EtherKeystore {
     convenience init() {
@@ -17,7 +17,7 @@ class FakeEtherKeystore: EtherKeystore {
         )
     }
 
-    override func createAccount(with password: String, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
+    override func createAccount(with _: String, completion: @escaping (Result<Wallet, KeystoreError>) -> Void) {
         completion(.success(.make()))
     }
 }

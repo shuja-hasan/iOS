@@ -1,12 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
-import JSONRPCKit
 import APIKit
 import BigInt
+import Foundation
+import JSONRPCKit
 
 final class ChainState {
-
     struct Keys {
         static let latestBlock = "chainID"
         static let gasPrice = "gasPrice"
@@ -32,6 +31,7 @@ final class ChainState {
             defaults.set(newValue, forKey: latestBlockKey)
         }
     }
+
     var gasPrice: BigInt? {
         get {
             guard let value = defaults.string(forKey: gasPriceBlockKey) else { return .none }
@@ -48,7 +48,7 @@ final class ChainState {
         server: RPCServer
     ) {
         self.server = server
-        self.defaults = Config.current.defaults
+        defaults = Config.current.defaults
         fetch()
     }
 
@@ -66,7 +66,7 @@ final class ChainState {
         Session.send(request) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .success(let number):
+            case let .success(number):
                 self.latestBlock = number
                 self.chainStateCompletion?(true, number)
             case .failure:
@@ -79,7 +79,7 @@ final class ChainState {
         let request = EtherServiceRequest(for: server, batch: BatchFactory().create(GasPriceRequest()))
         Session.send(request) { [weak self] result in
             switch result {
-            case .success(let balance):
+            case let .success(balance):
                 self?.gasPrice = BigInt(balance.drop0x, radix: 16)
             case .failure: break
             }

@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
 import BigInt
+import Foundation
 
 enum ConfigureTransactionError: LocalizedError {
     case gasLimitTooHigh
@@ -18,7 +18,7 @@ enum ConfigureTransactionError: LocalizedError {
                 ),
                 ConfigureTransaction.gasLimitMax
             )
-        case .gasFeeTooHigh(let server):
+        case let .gasFeeTooHigh(server):
             return String(
                 format: NSLocalizedString(
                     "configureTransaction.error.gasFeeHigh",

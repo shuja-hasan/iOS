@@ -1,8 +1,8 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import TrustCore
 import RealmSwift
+import TrustCore
 
 final class WalletSession {
     let account: WalletInfo
@@ -15,13 +15,15 @@ final class WalletSession {
     }
 
     lazy var walletStorage: WalletStorage = {
-        return WalletStorage(realm: sharedRealm)
+        WalletStorage(realm: sharedRealm)
     }()
+
     lazy var tokensStorage: TokensDataStore = {
-        return TokensDataStore(realm: realm, account: account)
+        TokensDataStore(realm: realm, account: account)
     }()
+
     lazy var transactionsStorage: TransactionsStorage = {
-        return TransactionsStorage(
+        TransactionsStorage(
             realm: realm,
             account: account
         )

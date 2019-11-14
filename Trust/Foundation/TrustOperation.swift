@@ -3,7 +3,6 @@
 import UIKit
 
 class TrustOperation: Operation {
-
     enum KVOProperties {
         static let isFinished = "isFinished"
         static let isExecuting = "isExecuting"
@@ -12,7 +11,7 @@ class TrustOperation: Operation {
     private var _finished = false
     private var _isExecuting = false
 
-    override public var isFinished: Bool {
+    public override var isFinished: Bool {
         get { return _finished }
         set {
             willChangeValue(forKey: KVOProperties.isFinished)
@@ -21,7 +20,7 @@ class TrustOperation: Operation {
         }
     }
 
-    override public var isExecuting: Bool {
+    public override var isExecuting: Bool {
         get { return _isExecuting }
         set {
             willChangeValue(forKey: KVOProperties.isExecuting)

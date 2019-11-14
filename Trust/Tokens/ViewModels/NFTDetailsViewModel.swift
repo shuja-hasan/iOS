@@ -4,7 +4,6 @@ import Foundation
 import UIKit
 
 final class NFTDetailsViewModel {
-
     let token: CollectibleTokenObject
     let server: RPCServer
 

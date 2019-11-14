@@ -4,7 +4,6 @@ import Foundation
 import PromiseKit
 
 struct NewTokenViewModel {
-
     private var tokensNetwork: NetworkProtocol
     let token: ERC20Token?
     private let session: WalletSession

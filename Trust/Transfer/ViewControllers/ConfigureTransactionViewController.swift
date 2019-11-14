@@ -1,15 +1,14 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import UIKit
-import Eureka
 import BigInt
+import Eureka
+import UIKit
 
 protocol ConfigureTransactionViewControllerDelegate: class {
     func didEdit(configuration: TransactionConfiguration, in viewController: ConfigureTransactionViewController)
 }
 
 class ConfigureTransactionViewController: FormViewController {
-
     let configuration: TransactionConfiguration
     let config: Config
     let transfer: Transfer
@@ -25,7 +24,7 @@ class ConfigureTransactionViewController: FormViewController {
     }
 
     lazy var viewModel: ConfigureTransactionViewModel = {
-        return ConfigureTransactionViewModel(
+        ConfigureTransactionViewModel(
             config: self.config,
             transfer: self.transfer
         )
@@ -34,15 +33,19 @@ class ConfigureTransactionViewController: FormViewController {
     private var gasPriceRow: SliderTextFieldRow? {
         return form.rowBy(tag: Values.gasPrice) as? SliderTextFieldRow
     }
+
     private var gasLimitRow: SliderTextFieldRow? {
         return form.rowBy(tag: Values.gasLimit) as? SliderTextFieldRow
     }
+
     private var totalFeeRow: TextRow? {
         return form.rowBy(tag: Values.totalFee) as? TextRow
     }
+
     private var dataRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.data) as? TextFloatLabelRow
     }
+
     private var nonceRow: TextFloatLabelRow? {
         return form.rowBy(tag: Values.nonce) as? TextFloatLabelRow
     }
@@ -50,15 +53,19 @@ class ConfigureTransactionViewController: FormViewController {
     private var gasLimit: BigInt {
         return BigInt(String(Int(gasLimitRow?.value ?? 0)), radix: 10) ?? BigInt()
     }
+
     private var gasPrice: BigInt {
         return fullFormatter.number(from: String(Int(gasPriceRow?.value ?? 1)), units: UnitConfiguration.gasPriceUnit) ?? BigInt()
     }
+
     private var totalFee: BigInt {
         return gasPrice * gasLimit
     }
+
     private var dataString: String {
         return dataRow?.value ?? "0x"
     }
+
     private var nonce: BigInt {
         return BigInt(nonceRow?.value ?? "0") ?? 0
     }
@@ -86,7 +93,7 @@ class ConfigureTransactionViewController: FormViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -99,66 +106,66 @@ class ConfigureTransactionViewController: FormViewController {
             footer: viewModel.gasPriceFooterText
         )
 
-        <<< SliderTextFieldRow(Values.gasPrice) {
-            $0.title = NSLocalizedString("configureTransaction.gasPriceGwei.label.title", value: "Gas Price (Gwei)", comment: "")
-            $0.value = Float(gasPriceGwei) ?? 1
-            $0.minimumValue = Float(GasPriceConfiguration.min / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
-            $0.maximumValue = Float(GasPriceConfiguration.max / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
-            $0.steps = UInt((GasPriceConfiguration.max / GasPriceConfiguration.min))
-            $0.displayValueFor = { (rowValue: Float?) in
-                return "\(Int(rowValue ?? 1))"
+            <<< SliderTextFieldRow(Values.gasPrice) {
+                $0.title = NSLocalizedString("configureTransaction.gasPriceGwei.label.title", value: "Gas Price (Gwei)", comment: "")
+                $0.value = Float(gasPriceGwei) ?? 1
+                $0.minimumValue = Float(GasPriceConfiguration.min / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
+                $0.maximumValue = Float(GasPriceConfiguration.max / BigInt(UnitConfiguration.gasPriceUnit.rawValue))
+                $0.steps = UInt(GasPriceConfiguration.max / GasPriceConfiguration.min)
+                $0.displayValueFor = { (rowValue: Float?) in
+                    "\(Int(rowValue ?? 1))"
+                }
+                $0.onChange { [weak self] _ in
+                    self?.recalculateTotalFee()
+                }
             }
-            $0.onChange { [weak self] _ in
-                self?.recalculateTotalFee()
+
+            +++ Section(
+                footer: viewModel.gasLimitFooterText
+            )
+
+            <<< SliderTextFieldRow(Values.gasLimit) {
+                $0.title = NSLocalizedString("configureTransaction.gasLimit.label.title", value: "Gas Limit", comment: "")
+                $0.value = Float(configuration.gasLimit.description) ?? 21000
+                $0.minimumValue = Float(GasLimitConfiguration.min)
+                $0.maximumValue = Float(GasLimitConfiguration.max)
+                $0.steps = UInt((GasLimitConfiguration.max - GasLimitConfiguration.min) / 1000)
+                $0.displayValueFor = { (rowValue: Float?) in
+                    "\(Int(rowValue ?? 1))"
+                }
+                $0.onChange { [unowned self] _ in
+                    self.recalculateTotalFee()
+                }
             }
-        }
 
-        +++ Section(
-            footer: viewModel.gasLimitFooterText
-        )
+            +++ Section()
 
-        <<< SliderTextFieldRow(Values.gasLimit) {
-            $0.title = NSLocalizedString("configureTransaction.gasLimit.label.title", value: "Gas Limit", comment: "")
-            $0.value = Float(configuration.gasLimit.description) ?? 21000
-            $0.minimumValue = Float(GasLimitConfiguration.min)
-            $0.maximumValue = Float(GasLimitConfiguration.max)
-            $0.steps = UInt((GasLimitConfiguration.max - GasLimitConfiguration.min) / 1000)
-            $0.displayValueFor = { (rowValue: Float?) in
-                return "\(Int(rowValue ?? 1))"
+            <<< AppFormAppearance.textFieldFloat(tag: Values.data) {
+                let dataText = String(format:
+                    NSLocalizedString(
+                        "configureTransaction.dataField.label.title",
+                        value: "Data (Optional). %@",
+                        comment: ""
+                    ), self.configuration.data.description)
+                $0.title = dataText
+                $0.value = self.configuration.data.hexEncoded
             }
-            $0.onChange { [unowned self] _ in
-                self.recalculateTotalFee()
+
+            +++ Section()
+
+            <<< AppFormAppearance.textFieldFloat(tag: Values.nonce) {
+                $0.title = R.string.localizable.nonce()
+                $0.value = "\(self.configuration.nonce)"
+            }.cellUpdate { cell, _ in
+                cell.textField.keyboardType = .numberPad
             }
-        }
 
-        +++ Section()
+            +++ Section()
 
-        <<< AppFormAppearance.textFieldFloat(tag: Values.data) {
-            let dataText = String(format:
-                NSLocalizedString(
-                    "configureTransaction.dataField.label.title",
-                    value: "Data (Optional). %@",
-                    comment: ""
-            ), self.configuration.data.description)
-            $0.title = dataText
-            $0.value = self.configuration.data.hexEncoded
-        }
-
-        +++ Section()
-
-        <<< AppFormAppearance.textFieldFloat(tag: Values.nonce) {
-            $0.title = R.string.localizable.nonce()
-            $0.value = "\(self.configuration.nonce)"
-        }.cellUpdate { cell, _ in
-            cell.textField.keyboardType = .numberPad
-        }
-
-        +++ Section()
-
-        <<< TextRow(Values.totalFee) {
-            $0.title = R.string.localizable.networkFee()
-            $0.disabled = true
-        }
+            <<< TextRow(Values.totalFee) {
+                $0.title = R.string.localizable.networkFee()
+                $0.disabled = true
+            }
 
         recalculateTotalFee()
     }

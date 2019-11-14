@@ -1,13 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
+import RealmSwift
+import Result
 import TrustCore
 import TrustKeystore
-import UIKit
-import RealmSwift
-import URLNavigator
 import TrustWalletSDK
-import Result
+import UIKit
+import URLNavigator
 
 protocol InCoordinatorDelegate: class {
     func didCancel(in coordinator: InCoordinator)
@@ -20,32 +20,31 @@ enum CoinType {
 }
 
 struct CoinTypeViewModel {
-
     let type: CoinType
 
     var account: Account {
         switch type {
-        case .coin(let account, _):
+        case let .coin(account, _):
             return account
-        case .tokenOf(let account, _):
+        case let .tokenOf(account, _):
             return account
         }
     }
 
     var address: String {
         switch type {
-        case .coin(let account, _):
+        case let .coin(account, _):
             return account.address.description
-        case .tokenOf(let account, _):
+        case let .tokenOf(account, _):
             return account.address.description
         }
     }
 
     var name: String {
         switch type {
-        case .coin(_, let token):
+        case let .coin(_, token):
             return token.name
-        case .tokenOf(_, let token):
+        case let .tokenOf(_, token):
             return token.name
         }
     }
@@ -59,13 +58,12 @@ struct CoinTypeViewModel {
         case .callisto: return RPCServer.callisto
         case .bitcoin: return RPCServer.main
         case .ether1: return RPCServer.ether1
-        case .xerom: return RPCServer.xerom
+        case .Xerom: return RPCServer.Xerom
         }
     }
 }
 
 class InCoordinator: Coordinator {
-
     let navigationController: NavigationController
     var coordinators: [Coordinator] = []
     let initialWallet: WalletInfo
@@ -76,24 +74,29 @@ class InCoordinator: Coordinator {
     weak var delegate: InCoordinatorDelegate?
     private var pendingTransactionsObserver: NotificationToken?
     var browserCoordinator: BrowserCoordinator? {
-        return self.coordinators.compactMap { $0 as? BrowserCoordinator }.first
+        return coordinators.compactMap { $0 as? BrowserCoordinator }.first
     }
+
     var settingsCoordinator: SettingsCoordinator? {
-        return self.coordinators.compactMap { $0 as? SettingsCoordinator }.first
+        return coordinators.compactMap { $0 as? SettingsCoordinator }.first
     }
+
     var tokensCoordinator: TokensCoordinator? {
-        return self.coordinators.compactMap { $0 as? TokensCoordinator }.first
+        return coordinators.compactMap { $0 as? TokensCoordinator }.first
     }
+
     var tabBarController: UITabBarController? {
-        return self.navigationController.viewControllers.first as? UITabBarController
+        return navigationController.viewControllers.first as? UITabBarController
     }
+
     var localSchemeCoordinator: LocalSchemeCoordinator?
     lazy var helpUsCoordinator: HelpUsCoordinator = {
-        return HelpUsCoordinator(
+        HelpUsCoordinator(
             navigationController: navigationController,
             appTracker: appTracker
         )
     }()
+
     let events: [BranchEvent] = []
 
     init(
@@ -103,15 +106,15 @@ class InCoordinator: Coordinator {
         config: Config = .current,
         appTracker: AppTracker = AppTracker(),
         navigator: Navigator = Navigator(),
-        events: [BranchEvent] = []
+        events _: [BranchEvent] = []
     ) {
         self.navigationController = navigationController
-        self.initialWallet = wallet
+        initialWallet = wallet
         self.keystore = keystore
         self.config = config
         self.appTracker = appTracker
         self.navigator = navigator
-        self.register(with: navigator)
+        register(with: navigator)
     }
 
     func start() {
@@ -123,7 +126,6 @@ class InCoordinator: Coordinator {
     }
 
     func showTabBar(for account: WalletInfo, tab: Tabs) {
-
         let migration = MigrationInitializer(account: account)
         migration.perform()
 
@@ -147,7 +149,7 @@ class InCoordinator: Coordinator {
         let coins = Config.current.servers
         if let wallet = account.currentWallet, account.accounts.count < coins.count, account.mainWallet {
             let derivationPaths = coins.map { $0.derivationPath(at: 0) }
-            let _ = self.keystore.addAccount(to: wallet, derivationPaths: derivationPaths)
+            _ = keystore.addAccount(to: wallet, derivationPaths: derivationPaths)
         }
 
         let tabBarController = TabBarController()
@@ -211,14 +213,14 @@ class InCoordinator: Coordinator {
         guard let nav = viewControllers[selectTab.index] as? UINavigationController else { return }
 
         switch selectTab {
-        case .browser(let url):
+        case let .browser(url):
             if let url = url {
                 browserCoordinator?.openURL(url)
             }
-        case .wallet(let action):
+        case let .wallet(action):
             switch action {
             case .none: break
-            case .addToken(let address):
+            case let .addToken(address):
                 tokensCoordinator?.addTokenContract(for: address)
             }
         case .settings:
@@ -314,9 +316,9 @@ class InCoordinator: Coordinator {
     @discardableResult
     func handleEvent(_ event: BranchEvent) -> Bool {
         switch event {
-        case .openURL(let url):
+        case let .openURL(url):
             showTab(.browser(openURL: url))
-        case .newToken(let address):
+        case let .newToken(address):
             showTab(.wallet(.addToken(address)))
         }
         return true
@@ -349,34 +351,34 @@ extension InCoordinator: SettingsCoordinatorDelegate {
         delegate?.didCancel(in: self)
     }
 
-    func didRestart(with account: WalletInfo, tab: Tabs, in coordinator: SettingsCoordinator) {
+    func didRestart(with account: WalletInfo, tab: Tabs, in _: SettingsCoordinator) {
         restart(for: account, tab: tab)
     }
 
-    func didUpdateAccounts(in coordinator: SettingsCoordinator) {
+    func didUpdateAccounts(in _: SettingsCoordinator) {
         delegate?.didUpdateAccounts(in: self)
     }
 
-    func didPressURL(_ url: URL, in coordinator: SettingsCoordinator) {
+    func didPressURL(_ url: URL, in _: SettingsCoordinator) {
         showTab(.browser(openURL: url))
     }
 }
 
 extension InCoordinator: TokensCoordinatorDelegate {
-    func didPressSend(for token: TokenObject, in coordinator: TokensCoordinator) {
+    func didPressSend(for token: TokenObject, in _: TokensCoordinator) {
         sendFlow(for: token)
     }
 
-    func didPressRequest(for token: TokenObject, in coordinator: TokensCoordinator) {
+    func didPressRequest(for token: TokenObject, in _: TokensCoordinator) {
         requestFlow(for: token)
     }
 
-    func didPressDiscover(in coordinator: TokensCoordinator) {
+    func didPressDiscover(in _: TokensCoordinator) {
         guard let url = RPCServer.main.openseaURL else { return }
         showTab(.browser(openURL: url))
     }
 
-    func didPress(url: URL, in coordinator: TokensCoordinator) {
+    func didPress(url: URL, in _: TokensCoordinator) {
         showTab(.browser(openURL: url))
     }
 }
@@ -384,9 +386,9 @@ extension InCoordinator: TokensCoordinatorDelegate {
 extension InCoordinator: SendCoordinatorDelegate {
     func didFinish(_ result: Result<ConfirmResult, AnyError>, in coordinator: SendCoordinator) {
         switch result {
-        case .success(let confirmResult):
+        case let .success(confirmResult):
             switch confirmResult {
-            case .sentTransaction(let transaction):
+            case let .sentTransaction(transaction):
                 handlePendingTransaction(transaction: transaction)
                 // TODO. Pop 2 view controllers
                 coordinator.navigationController.childNavigationController.popToRootViewController(animated: true)
@@ -394,20 +396,20 @@ extension InCoordinator: SendCoordinatorDelegate {
             case .signedTransaction:
                 break
             }
-        case .failure(let error):
+        case let .failure(error):
             coordinator.navigationController.topViewController?.displayError(error: error)
         }
     }
 }
 
 extension InCoordinator: BrowserCoordinatorDelegate {
-    func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator) {
+    func didSentTransaction(transaction: SentTransaction, in _: BrowserCoordinator) {
         handlePendingTransaction(transaction: transaction)
     }
 }
 
 extension InCoordinator: WalletsCoordinatorDelegate {
-    func didUpdateAccounts(in coordinator: WalletsCoordinator) {
+    func didUpdateAccounts(in _: WalletsCoordinator) {
         delegate?.didUpdateAccounts(in: self)
     }
 
@@ -416,7 +418,8 @@ extension InCoordinator: WalletsCoordinatorDelegate {
         // removeCoordinator(coordinator)
         restart(for: wallet, tab: Tabs.wallet(WalletAction.none))
     }
-    func didCancel(in coordinator: WalletsCoordinator) {
+
+    func didCancel(in _: WalletsCoordinator) {
         navigationController.dismiss(animated: true)
         // removeCoordinator(coordinator)
     }

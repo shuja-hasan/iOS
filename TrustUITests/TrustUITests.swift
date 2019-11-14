@@ -3,7 +3,6 @@
 import XCTest
 
 class TrustUITests: XCTestCase {
-        
     func testCreateWallet() {
 //        let app = XCUIApplication()
 //        app.buttons["CREATE WALLET"].tap()

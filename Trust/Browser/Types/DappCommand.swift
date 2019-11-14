@@ -22,15 +22,15 @@ enum DappCallbackValue {
 
     var object: String {
         switch self {
-        case .signTransaction(let data):
+        case let .signTransaction(data):
             return data.hexEncoded
-        case .sentTransaction(let data):
+        case let .sentTransaction(data):
             return data.hexEncoded
-        case .signMessage(let data):
+        case let .signMessage(data):
             return data.hexEncoded
-        case .signPersonalMessage(let data):
+        case let .signPersonalMessage(data):
             return data.hexEncoded
-        case .signTypedMessage(let data):
+        case let .signTypedMessage(data):
             return data.hexEncoded
         }
     }
@@ -42,13 +42,13 @@ struct DappCommandObjectValue: Decodable {
     public init(from coder: Decoder) throws {
         let container = try coder.singleValueContainer()
         if let intValue = try? container.decode(Int.self) {
-            self.value = String(intValue)
+            value = String(intValue)
         } else if let stringValue = try? container.decode(String.self) {
-            self.value = stringValue
+            value = stringValue
         } else {
             var arrayContainer = try coder.unkeyedContainer()
             while !arrayContainer.isAtEnd {
-                self.array.append(try arrayContainer.decode(EthTypedData.self))
+                array.append(try arrayContainer.decode(EthTypedData.self))
             }
         }
     }

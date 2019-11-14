@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
 import APIKit
+import Foundation
 import JSONRPCKit
 
 struct EtherServiceRequest<Batch: JSONRPCKit.Batch>: APIKit.Request {
@@ -43,7 +43,7 @@ struct EtherServiceRequest<Batch: JSONRPCKit.Batch>: APIKit.Request {
         return urlRequest
     }
 
-    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+    func response(from object: Any, urlResponse _: HTTPURLResponse) throws -> Response {
         return try batch.responses(from: object)
     }
 }

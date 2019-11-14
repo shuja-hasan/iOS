@@ -1,12 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
+import RealmSwift
 @testable import Trust
 import TrustCore
-import RealmSwift
+import XCTest
 
 class TransactionsStorageTests: XCTestCase {
-
     func testInit() {
         let storage = FakeTransactionsStorage()
 
@@ -28,7 +27,7 @@ class TransactionsStorageTests: XCTestCase {
 
         storage.add([
             .make(nonce: 1),
-            .make(nonce: 2)
+            .make(nonce: 2),
         ])
 
         XCTAssertEqual(2, storage.transactions.count)
@@ -40,7 +39,7 @@ class TransactionsStorageTests: XCTestCase {
         storage.add([
             .make(nonce: 1),
             .make(nonce: 1),
-            .make(nonce: 2)
+            .make(nonce: 2),
         ])
 
         XCTAssertEqual(2, storage.transactions.count)
@@ -70,7 +69,7 @@ class TransactionsStorageTests: XCTestCase {
 
         storage.add([
             .make(nonce: 1),
-            .make(nonce: 2)
+            .make(nonce: 2),
         ])
 
         XCTAssertEqual(2, storage.transactions.count)

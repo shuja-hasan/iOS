@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
 @testable import Trust
+import XCTest
 
 class TokensDataStoreTest: XCTestCase {
     var tokensDataStore = FakeTokensDataStore()
@@ -10,12 +10,12 @@ class TokensDataStoreTest: XCTestCase {
         XCTAssertEqual(0, tokensDataStore.tickers.count)
 
         tokensDataStore.saveTickers(tickers: FakeCoinTickerFactory.make3UniqueCionTickers())
-        
+
         let returnedCoinTickers = tokensDataStore.tickers
-        
+
         XCTAssertEqual(3, returnedCoinTickers.count)
     }
-    
+
     func testDeleteTickers() {
         XCTAssertEqual(0, tokensDataStore.realm.objects(CoinTicker.self).count)
         XCTAssertEqual(0, tokensDataStore.tickers.count)
@@ -24,7 +24,7 @@ class TokensDataStoreTest: XCTestCase {
             try tokensDataStore.realm.write {
                 tokensDataStore.realm.add(CoinTicker.make(currencyKey: "This is a ticker currency key that does not match anyone"), update: true)
             }
-        } catch let error {
+        } catch {
             print(error.localizedDescription)
         }
 
@@ -46,7 +46,7 @@ class TokensDataStoreTest: XCTestCase {
         XCTAssertEqual(0, tokensDataStore.tickers.count)
     }
 
-// Needs to insert CoinTicker and then fetch balance
+    // Needs to insert CoinTicker and then fetch balance
 //    func testGetBalance() {
 //        let token = TokenObject(
 //            contract: "0x0000000000000000000000000000000000000001",
@@ -82,7 +82,8 @@ class TokensDataStoreTest: XCTestCase {
             name: "",
             coin: .ethereum,
             type: .coin,
-            symbol: "symbol1", decimals: 18, value: "", isCustom: false, isDisabled: false)
+            symbol: "symbol1", decimals: 18, value: "", isCustom: false, isDisabled: false
+        )
 
         let coinTicker = tokensDataStore.coinTicker(by: token.address)
 

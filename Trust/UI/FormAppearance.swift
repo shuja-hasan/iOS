@@ -1,10 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
 import Eureka
+import Foundation
 
 struct AppFormAppearance {
-
     static func textArea(tag: String? = .none, callback: @escaping (TextAreaRow) -> Void) -> TextAreaRow {
         let textArea = TextAreaRow(tag) {
             $0.title = ""
@@ -43,10 +42,10 @@ struct AppFormAppearance {
         return textField
     }
 
-    static func onRowValidationChanged(baseCell: BaseCell, row: BaseRow) {
+    static func onRowValidationChanged(baseCell _: BaseCell, row: BaseRow) {
         guard let rowIndex = row.indexPath?.row, let rowSection = row.section else { return }
 
-        while rowSection.count > rowIndex + 1 && rowSection[rowIndex  + 1] is LabelRow {
+        while rowSection.count > rowIndex + 1, rowSection[rowIndex + 1] is LabelRow {
             rowSection.remove(at: rowIndex + 1)
         }
 
@@ -66,10 +65,10 @@ struct AppFormAppearance {
 
     static func button(_ title: String? = .none, callback: @escaping (ButtonRow) -> Void) -> ButtonRow {
         let button = ButtonRow(title)
-        .cellUpdate { cell, _ in
-            cell.textLabel?.textAlignment = .left
-            cell.textLabel?.textColor = .black
-        }
+            .cellUpdate { cell, _ in
+                cell.textLabel?.textAlignment = .left
+                cell.textLabel?.textColor = .black
+            }
         callback(button)
         return button
     }

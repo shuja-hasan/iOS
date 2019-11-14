@@ -1,14 +1,14 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
 import StackViewController
+import UIKit
 
 extension UIViewController {
     func displayChildViewController(viewController: UIViewController) {
-        addChildViewController(viewController)
+        addChild(viewController)
         view.addSubview(viewController.view)
         _ = viewController.view.activateSuperviewHuggingConstraints()
-        viewController.didMove(toParentViewController: self)
+        viewController.didMove(toParent: self)
     }
 }

@@ -1,12 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
 import Eureka
+import Foundation
 
 public struct EthereumAddressRule<T: Equatable>: RuleType {
-
     public init(msg: String = "Invalid Ethereum Address") {
-        self.validationError = ValidationError(msg: msg)
+        validationError = ValidationError(msg: msg)
     }
 
     public var id: String?

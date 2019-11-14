@@ -25,7 +25,7 @@ final class EtherNumberFormatter {
 
     /// Thousands separator.
     var groupingSeparator = ","
-    
+
     let locale: Locale
 
     /// Initializes a `EtherNumberFormatter` with a `Locale`.
@@ -53,9 +53,9 @@ final class EtherNumberFormatter {
     ///   - decimals: decimal places used for scaling values.
     /// - Returns: `BigInt` represenation.
     func number(from string: String, decimals: Int) -> BigInt? {
-        guard let index = string.index(where: { String($0) == decimalSeparator }) else {
+        guard let index = string.firstIndex(where: { String($0) == decimalSeparator }) else {
             // No fractional part
-            return BigInt(string).flatMap({ $0 * BigInt(10).power(decimals) })
+            return BigInt(string).flatMap { $0 * BigInt(10).power(decimals) }
         }
 
         let fractionalDigits = string.distance(from: string.index(after: index), to: string.endIndex)
@@ -106,8 +106,9 @@ final class EtherNumberFormatter {
         if fractionalString.isEmpty {
             return integerString
         }
-        return "\(integerString)\(self.decimalSeparator)\(fractionalString)"
+        return "\(integerString)\(decimalSeparator)\(fractionalString)"
     }
+
     /// Formats a `BigInt` to a Decimal.
     ///
     /// - Parameters:
@@ -124,8 +125,9 @@ final class EtherNumberFormatter {
         if fractionalString.isEmpty {
             return Decimal(string: integerString)
         }
-        return Decimal(string: "\(integerString)\(self.decimalSeparator)\(fractionalString)", locale: locale)
+        return Decimal(string: "\(integerString)\(decimalSeparator)\(fractionalString)", locale: locale)
     }
+
     private func integerString(from: BigInt) -> String {
         var string = from.description
         let end = from.sign == .minus ? 1 : 0
@@ -159,11 +161,11 @@ final class EtherNumberFormatter {
         }
 
         // Remove extra zeros after the decimal point.
-        if let lastNonZeroIndex = string.reversed().index(where: { $0 != "0" })?.base {
+        if let lastNonZeroIndex = string.reversed().firstIndex(where: { $0 != "0" })?.base {
             let numberOfZeros = string.distance(from: string.startIndex, to: lastNonZeroIndex)
             if numberOfZeros > minimumFractionDigits {
                 let newEndIndex = string.index(string.startIndex, offsetBy: numberOfZeros - minimumFractionDigits)
-                string = String(string[string.startIndex..<newEndIndex])
+                string = String(string[string.startIndex ..< newEndIndex])
             }
         }
 

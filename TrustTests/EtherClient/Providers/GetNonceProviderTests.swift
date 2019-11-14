@@ -1,12 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
-@testable import Trust
 import BigInt
+@testable import Trust
 import TrustCore
+import XCTest
 
 class GetNonceProviderTests: XCTestCase {
-    
     func testDefault() {
         let provider = GetNonceProvider(storage: FakeTransactionsStorage(), server: .make(), address: EthereumAddress.make())
 
@@ -44,7 +43,7 @@ class GetNonceProviderTests: XCTestCase {
 
     func testExistMultipleTransactions() {
         let storage = FakeTransactionsStorage()
-        storage.add([.make(nonce: 5),.make(nonce: 6)])
+        storage.add([.make(nonce: 5), .make(nonce: 6)])
         let provider = GetNonceProvider(
             storage: storage,
             server: .make(),

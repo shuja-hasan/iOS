@@ -1,8 +1,8 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
 import TrustKeystore
+import UIKit
 
 protocol WalletsCoordinatorDelegate: class {
     func didSelect(wallet: WalletInfo, in coordinator: WalletsCoordinator)
@@ -11,14 +11,13 @@ protocol WalletsCoordinatorDelegate: class {
 }
 
 class WalletsCoordinator: RootCoordinator {
-
     var coordinators: [Coordinator] = []
     let keystore: Keystore
     let navigationController: NavigationController
     weak var delegate: WalletsCoordinatorDelegate?
 
     lazy var rootViewController: UIViewController = {
-        return walletController
+        walletController
     }()
 
     lazy var walletController: WalletsViewController = {
@@ -62,7 +61,7 @@ class WalletsCoordinator: RootCoordinator {
         navigationController.present(coordinator.navigationController, animated: true, completion: nil)
     }
 
-    func showWalletInfo(for wallet: WalletInfo, account: Account, sender: UIView) {
+    func showWalletInfo(for wallet: WalletInfo, account _: Account, sender _: UIView) {
         let controller = WalletInfoViewController(
             wallet: wallet
         )
@@ -75,9 +74,9 @@ class WalletsCoordinator: RootCoordinator {
         keystore.exportMnemonic(wallet: account) { [weak self] result in
             self?.navigationController.topViewController?.hideLoading()
             switch result {
-            case .success(let words):
+            case let .success(words):
                 self?.exportMnemonicCoordinator(for: account, words: words)
-            case .failure(let error):
+            case let .failure(error):
                 self?.navigationController.topViewController?.displayError(error: error)
             }
         }
@@ -88,9 +87,9 @@ class WalletsCoordinator: RootCoordinator {
         keystore.exportPrivateKey(account: account) { [weak self] result in
             self?.navigationController.topViewController?.hideLoading()
             switch result {
-            case .success(let privateKey):
+            case let .success(privateKey):
                 self?.exportPrivateKey(with: privateKey)
-            case .failure(let error):
+            case let .failure(error):
                 self?.navigationController.topViewController?.displayError(error: error)
             }
         }
@@ -126,14 +125,14 @@ extension WalletsCoordinator: WalletsViewControllerDelegate {
     func didDeleteAccount(account: WalletInfo, in viewController: WalletsViewController) {
         viewController.fetch()
 
-        //Remove Realm DB
+        // Remove Realm DB
         let db = RealmConfiguration.configuration(for: account)
         let fileManager = FileManager.default
         guard let fileURL = db.fileURL else { return }
         try? fileManager.removeItem(at: fileURL)
     }
 
-    func didSelect(wallet: WalletInfo, account: Account, in controller: WalletsViewController) {
+    func didSelect(wallet: WalletInfo, account _: Account, in _: WalletsViewController) {
         delegate?.didSelect(wallet: wallet, in: self)
     }
 
@@ -143,14 +142,14 @@ extension WalletsCoordinator: WalletsViewControllerDelegate {
 }
 
 extension WalletsCoordinator: WalletCoordinatorDelegate {
-    func didFinish(with account: WalletInfo, in coordinator: WalletCoordinator) {
+    func didFinish(with _: WalletInfo, in coordinator: WalletCoordinator) {
         delegate?.didUpdateAccounts(in: self)
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
         walletController.fetch()
     }
 
-    func didFail(with error: Error, in coordinator: WalletCoordinator) {
+    func didFail(with _: Error, in coordinator: WalletCoordinator) {
         coordinator.navigationController.dismiss(animated: true, completion: nil)
         removeCoordinator(coordinator)
     }
@@ -166,7 +165,7 @@ extension WalletsCoordinator: BackupCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 
-    func didFinish(wallet: Wallet, in coordinator: BackupCoordinator) {
+    func didFinish(wallet _: Wallet, in coordinator: BackupCoordinator) {
         removeCoordinator(coordinator)
     }
 }
@@ -174,18 +173,18 @@ extension WalletsCoordinator: BackupCoordinatorDelegate {
 extension WalletsCoordinator: WalletInfoViewControllerDelegate {
     func didPress(item: WalletInfoType, in controller: WalletInfoViewController) {
         switch item {
-        case .exportKeystore(let account):
+        case let .exportKeystore(account):
             exportKeystore(for: account)
-        case .exportPrivateKey(let account):
+        case let .exportPrivateKey(account):
             exportPrivateKeyView(for: account)
-        case .exportRecoveryPhrase(let account):
+        case let .exportRecoveryPhrase(account):
             exportMnemonic(for: account)
-        case .copyAddress(let address):
+        case let .copyAddress(address):
             controller.showShareActivity(from: controller.view, with: [address.description])
         }
     }
 
-    func didPressSave(wallet: WalletInfo, fields: [WalletInfoField], in controller: WalletInfoViewController) {
+    func didPressSave(wallet: WalletInfo, fields: [WalletInfoField], in _: WalletInfoViewController) {
         keystore.store(object: wallet.info, fields: fields)
         navigationController.popViewController(animated: true)
     }

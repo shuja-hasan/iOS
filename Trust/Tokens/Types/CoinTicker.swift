@@ -24,7 +24,7 @@ final class CoinTicker: Object, Decodable {
         self.contract = contract.description
         self.tickersKey = tickersKey
 
-        self.key = CoinTickerKeyMaker.makePrimaryKey(contract: contract, currencyKey: tickersKey)
+        key = CoinTickerKeyMaker.makePrimaryKey(contract: contract, currencyKey: tickersKey)
     }
 
     required init() {

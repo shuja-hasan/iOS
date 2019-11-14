@@ -16,7 +16,6 @@ struct FormSection {
 }
 
 struct WalletInfoViewModel {
-
     let wallet: WalletInfo
 
     init(
@@ -57,7 +56,7 @@ struct WalletInfoViewModel {
                     ]
                 ),
             ]
-        case .hd(let account):
+        case let .hd(account):
             if wallet.multiWallet {
                 return [
                     FormSection(
@@ -83,7 +82,7 @@ struct WalletInfoViewModel {
                     ]
                 ),
             ]
-        case .address(_, let address):
+        case let .address(_, address):
             return [
                 FormSection(
                     footer: wallet.currentAccount.address.description,

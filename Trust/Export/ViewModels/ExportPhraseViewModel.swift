@@ -4,7 +4,6 @@ import Foundation
 import TrustKeystore
 
 struct ExportPhraseViewModel {
-
     let keystore: Keystore
     let account: Wallet
 

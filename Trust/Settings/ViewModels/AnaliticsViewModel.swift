@@ -3,7 +3,6 @@
 import UIKit
 
 struct AnaliticsViewModel {
-
     let answer = Analitics.answer
 
     let branch = Analitics.branch

@@ -1,10 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import XCTest
 @testable import Trust
+import XCTest
 
 class PreferencesControllerTests: XCTestCase {
-
     func testDefaultValues() {
         let controller = PreferencesController(userDefaults: .test)
 

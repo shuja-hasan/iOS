@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
 import BigInt
+import Foundation
 import TrustCore
 import WebKit
 
@@ -44,11 +44,11 @@ extension DappAction {
         }()
         let gasLimit: BigInt? = {
             guard let value = object["gasLimit"]?.value ?? object["gas"]?.value else { return .none }
-            return BigInt((value).drop0x, radix: 16)
+            return BigInt(value.drop0x, radix: 16)
         }()
         let gasPrice: BigInt? = {
             guard let value = object["gasPrice"]?.value else { return .none }
-            return BigInt((value).drop0x, radix: 16)
+            return BigInt(value.drop0x, radix: 16)
         }()
         let data = Data(hex: object["data"]?.value ?? "0x")
 
@@ -68,7 +68,7 @@ extension DappAction {
         guard let body = message.body as? [String: AnyObject],
             let jsonString = body.jsonString,
             let command = try? decoder.decode(DappCommand.self, from: jsonString.data(using: .utf8)!) else {
-                return .none
+            return .none
         }
         return command
     }

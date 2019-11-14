@@ -1,29 +1,28 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
+import BigInt
 import Foundation
+import Result
 import TrustCore
 import TrustKeystore
 import TrustWalletSDK
-import BigInt
-import Result
 
 protocol LocalSchemeCoordinatorDelegate: class {
     func didCancel(in coordinator: LocalSchemeCoordinator)
 }
 
 final class LocalSchemeCoordinator: Coordinator {
-
     let navigationController: NavigationController
     let keystore: Keystore
     let session: WalletSession
     var coordinators: [Coordinator] = []
     weak var delegate: LocalSchemeCoordinatorDelegate?
     lazy var trustWalletSDK: TrustWalletSDK = {
-        return TrustWalletSDK(delegate: self)
+        TrustWalletSDK(delegate: self)
     }()
 
     lazy var server: RPCServer = {
-        return session.currentRPC
+        session.currentRPC
     }()
 
     init(
@@ -35,6 +34,7 @@ final class LocalSchemeCoordinator: Coordinator {
         self.keystore = keystore
         self.session = session
     }
+
     private func signMessage(for account: Account, signMessage: SignMesageType, completion: @escaping (Result<Data, WalletSDKError>) -> Void) {
         let coordinator = SignMessageCoordinator(
             navigationController: navigationController,
@@ -44,9 +44,9 @@ final class LocalSchemeCoordinator: Coordinator {
         coordinator.didComplete = { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .success(let data):
+            case let .success(data):
                 completion(.success(data))
-            case .failure(let error):
+            case let .failure(error):
                 if let dappError = error.error as? DAppError, dappError == .cancelled {
                     completion(.failure(WalletSDKError.cancelled))
                 } else {
@@ -81,14 +81,14 @@ final class LocalSchemeCoordinator: Coordinator {
         addCoordinator(coordinator)
         coordinator.didCompleted = { [unowned self] result in
             switch result {
-            case .success(let type):
+            case let .success(type):
                 switch type {
-                case .signedTransaction(let transaction):
+                case let .signedTransaction(transaction):
                     completion(.success(transaction.data))
-                case .sentTransaction(let transaction):
+                case let .sentTransaction(transaction):
                     completion(.success(transaction.data))
                 }
-            case .failure(let error):
+            case let .failure(error):
                 if let dappError = error.error as? DAppError, dappError == .cancelled {
                     completion(.failure(WalletSDKError.cancelled))
                 } else {
@@ -117,14 +117,14 @@ extension LocalSchemeCoordinator: SignMessageCoordinatorDelegate {
 }
 
 extension LocalSchemeCoordinator: WalletDelegate {
-    func signMessage(_ message: Data, address: Address?, completion: @escaping (Result<Data, WalletSDKError>) -> Void) {
+    func signMessage(_ message: Data, address _: Address?, completion: @escaping (Result<Data, WalletSDKError>) -> Void) {
         guard let account = account(for: session) else {
             return completion(.failure(WalletSDKError.watchOnly))
         }
         signMessage(for: account, signMessage: .message(message), completion: completion)
     }
 
-    func signPersonalMessage(_ message: Data, address: Address?, completion: @escaping (Result<Data, WalletSDKError>) -> Void) {
+    func signPersonalMessage(_ message: Data, address _: Address?, completion: @escaping (Result<Data, WalletSDKError>) -> Void) {
         guard let account = account(for: session) else {
             return completion(.failure(WalletSDKError.watchOnly))
         }

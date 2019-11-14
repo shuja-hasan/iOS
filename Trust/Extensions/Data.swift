@@ -8,7 +8,7 @@ extension Data {
     }
 
     var hexEncoded: String {
-        return "0x" + self.hex
+        return "0x" + hex
     }
 
     func toString() -> String? {

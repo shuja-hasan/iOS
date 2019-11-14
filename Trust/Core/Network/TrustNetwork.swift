@@ -1,13 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import PromiseKit
+import APIKit
+import BigInt
+import JSONRPCKit
 import Moya
+import PromiseKit
+import Result
 import TrustCore
 import TrustKeystore
-import JSONRPCKit
-import APIKit
-import Result
-import BigInt
 
 import enum Result.Result
 
@@ -26,7 +26,6 @@ protocol NetworkProtocol: TrustNetworkProtocol {
 }
 
 final class TrustNetwork: NetworkProtocol {
-
     static let deleteMissingInternalSeconds: Double = 60.0
     static let deleyedTransactionInternalSeconds: Double = 60.0
     let provider: MoyaProvider<TrustAPI>
@@ -35,6 +34,7 @@ final class TrustNetwork: NetworkProtocol {
     private var dict: [String: [String]] {
         return TrustRequestFormatter.toAddresses(from: wallet.accounts)
     }
+
     private var networks: [Int] {
         return TrustRequestFormatter.networks(from: wallet.accounts)
     }
@@ -61,7 +61,7 @@ final class TrustNetwork: NetworkProtocol {
         return Promise { seal in
             provider.request(.getTokens(dict)) { result in
                 switch result {
-                case .success(let response):
+                case let .success(response):
                     do {
                         let items = try response.map(ArrayResponse<TokenObjectList>.self).docs
                         let tokens = items.map { $0.contract }
@@ -69,7 +69,7 @@ final class TrustNetwork: NetworkProtocol {
                     } catch {
                         seal.reject(error)
                     }
-                case .failure(let error):
+                case let .failure(error):
                     seal.reject(error)
                 }
             }
@@ -84,7 +84,7 @@ final class TrustNetwork: NetworkProtocol {
             )
             provider.request(.prices(tokensPriceToFetch)) { result in
                 switch result {
-                case .success(let response):
+                case let .success(response):
                     do {
                         let rawTickers = try response.map(ArrayResponse<CoinTicker>.self).docs
                         let tickers = rawTickers.compactMap { self.getTickerFrom($0) }
@@ -92,7 +92,7 @@ final class TrustNetwork: NetworkProtocol {
                     } catch {
                         seal.reject(error)
                     }
-                case .failure(let error):
+                case let .failure(error):
                     seal.reject(error)
                 }
             }
@@ -103,14 +103,14 @@ final class TrustNetwork: NetworkProtocol {
         return Promise { seal in
             provider.request(.collectibles(dict)) { result in
                 switch result {
-                case .success(let response):
+                case let .success(response):
                     do {
                         let tokens = try response.map(ArrayResponse<CollectibleTokenCategory>.self).docs
                         seal.fulfill(tokens)
                     } catch {
                         seal.reject(error)
                     }
-                case .failure(let error):
+                case let .failure(error):
                     seal.reject(error)
                 }
             }
@@ -120,7 +120,7 @@ final class TrustNetwork: NetworkProtocol {
     func transactions(for address: Address, on server: RPCServer, startBlock: Int, page: Int, contract: String?, completion: @escaping (([Transaction]?, Bool)) -> Void) {
         provider.request(.getTransactions(server: server, address: address.description, startBlock: startBlock, page: page, contract: contract)) { result in
             switch result {
-            case .success(let response):
+            case let .success(response):
                 do {
                     let transactions = try response.map(ArrayResponse<Transaction>.self).docs
                     completion((transactions, true))
@@ -132,7 +132,7 @@ final class TrustNetwork: NetworkProtocol {
             }
         }
     }
-    
+
     func search(query: String) -> Promise<[TokenObject]> {
         return search(query: query, tokens: Set<TokenObject>())
     }
@@ -150,14 +150,14 @@ final class TrustNetwork: NetworkProtocol {
         return Promise { seal in
             provider.request(.search(query: query, networks: localNetworks)) { result in
                 switch result {
-                case .success(let response):
+                case let .success(response):
                     do {
                         let tokens = try response.map(ArrayResponse<TokenObject>.self).docs
                         seal.fulfill(tokens)
                     } catch {
                         seal.reject(error)
                     }
-                case .failure(let error):
+                case let .failure(error):
                     seal.reject(error)
                 }
             }

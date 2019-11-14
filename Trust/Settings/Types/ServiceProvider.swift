@@ -1,8 +1,8 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import UIKit
 import Rswift
+import UIKit
 
 enum URLServiceProvider {
     case twitter
@@ -33,7 +33,7 @@ enum URLServiceProvider {
         case .termsOfService: return R.string.localizable.settingsTermsOfServiceButtonTitle()
         case .upstreamPrivacyPolicy: return R.string.localizable.settingsUpstreamPrivacyPolicyButtonTitle()
         case .upstreamTermsOfService: return R.string.localizable.settingsUpstreamTermsOfServiceButtonTitle()
-       }
+        }
     }
 
     var localURL: URL? {
@@ -62,7 +62,7 @@ enum URLServiceProvider {
     }
 
     var remoteURL: URL {
-        return URL(string: self.remoteURLString)!
+        return URL(string: remoteURLString)!
     }
 
     private var remoteURLString: String {

@@ -3,8 +3,7 @@
 import UIKit
 
 final class WordCollectionViewCell: UICollectionViewCell {
-
-    @IBOutlet weak var wordLabel: UILabel!
+    @IBOutlet var wordLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -1,13 +1,13 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
-import UIKit
 import BigInt
-import TrustKeystore
+import Branch
+import Foundation
 import RealmSwift
+import TrustKeystore
+import UIKit
 import URLNavigator
 import WebKit
-import Branch
 
 protocol BrowserCoordinatorDelegate: class {
     func didSentTransaction(transaction: SentTransaction, in coordinator: BrowserCoordinator)
@@ -48,16 +48,20 @@ final class BrowserCoordinator: NSObject, Coordinator {
         controller.webView.uiDelegate = self
         return controller
     }()
+
     private let sharedRealm: Realm
     private lazy var bookmarksStore: BookmarksStore = {
-        return BookmarksStore(realm: sharedRealm)
+        BookmarksStore(realm: sharedRealm)
     }()
+
     private lazy var historyStore: HistoryStore = {
-        return HistoryStore(realm: sharedRealm)
+        HistoryStore(realm: sharedRealm)
     }()
+
     lazy var preferences: PreferencesController = {
-        return PreferencesController()
+        PreferencesController()
     }()
+
     var urlParser: BrowserURLParser {
         let engine = SearchEngine(rawValue: preferences.get(for: .browserSearchEngine)) ?? .default
         return BrowserURLParser(engine: engine)
@@ -78,10 +82,10 @@ final class BrowserCoordinator: NSObject, Coordinator {
     init(
         session: WalletSession,
         keystore: Keystore,
-        navigator: Navigator,
+        navigator _: Navigator,
         sharedRealm: Realm
     ) {
-        self.navigationController = NavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
+        navigationController = NavigationController(navigationBarClass: BrowserNavigationBar.self, toolbarClass: nil)
         self.session = session
         self.keystore = keystore
         self.sharedRealm = sharedRealm
@@ -96,7 +100,7 @@ final class BrowserCoordinator: NSObject, Coordinator {
         navigationController.dismiss(animated: true, completion: nil)
     }
 
-    private func executeTransaction(account: Account, action: DappAction, callbackID: Int, transaction: UnconfirmedTransaction, type: ConfirmType, server: RPCServer) {
+    private func executeTransaction(account: Account, action _: DappAction, callbackID: Int, transaction: UnconfirmedTransaction, type: ConfirmType, server: RPCServer) {
         let configurator = TransactionConfigurator(
             session: session,
             account: account,
@@ -115,14 +119,14 @@ final class BrowserCoordinator: NSObject, Coordinator {
         addCoordinator(coordinator)
         coordinator.didCompleted = { [unowned self] result in
             switch result {
-            case .success(let type):
+            case let .success(type):
                 switch type {
-                case .signedTransaction(let transaction):
+                case let .signedTransaction(transaction):
                     // on signing we pass signed hex of the transaction
                     let callback = DappCallback(id: callbackID, value: .signTransaction(transaction.data))
                     self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .success(callback))
                     self.delegate?.didSentTransaction(transaction: transaction, in: self)
-                case .sentTransaction(let transaction):
+                case let .sentTransaction(transaction):
                     // on send transaction we pass transaction ID only.
                     let data = Data(hex: transaction.id)
                     let callback = DappCallback(id: callbackID, value: .sentTransaction(data))
@@ -166,7 +170,7 @@ final class BrowserCoordinator: NSObject, Coordinator {
         coordinator.didComplete = { [weak self] result in
             guard let `self` = self else { return }
             switch result {
-            case .success(let data):
+            case let .success(data):
                 let callback: DappCallback
                 switch type {
                 case .message:
@@ -231,18 +235,21 @@ final class BrowserCoordinator: NSObject, Coordinator {
         guard let url = rootViewController.browserViewController.webView.url else { return }
         rootViewController.displayLoading()
         let params = BranchEvent.openURL(url).params
-        Branch.getInstance().getShortURL(withParams: params) { [weak self] shortURLString, _ in
-            guard let `self` = self else { return }
-            let shareURL: URL = {
-                if let shortURLString = shortURLString, let shortURL = URL(string: shortURLString) {
-                    return shortURL
+
+        Branch.getInstance()?.getShortURL(withParams: params, andCallback: { shortURLString, error in
+            //            guard let `self` = self else { return }
+            if error == nil {
+                let shareURL: URL = {
+                    if let shortURLString = shortURLString, let shortURL = URL(string: shortURLString) {
+                        return shortURL
+                    }
+                    return url
+                }()
+                self.rootViewController.showShareActivity(from: UIView(), with: [shareURL]) { [weak self] in
+                    self?.rootViewController.hideLoading()
                 }
-                return url
-            }()
-            self.rootViewController.showShareActivity(from: UIView(), with: [shareURL]) { [weak self] in
-                self?.rootViewController.hideLoading()
             }
-        }
+        })
     }
 }
 
@@ -251,48 +258,48 @@ extension BrowserCoordinator: BrowserViewControllerDelegate {
         switch action {
         case .bookmarks:
             rootViewController.select(viewType: .bookmarks)
-        case .addBookmark(let bookmark):
+        case let .addBookmark(bookmark):
             bookmarksStore.add(bookmarks: [bookmark])
         case .qrCode:
             presentQRCodeReader()
         case .history:
             rootViewController.select(viewType: .history)
-        case .navigationAction(let navAction):
+        case let .navigationAction(navAction):
             switch navAction {
             case .home:
                 enableToolbar = true
                 rootViewController.select(viewType: .browser)
                 rootViewController.browserViewController.goHome()
-            case .more(let sender):
+            case let .more(sender):
                 presentMoreOptions(sender: sender)
-            case .enter(let string):
+            case let .enter(string):
                 guard let url = urlParser.url(from: string) else { return }
                 openURL(url)
             case .goBack:
                 rootViewController.browserViewController.webView.goBack()
             default: break
             }
-        case .changeURL(let url):
+        case let .changeURL(url):
             handleToolbar(for: url)
         }
     }
 
     func didCall(action: DappAction, callbackID: Int) {
         guard let account = session.account.currentAccount, let _ = account.wallet else {
-            self.rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
-            self.navigationController.topViewController?.displayError(error: InCoordinatorError.onlyWatchAccount)
+            rootViewController.browserViewController.notifyFinish(callbackID: callbackID, value: .failure(DAppError.cancelled))
+            navigationController.topViewController?.displayError(error: InCoordinatorError.onlyWatchAccount)
             return
         }
         switch action {
-        case .signTransaction(let unconfirmedTransaction):
+        case let .signTransaction(unconfirmedTransaction):
             executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend, server: browserViewController.server)
-        case .sendTransaction(let unconfirmedTransaction):
+        case let .sendTransaction(unconfirmedTransaction):
             executeTransaction(account: account, action: action, callbackID: callbackID, transaction: unconfirmedTransaction, type: .signThenSend, server: browserViewController.server)
-        case .signMessage(let hexMessage):
+        case let .signMessage(hexMessage):
             signMessage(with: .message(Data(hex: hexMessage)), account: account, callbackID: callbackID)
-        case .signPersonalMessage(let hexMessage):
+        case let .signPersonalMessage(hexMessage):
             signMessage(with: .personalMessage(Data(hex: hexMessage)), account: account, callbackID: callbackID)
-        case .signTypedMessage(let typedData):
+        case let .signTypedMessage(typedData):
             signMessage(with: .typedMessage(typedData), account: account, callbackID: callbackID)
         case .unknown:
             break
@@ -336,7 +343,7 @@ extension BrowserCoordinator: ScanQRCodeCoordinatorDelegate {
 }
 
 extension BrowserCoordinator: BookmarkViewControllerDelegate {
-    func didSelectBookmark(_ bookmark: Bookmark, in viewController: BookmarkViewController) {
+    func didSelectBookmark(_ bookmark: Bookmark, in _: BookmarkViewController) {
         guard let url = bookmark.linkURL else {
             return
         }
@@ -345,7 +352,7 @@ extension BrowserCoordinator: BookmarkViewControllerDelegate {
 }
 
 extension BrowserCoordinator: HistoryViewControllerDelegate {
-    func didSelect(history: History, in controller: HistoryViewController) {
+    func didSelect(history: History, in _: HistoryViewController) {
         guard let url = history.URL else {
             return
         }
@@ -354,14 +361,14 @@ extension BrowserCoordinator: HistoryViewControllerDelegate {
 }
 
 extension BrowserCoordinator: WKUIDelegate {
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+    func webView(_: WKWebView, createWebViewWith _: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures _: WKWindowFeatures) -> WKWebView? {
         if navigationAction.targetFrame == nil {
             browserViewController.webView.load(navigationAction.request)
         }
         return nil
     }
 
-    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+    func webView(_: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame _: WKFrameInfo, completionHandler: @escaping () -> Void) {
         let alertController = UIAlertController.alertController(
             title: .none,
             message: message,
@@ -374,7 +381,7 @@ extension BrowserCoordinator: WKUIDelegate {
         navigationController.present(alertController, animated: true, completion: nil)
     }
 
-    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+    func webView(_: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame _: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
         let alertController = UIAlertController.alertController(
             title: .none,
             message: message,
@@ -390,14 +397,14 @@ extension BrowserCoordinator: WKUIDelegate {
         navigationController.present(alertController, animated: true, completion: nil)
     }
 
-    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+    func webView(_: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame _: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         let alertController = UIAlertController.alertController(
             title: .none,
             message: prompt,
             style: .alert,
             in: navigationController
         )
-        alertController.addTextField { (textField) in
+        alertController.addTextField { textField in
             textField.text = defaultText
         }
         alertController.addAction(UIAlertAction(title: R.string.localizable.oK(), style: .default, handler: { _ in
@@ -417,7 +424,7 @@ extension BrowserCoordinator: WKUIDelegate {
 extension BrowserCoordinator: MasterBrowserViewControllerDelegate {
     func didPressAction(_ action: BrowserToolbarAction) {
         switch action {
-        case .view(let viewType):
+        case let .view(viewType):
             switch viewType {
             case .bookmarks:
                 break

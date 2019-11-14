@@ -1,7 +1,7 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import Foundation
 import BigInt
+import Foundation
 
 struct GasViewModel {
     let fee: BigInt

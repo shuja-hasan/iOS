@@ -17,11 +17,11 @@ enum WalletType {
 
     var description: String {
         switch self {
-        case .privateKey(let account):
+        case let .privateKey(account):
             return Keys.walletPrivateKey + account.identifier
-        case .hd(let account):
+        case let .hd(account):
             return Keys.walletHD + account.identifier
-        case .address(let coin, let address):
+        case let .address(coin, address):
             return Keys.address + "\(coin.rawValue)" + "-" + address.description
         }
     }
@@ -30,11 +30,11 @@ enum WalletType {
 extension WalletType: Equatable {
     static func == (lhs: WalletType, rhs: WalletType) -> Bool {
         switch (lhs, rhs) {
-        case (let .privateKey(lhs), let .privateKey(rhs)):
+        case let (.privateKey(lhs), .privateKey(rhs)):
             return lhs == rhs
-        case (let .hd(lhs), let .hd(rhs)):
+        case let (.hd(lhs), .hd(rhs)):
             return lhs == rhs
-        case (let .address(lhs), let .address(rhs)):
+        case let (.address(lhs), .address(rhs)):
             return lhs == rhs
         case (.privateKey, _),
              (.hd, _),

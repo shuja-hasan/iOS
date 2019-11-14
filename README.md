@@ -1,20 +1,33 @@
-# Trust - Ethereum Wallet and Web3 DApp Browser for iOS
+# Nextshore - Ether-1 Wallet and Web3 DApp Browser for iOS
 
-[![Build Status](https://travis-ci.org/TrustWallet/trust-wallet-ios.svg?branch=master)](https://travis-ci.org/TrustWallet/trust-wallet-ios)
-[![Black Duck Security Risk](https://copilot.blackducksoftware.com/github/repos/TrustWallet/trust-wallet-ios/branches/master/badge-risk.svg)](https://copilot.blackducksoftware.com/github/repos/TrustWallet/trust-wallet-ios/branches/master)
-[![License](https://img.shields.io/badge/license-GPL3-green.svg?style=flat)](https://github.com/TrustWallet/trust-wallet-ios/blob/master/LICENSE)
-
-[<img src="https://raw.githubusercontent.com/TrustWallet/trust-wallet-ios/master/resources/iphone_cover.png">](https://itunes.apple.com/us/app/trust-ethereum-wallet/id1288339409)
-
-[<img src=resources/app-store-badge.png height="88">](https://itunes.apple.com/us/app/trust-ethereum-wallet/id1288339409)
-
-Welcome to Trust's open source iOS app!
+Welcome to Nextshore's open source iOS app!
 
 ## Getting Started
 
-1. [Download](https://developer.apple.com/xcode/download/) the Xcode 9 release.
-1. Clone this repository.
-1. Run `make bootstrap` to install tools and dependencies.
+1. [Download](https://developer.apple.com/xcode/download/) the Xcode 11 release.
+2. Clone this repository.
+3. Run `make bootstrap` to install tools and dependencies.
+4. Open Trust.xcworkspace in Xcode
+5. Set the following pods to Swift Language version 4.
+
+```
+Alamofire
+APIKit
+BigInt
+CryptoSwift
+Eureka
+JSONRPCKit
+Kingfisher
+Moya
+PromiseKit
+R.swift.Library
+Result
+SeedStackViewController
+SipHash
+TrustCore
+TrustWalletSDK
+URLNavigator
+```
 
 ## Contributing
 
@@ -35,6 +48,3 @@ product, for our community, in a safe and open space. We work as we live, as
 kind and considerate human beings who learn and grow from giving and receiving
 positive, constructive feedback. We reserve the right to delete or ban any
 behavior violating this base foundation of respect.
-
-Help with localization?
-Here is a public link to join localization project: https://lokalise.co/signup/3947163159df13df851b51.98101647/all/

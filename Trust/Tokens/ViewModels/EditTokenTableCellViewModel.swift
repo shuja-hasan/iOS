@@ -4,7 +4,6 @@ import Foundation
 import UIKit
 
 struct EditTokenTableCellViewModel {
-
     private let viewModel: TokenObjectViewModel
     private let coinTicker: CoinTicker?
     private let isLocal: Bool
@@ -24,7 +23,7 @@ struct EditTokenTableCellViewModel {
     }
 
     var titleFont: UIFont {
-        return UIFont.systemFont(ofSize: 18, weight: .medium)
+        return UIFont(name: "Trenda-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .medium)
     }
 
     var titleTextColor: UIColor {

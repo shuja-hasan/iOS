@@ -1,10 +1,10 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
+import RealmSwift
 import TrustCore
 import UIKit
 import WebKit
-import RealmSwift
 
 protocol SettingsCoordinatorDelegate: class {
     func didRestart(with account: WalletInfo, tab: Tabs, in coordinator: SettingsCoordinator)
@@ -14,7 +14,6 @@ protocol SettingsCoordinatorDelegate: class {
 }
 
 final class SettingsCoordinator: Coordinator {
-
     let navigationController: NavigationController
     let keystore: Keystore
     let session: WalletSession
@@ -33,9 +32,10 @@ final class SettingsCoordinator: Coordinator {
         controller.modalPresentationStyle = .pageSheet
         return controller
     }()
+
     let sharedRealm: Realm
     private lazy var historyStore: HistoryStore = {
-        return HistoryStore(realm: sharedRealm)
+        HistoryStore(realm: sharedRealm)
     }()
 
     init(
@@ -65,8 +65,8 @@ final class SettingsCoordinator: Coordinator {
 
     func cleadCache() {
         let dataStore = WKWebsiteDataStore.default()
-        dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { (records) in
-            dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records, completionHandler: { })
+        dataStore.fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            dataStore.removeData(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), for: records, completionHandler: {})
         }
         historyStore.clearAll()
     }
@@ -79,14 +79,14 @@ final class SettingsCoordinator: Coordinator {
 }
 
 extension SettingsCoordinator: SettingsViewControllerDelegate {
-    func didAction(action: SettingsAction, in viewController: SettingsViewController) {
+    func didAction(action: SettingsAction, in _: SettingsViewController) {
         switch action {
         case .currency:
             session.tokensStorage.clearBalance()
             restart(for: session.account, tab: Tabs.settings)
-        case .pushNotifications(let change):
+        case let .pushNotifications(change):
             switch change {
-            case .state(let isEnabled):
+            case let .state(isEnabled):
                 switch isEnabled {
                 case true:
                     pushNotificationsRegistrar.register()
@@ -96,7 +96,7 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
             case .preferences:
                 pushNotificationsRegistrar.register()
             }
-        case .openURL(let url):
+        case let .openURL(url):
             delegate?.didPressURL(url, in: self)
         case .clearBrowserCache:
             cleadCache()
@@ -115,18 +115,19 @@ extension SettingsCoordinator: WalletsCoordinatorDelegate {
     func didCancel(in coordinator: WalletsCoordinator) {
         coordinator.navigationController.dismiss(animated: true)
     }
-    
+
     func didUpdateAccounts(in coordinator: WalletsCoordinator) {
-        //Refactor
+        // Refactor
         coordinator.navigationController.dismiss(animated: true)
     }
-    
+
     func didSelect(wallet: WalletInfo, in coordinator: WalletsCoordinator) {
         coordinator.navigationController.removeChildCoordinators()
         delegate?.didRestart(with: wallet, tab: Tabs.settings, in: self)
     }
 }
-//extension SettingsCoordinator: WalletsCoordinatorDelegate {
+
+// extension SettingsCoordinator: WalletsCoordinatorDelegate {
 //    func didCancel(in coordinator: WalletsCoordinator) {
 //        coordinator.navigationController.dismiss(animated: true)
 //    }
@@ -140,4 +141,4 @@ extension SettingsCoordinator: WalletsCoordinatorDelegate {
 //        coordinator.navigationController.removeChildCoordinators()
 //        delegate?.didRestart(with: wallet, in: self)
 //    }
-//}
+// }

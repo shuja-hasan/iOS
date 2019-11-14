@@ -4,13 +4,11 @@ import Foundation
 import UIKit
 
 final class InfoHeaderView: UIView {
-
     let amountLabel = UILabel(frame: .zero)
     let logoImageView = UIImageView(frame: .zero)
     let label = UILabel(frame: .zero)
 
     override init(frame: CGRect = .zero) {
-
         super.init(frame: frame)
 
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +34,7 @@ final class InfoHeaderView: UIView {
         backgroundColor = .clear
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

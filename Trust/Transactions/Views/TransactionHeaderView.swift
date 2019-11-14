@@ -5,7 +5,7 @@ import UIKit
 
 struct TransactionHeaderAppereance {
     static let amountFont = AppStyle.largeAmount.font
-    static let monetaryFont = UIFont.systemFont(ofSize: 13, weight: .light)
+    static let monetaryFont = UIFont(name: "Trenda-Light", size: 13) ?? UIFont.systemFont(ofSize: 13, weight: .light)
     static let monetaryTextColor = TokensLayout.cell.fiatAmountTextColor
 }
 
@@ -17,13 +17,11 @@ struct TransactionHeaderViewViewModel {
 }
 
 final class TransactionHeaderView: UIView {
-
     let imageView = UIImageView()
     let amountLabel = UILabel()
     let monetaryAmountLabel = UILabel()
 
     override init(frame: CGRect = .zero) {
-
         super.init(frame: frame)
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +58,7 @@ final class TransactionHeaderView: UIView {
         ])
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

@@ -1,10 +1,9 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import UIKit
 import Eureka
+import UIKit
 
 final class TokenInfoViewController: FormViewController {
-
     let token: TokenObject
 
     init(token: TokenObject) {
@@ -18,7 +17,7 @@ final class TokenInfoViewController: FormViewController {
         form +++ Section()
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

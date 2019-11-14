@@ -8,6 +8,7 @@ final class TokenInfoCoordinator: RootCoordinator {
     var rootViewController: UIViewController {
         return TokenInfoViewController(token: token)
     }
+
     var coordinators: [Coordinator] = []
 
     init(token: TokenObject) {

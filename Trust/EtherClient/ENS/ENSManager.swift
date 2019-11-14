@@ -1,11 +1,11 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
 import Foundation
-import TrustCore
-import RealmSwift
 import PromiseKit
+import RealmSwift
+import TrustCore
 
-//struct ENSManager {
+// struct ENSManager {
 //
 //    var store: ENSStore
 //    let localInterval: Double = 24 * 60 * 60 // 1 day
@@ -49,4 +49,4 @@ import PromiseKit
 //            return name
 //        }
 //    }
-//}
+// }

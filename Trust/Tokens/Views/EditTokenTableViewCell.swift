@@ -1,18 +1,17 @@
 // Copyright DApps Platform Inc. All rights reserved.
 
-import UIKit
 import Kingfisher
+import UIKit
 
 protocol EditTokenTableViewCellDelegate: class {
     func didChangeState(state: Bool, in cell: EditTokenTableViewCell)
 }
 
 final class EditTokenTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var tokenImageView: TokenImageView!
-    @IBOutlet weak var tokenLabel: UILabel!
-    @IBOutlet weak var tokenEnableSwitch: UISwitch!
-    @IBOutlet weak var tokenContractLabel: UILabel!
+    @IBOutlet var tokenImageView: TokenImageView!
+    @IBOutlet var tokenLabel: UILabel!
+    @IBOutlet var tokenEnableSwitch: UISwitch!
+    @IBOutlet var tokenContractLabel: UILabel!
     weak var delegate: EditTokenTableViewCellDelegate?
 
     var viewModel: EditTokenTableCellViewModel? {

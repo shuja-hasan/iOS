@@ -8,7 +8,6 @@ protocol WalletCreatedControllerDelegate: class {
 }
 
 final class WalletCreatedController: UIViewController {
-
     weak var delegate: WalletCreatedControllerDelegate?
 
     lazy var doneButton: UIButton = {
@@ -23,7 +22,7 @@ final class WalletCreatedController: UIViewController {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = ""
-        titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        titleLabel.font = UIFont(name: "Trenda-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .regular)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.textAlignment = .center
         return titleLabel
@@ -91,7 +90,7 @@ final class WalletCreatedController: UIViewController {
         delegate?.didPressDone(wallet: viewModel.wallet, in: self)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
